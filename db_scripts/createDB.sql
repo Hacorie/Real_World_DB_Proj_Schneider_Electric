@@ -43,7 +43,7 @@ DROP TABLE IF EXISTS User;
 CREATE TABLE User
 (
 	UName VARCHAR(30),
-	Password VARCHAR(30),
+	Password VARCHAR(40),
 	PRIMARY KEY (UName)
 );
 
