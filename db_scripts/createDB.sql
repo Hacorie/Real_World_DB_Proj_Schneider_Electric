@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS Tag;
 CREATE TABLE Tag
 (
 	Num INT,
@@ -21,21 +22,24 @@ CREATE TABLE Tag
 	FOREIGN KEY(CName) REFERENCES Complexity(CName),
 	FOREIGN KEY(UName)  REFERENCES User(UName),
 
-	Primary Key(Num, Revision, Sname, CName, UName)
+	Primary Key(Num, Revision)
 );
 
+DROP TABLE IF EXISTS Subcategory;
 CREATE TABLE Subcategory
 (
 	SName VARCHAR(30),
 	PRIMARY KEY(SName)
 );
 
+DROP TABLE IF EXISTS Complexity;
 CREATE TABLE Complexity
 (
 	CName VARCHAR(30),
 	PRIMARY KEY(CName)
 );
 
+DROP TABLE IF EXISTS User;
 CREATE TABLE User
 (
 	UName VARCHAR(30),
@@ -43,12 +47,14 @@ CREATE TABLE User
 	PRIMARY KEY (UName)
 );
 
+DROP TABLE IF EXISTS Groups;
 CREATE TABLE Groups
 (
 	GName VARCHAR(30),
 	PRIMARY KEY(GName)
 );
 
+DROP TABLE IF EXISTS Applied_FO_Table;
 CREATE TABLE Applied_FO_Table
 (
 	FONumber INT,
@@ -57,12 +63,12 @@ CREATE TABLE Applied_FO_Table
 	RevNo INT,
 	Type VARCHAR(30),
 
-	FOREIGN KEY(Num) REFERENCES Tag(Num),
-	FOREIGN KEY(RevNo) REFERENCES Tag(Revision),
+	FOREIGN KEY(Num, RevNo) REFERENCES Tag(Num, Revision),
 
 	PRIMARY KEY(FONumber, Num, RevNo)
 );
 
+DROP TABLE IF EXISTS Product_Type;
 CREATE TABLE Product_Type
 (
 	PName VARCHAR(30),
@@ -71,6 +77,7 @@ CREATE TABLE Product_Type
 	PRIMARY KEY(PName)
 );
 
+DROP TABLE IF EXISTS Country;
 CREATE TABLE Country
 (
 	CName VARCHAR(30),
@@ -79,6 +86,7 @@ CREATE TABLE Country
 	PRIMARY KEY(CName)
 );
 
+DROP TABLE IF EXISTS Member_Of;
 CREATE TABLE Member_Of
 (
 	Username VARCHAR(30),
@@ -90,17 +98,22 @@ CREATE TABLE Member_Of
 	PRIMARY KEY(Username, GName)
 );
 
+DROP TABLE IF EXISTS Type;
 CREATE TABLE Type
 (
 	PName VARCHAR(30),
 	CName VARCHAR(30),
+	Num INT,
+	Revision INT,
 
+	FOREIGN KEY(Num, Revision) REFERENCES Tag(Num, Revision),
 	FOREIGN KEY(PName) REFERENCES Product_Type(PName),
 	FOREIGN KEY(CName) REFERENCES Country(CName),
 
-	PRIMARY KEY (PName, CName)
+	PRIMARY KEY (PName, CName, Num, Revision)
 );
 
+DROP TABLE IF EXISTS Log;
 CREATE TABLE Log
 (
 	UID	INT,
@@ -108,6 +121,8 @@ CREATE TABLE Log
 	LDate	DATE,
 	LTime	TIMESTAMP,
 	IP	VARCHAR(9),
-	
+
+	FOREIGN KEY(UName) REFERENCES User(UName),
+
 	PRIMARY KEY(UID)
 );
