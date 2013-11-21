@@ -1,7 +1,7 @@
 DROP TABLE IF EXISTS Tag;
 CREATE TABLE Tag
 (
-	Num INT,
+	Num INT AUTO_INCREMENT,
 	Revision INT,
 	LTime VARCHAR(5),
 	CDate DATE,
@@ -57,11 +57,11 @@ CREATE TABLE Groups
 DROP TABLE IF EXISTS Applied_FO_Table;
 CREATE TABLE Applied_FO_Table
 (
-	FONumber INT,
+	FONumber INT AUTO_INCREMENT,
 	Notes VARCHAR(100),
 	Num INT,
 	RevNo INT,
-	Type VARCHAR(30),
+	Typeof VARCHAR(30),
 
 	FOREIGN KEY(Num, RevNo) REFERENCES Tag(Num, Revision),
 
