@@ -126,3 +126,25 @@ CREATE TABLE Log
 
 	PRIMARY KEY(UID)
 );
+
+DROP TABLE IF EXISTS Per_Hour;
+CREATE TABLE Per_Hour
+(
+	UID INT,
+	Labor Decimal(7,3),
+	Engineering Decimal(7,3),
+
+	PRIMARY KEY(UID)
+);
+
+DROP TABLE IF EXISTS Log_In;
+CREATE TABLE Log_In
+(
+	UName VARCHAR(30),
+	Initial_Date DATE,
+	Expire_Date DATE,
+	IP VARCHAR(9),
+
+	FOREIGN KEY(UName) REFERENCES User(UName),
+	PRIMARY KEY(UName)
+);
