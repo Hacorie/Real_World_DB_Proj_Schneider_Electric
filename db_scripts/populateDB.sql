@@ -46,10 +46,16 @@ INSERT INTO Log
 VALUES
 ();
 
-INSERT INTO User(UName)
+INSERT INTO User(UName, Password)
 VALUES
-("Nobody"), ("Nobody2"), ("Pew"), ("Nathan"), 
-("Tony"), ("Oliver"), ("Uma"), ("Adam");
+("Nobody", "5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8"),
+("Nobody2", "5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8"),
+("Pew", "5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8"),
+("Nathan", "5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8"), 
+("Tony", "5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8"),
+("Oliver", "5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8"),
+("Uma", "5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8"),
+("Adam", "5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8");
 
 INSERT INTO Complexity
 VALUES
