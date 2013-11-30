@@ -53,6 +53,7 @@ function isActive($id) {
 						<li><a href="groups.php">Manage Groups</a></li>
 					</ul>
 				</li>
+				<li><a href="logout.php">Logout</a></li>
 			</ul>
 		</div>
 				</div>
