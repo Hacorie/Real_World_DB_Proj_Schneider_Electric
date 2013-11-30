@@ -22,29 +22,33 @@
 			// Store username in the SESSIONS variable
 			$stmt->bind_result($username);
 			$stmt->fetch();
+			$stmt->close();
 
 			session_start();
 			$_SESSION['username'] = $username;
 
-			// Set a cookie with the username and token
-			$token = uniqid(mt_rand(), true);
-			$expire = time() + 60*60*24*90; // 90 days
-			setcookie('username', $username, $expire);
-			setcookie('token', $token, $expire);
+			// Remember the session
+			if (isset($_POST['remember'])) {
+				// Set a cookie with the username and token
+				$token = uniqid(mt_rand(), true);
+				$expire = time() + 60*60*24*90; // 90 days
 
-			$stmt->close();
 
-			// Add an entry to the log
-			$sql = "INSERT INTO Log_In(UName, Initial_Date, Expire_Date, IP, MName, Token) 
-					VALUES (?, CURRENT_DATE, ADDDATE(CURRENT_DATE, INTERVAL 90 DAY), ?, ?, ?)";
-			$stmt = $db->prepare($sql);
+				setcookie('username', $username, $expire);
+				setcookie('token', $token, $expire);
 
-			//$host = $_SERVER['REMOTE_HOST']
-			$host = gethostbyaddr($_SERVER['REMOTE_ADDR']);
-			
-			$stmt->bind_param("ssss", $username, $_SERVER['REMOTE_ADDR'], $host, $token);
-			$stmt->execute();
-			$stmt->close();
+				// Add an entry to the log
+				$sql = "INSERT INTO Log_In(UName, Initial_Date, Expire_Date, IP, MName, Token) 
+						VALUES (?, CURRENT_DATE, ADDDATE(CURRENT_DATE, INTERVAL 90 DAY), ?, ?, ?)";
+				$stmt = $db->prepare($sql);
+
+				//$host = $_SERVER['REMOTE_HOST']
+				$host = gethostbyaddr($_SERVER['REMOTE_ADDR']);
+				
+				$stmt->bind_param("ssss", $username, $_SERVER['REMOTE_ADDR'], $host, $token);
+				$stmt->execute();
+				$stmt->close();
+			}
 
 			$db->close();
 
@@ -92,10 +96,7 @@
 
 			// Redirect to homepage
 			header('Location: homepage.php');
-		} else {
-			$error = true;
 		}
-
 
 	}
 
@@ -127,14 +128,10 @@
 						Invalid Username or Password
 					</li>
 				<?php } ?>
-				<li>
-					<input type="text" name="username" placeholder="Username" required>
-				</li>
-				<li>
-					<input type="password" name="password" placeholder="Password" required></li>
-				<li>
-					<input type="submit" name="submit" value="Login">
-				</li>
+				<li><input type="text" name="username" placeholder="Username" required /></li>
+				<li><input type="password" name="password" placeholder="Password" required /></li>
+				<li><input type="checkbox" name="remember" checked="checked" /> Remember my login</li>
+				<li><input type="submit" name="submit" value="Login" /></li>
 			</ul>
 		</form>
 	</section>
