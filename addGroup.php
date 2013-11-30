@@ -18,7 +18,7 @@
                                 <li>
                                         Permissions: <br>
                                         Input Tags: <input type="checkbox" name="iTag" value="iTag"><br>
-                                        Revist Tags: <input type="checkbox" name="rTag" value="rTag"><br>
+                                        Revise Tags: <input type="checkbox" name="rTag" value="rTag"><br>
                                         Search Tags: <input type="checkbox" name="sTag" value="sTag"><br>
                                         View Tags: <input type="checkbox" name="vTag" value="vTag"><br>
                                         View Prices: <input type="checkbox" name="vPrice" value="vPrice"><br>
