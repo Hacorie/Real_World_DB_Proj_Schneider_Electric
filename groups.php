@@ -14,7 +14,7 @@
 
     $db = dbConnect();
 
-    $errMsg = [];
+    $errMsg = Array();
 
     // If the form was submitted
     if (isset($_POST['submit'])) {
@@ -38,7 +38,7 @@
 
     // Get a list of groups
     $res = $db->query('SELECT GName from Groups');
-    $groups = [];
+    $groups = Array();
     while ($row = $res->fetch_assoc()) {
         $groups[] = $row;
     }
