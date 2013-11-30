@@ -32,7 +32,7 @@
           </div>
           <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-              <li class="active"><a href="homepage.html">Home</a></li>
+              <li class="active"><a href="homepage.php">Home</a></li>
               <li><a href="search.html">Search</a></li>
               <li><a href="insert.html">Insert</a></li>
               <li><a href="view.html">View</a></li>
@@ -42,7 +42,8 @@
                 <ul class="dropdown-menu">
                   <li><a href="userlog.html">Login Record</a></li>
                   <li class="divider"></li>
-                  <li><a href="usermaint.html">User & Group Maintenence</a></li>
+                  <li><a href="addUser.php">Add User</a></li>
+                  <li><a href="groups.php">Manage Groups</a></li>
                 </ul>
               </li>
             </ul>
