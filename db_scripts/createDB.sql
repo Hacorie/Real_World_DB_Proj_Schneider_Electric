@@ -148,5 +148,5 @@ CREATE TABLE Log_In
 	Token VARCHAR(500),
 
 	FOREIGN KEY(UName) REFERENCES User(UName),
-	PRIMARY KEY(UName)
+	PRIMARY KEY(UName, Initial_Date)
 );

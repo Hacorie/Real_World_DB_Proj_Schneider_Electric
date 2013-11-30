@@ -23,6 +23,20 @@
 			session_start();
 			$_SESSION['username'] = $username;
 
+			$stmt->close();
+
+			// Add an entry to the log
+			$sql = "INSERT INTO Log_In(UName, Initial_Date, Expire_Date, IP, MName, Token) 
+					VALUES (?, CURRENT_DATE, ADDDATE(CURRENT_DATE, INTERVAL 90 DAY), ?, ?, ?)";
+			$ins = $db->prepare($sql);
+
+			$token = 'token';
+			//$host = $_SERVER['REMOTE_HOST']
+			$host = gethostbyaddr($_SERVER['REMOTE_ADDR']);
+			
+			$ins->bind_param("ssss", $username, $_SERVER['REMOTE_ADDR'], $host, $token);
+			$ins->execute();
+
 			// Redirect to homepage
 			header('Location: homepage.php');
 		} else {
