@@ -54,6 +54,21 @@ CREATE TABLE Groups
 	PRIMARY KEY(GName)
 );
 
+DROP TABLE IF EXISTS Permissions;
+CREATE TABLE Permissions
+(
+    GName VARCHAR(30),
+    iTags BOOLEAN,
+    rTags BOOLEAN,
+    sTags BOOLEAN,
+    vTags BOOLEAN,
+    vPrices BOOLEAN,
+
+    FOREIGN KEY(GName) REFERENCES Groups(Gname),
+
+    PRIMARY KEY (GName)
+);
+
 DROP TABLE IF EXISTS Applied_FO_Table;
 CREATE TABLE Applied_FO_Table
 (
