@@ -13,22 +13,17 @@
                 <center><img src ="images/logo.gif"></center><br/>
                 <form name="addUser" action="addUser.php" method="post" accept-charset="utf-8">
                         <ul>
-                                <?php if ($error) { ?>
-                                        <li>
-                                                Invalid Username or Password
-                                        </li>
-                                <?php } ?>
-                                <li><input type="text" name="username" placeholder="Username" required /></li>
-                                <li><input type="password" name="password" placeholder="Password" required /></li>
-                                <li><input type="password" name="confirmPass" placeholder="Retype Password" required /></li>
+                                <li> Username: <input type="text" name="user" placeholder="Username" required /></li>
+                                <li> Password: <input type="password" name="pass" placeholder="Password" required /></li>
+                                <li> Confirm Password: <input type="password" name="confirmPass" placeholder="Retype Password" required /></li>
                                 <li>
-                                        <select name="select">
-                                                <option value="Administrator"> </option>
-                                                <option value="Tag Members"> </option>
-                                                <option value="OE"> </option>
-                                                <option value="User"> </option>
-                                        </select>
-                                Group:
+                                    Group:
+                                    <select name="select">
+                                        <option value="admin"> Administrator </option>
+                                        <option value="tmember"> Tag Members </option>
+                                        <option value="oe"> OE </option>
+                                        <option value="user"> User </option>
+                                    </select>
                                 </li>
                                 <li><input type="submit" name="submit" value="Create User" /></li>
                         </ul>
