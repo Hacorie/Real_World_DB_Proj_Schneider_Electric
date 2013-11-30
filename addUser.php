@@ -17,13 +17,11 @@
                                 <li> Password: <input type="password" name="pass" placeholder="Password" required /></li>
                                 <li> Confirm Password: <input type="password" name="confirmPass" placeholder="Retype Password" required /></li>
                                 <li>
-                                    Group:
-                                    <select name="select">
-                                        <option value="admin"> Administrator </option>
-                                        <option value="tmember"> Tag Members </option>
-                                        <option value="oe"> OE </option>
-                                        <option value="user"> User </option>
-                                    </select>
+                                    Groups:<br>
+                                    Administrator: <input type="checkbox" name="admin" value="admin"><br>
+                                    Tag Member: <input type="checkbox" name="tmember" value="tember"><br>
+                                    OE: <input type="checkbox" name="oe" value="oe"><br>
+                                    User: <input type="checkbox" name="user" value="user">
                                 </li>
                                 <li><input type="submit" name="submit" value="Create User" /></li>
                         </ul>
