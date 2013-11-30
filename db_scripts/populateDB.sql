@@ -65,8 +65,8 @@ INSERT INTO Subcategory
 VALUES
 ("Movies"), ("Books"), ("DVDS");
 
-INSERT INTO Tag(Revision, LTime, CDate, Description, TNotes, PNotes, PExpire, MCost, LCost, 
-				ECost, ICost, APath, SName, CName, UName)
+INSERT INTO Tag(Revision, LeadTime, CreationDate, Description, TagNotes, PriceNotes, PriceExpire, MaterialCost, LaborCost, 
+				EngineeringCost, InstallCost, AttachmentPath, Subcategory, Complexity, Owner)
 VALUES
 (1, "12:20", CURDATE(), "This is a description", "This is Tag Notes", "This is Price Notes", 
 	CURDATE(), 12.50, 13.50, 14.50, NULL, "c:/users/blah/test.txt", "Movies", "A", "Nobody" ),

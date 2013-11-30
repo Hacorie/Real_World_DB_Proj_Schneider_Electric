@@ -2,25 +2,25 @@ DROP TABLE IF EXISTS Tag;
 CREATE TABLE Tag
 (
 	Num INT AUTO_INCREMENT,
-	Revision INT AUTO_INCREMENT,
-	LTime INT,
-	CDate DATE,
-	Description VARCHAR(250),
-	TNotes VARCHAR(100),
-	PNotes VARCHAR(100),
-	PExpire DATE,
-	MCost	DECIMAL(7,3),
-	LCost 	DECIMAL(7,3),
-	ECost	DECIMAL(7,3),
-	ICost	DECIMAL(7,3),
-	APath	VARCHAR(100),	
-	SName 	VARCHAR(30),
-	CName	VARCHAR(30),
-	UName	VARCHAR(30),
+	Revision INT,
+	LeadTime INT,
+	CreationDate DATE,
+	Description VARCHAR(500),
+	TagNotes VARCHAR(500),
+	PriceNotes VARCHAR(500),
+	PriceExpire DATE,
+	MaterialCost DECIMAL(7,3),
+	LaborCost DECIMAL(7,3),
+	EngineeringCost DECIMAL(7,3),
+	InstallCost DECIMAL(7,3),
+	AttachmentPath VARCHAR(100),	
+	Subcategory  VARCHAR(30),
+	Complexity VARCHAR(30),
+	Owner VARCHAR(30),
 
-	FOREIGN KEY(Sname) REFERENCES Subcategory(SName),
-	FOREIGN KEY(CName) REFERENCES Complexity(CName),
-	FOREIGN KEY(UName)  REFERENCES User(UName),
+	FOREIGN KEY(Subcategory) REFERENCES Subcategory(SName),
+	FOREIGN KEY(Complexity) REFERENCES Complexity(CName),
+	FOREIGN KEY(Owner)  REFERENCES User(UName),
 
 	Primary Key(Num, Revision)
 );
@@ -52,21 +52,6 @@ CREATE TABLE Groups
 (
 	GName VARCHAR(30),
 	PRIMARY KEY(GName)
-);
-
-DROP TABLE IF EXISTS Permissions;
-CREATE TABLE Permissions
-(
-    GName VARCHAR(30),
-    iTags BOOLEAN,
-    rTags BOOLEAN,
-    sTags BOOLEAN,
-    vTags BOOLEAN,
-    vPrices BOOLEAN,
-
-    FOREIGN KEY(GName) REFERENCES Groups(Gname),
-
-    PRIMARY KEY (GName)
 );
 
 DROP TABLE IF EXISTS Applied_FO_Table;
