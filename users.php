@@ -3,7 +3,7 @@
 	require_once('include/db.php');
 
 	session_start();
-	$title = 'Add User';
+	$title = 'Manage Users';
 	$admin = true;
 
 	$db = dbConnect();
@@ -13,7 +13,7 @@
 
 	$errMsg = Array();
 
-	// If the form was submitted
+	// If the add form was submitted
 	if (isset($_POST['submit'])) {
 		if ($_POST['password'] != $_POST['confirmPassword']) {
 			$errMsg[] = 'Passwords do not match.';
@@ -52,12 +52,52 @@
 
 	}
 
+	if (isset($_POST['delete'])) {
+
+		$sql = "DELETE FROM Member_Of WHERE Username = ?";
+		$stmt = $db->prepare($sql);
+	
+		$stmt->bind_param("s", $_POST['UName']);
+		$stmt->execute();
+
+		$sql = "DELETE FROM User WHERE UName = ?";
+		$stmt = $db->prepare($sql);
+	
+		$stmt->bind_param("s", $_POST['UName']);
+		$stmt->execute();
+
+		if ($db->affected_rows == 1) {
+			$flash = $_POST['UName'] . ' was removed!';
+		} else {
+			$errMsg[] = 'Error deleting User';
+			$errMsg[] = $db->error;
+		}
+		$stmt->close();
+
+
+	}
+
 	$error = join('<br />', $errMsg);
+
+	// Get a list of groups
+	$users = dbQuery($db, 'SELECT UName FROM User');
 
 ?>
 
 <?php include "include/header.php"; ?>
-<form name="addUser" action="addUser.php" method="post" accept-charset="utf-8">
+<ul>
+	<?php foreach($users as $user) { ?>
+		<li>
+			<?php echo $user['UName']; ?>
+			<form action="users.php" method="post">
+				<input type="hidden" name="UName" value="<?php echo $user['UName'] ?>" />
+				<input type="submit" name="delete" value="Delete" />
+			</form>
+		</li>
+	<?php } ?>
+</ul>
+
+<form name="addUser" action="users.php" method="post" accept-charset="utf-8">
 	<ul>
 		<li> Username: <input type="text" name="username" placeholder="Username" required /></li>
 		<li> Password: <input type="password" name="password" placeholder="Password" required /></li>
