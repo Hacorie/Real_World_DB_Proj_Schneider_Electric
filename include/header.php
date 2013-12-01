@@ -47,7 +47,7 @@ function isActive($id) {
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">Administration <b class="caret"></b></a>
 					<ul class="dropdown-menu">
-						<li><a href="userlog.html">Login Record</a></li>
+						<li><a href="viewLog.php">Login Record</a></li>
 						<li class="divider"></li>
 						<li><a href="addUser.php">Add User</a></li>
 						<li><a href="groups.php">Manage Groups</a></li>
