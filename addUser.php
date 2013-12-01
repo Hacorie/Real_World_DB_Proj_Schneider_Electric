@@ -39,6 +39,8 @@
 				foreach ($grp as $g) {
 					$stmt->execute();
 				}
+
+				$flash = "User added!";
 			} else {
 				$errMsg[] = 'Error adding User';
 				$errMsg[] = $db->error;
@@ -48,17 +50,15 @@
 
 		}
 
-
 	}
+
+	$error = join('<br />', $errMsg);
 
 ?>
 
 <?php include "include/header.php"; ?>
 <form name="addUser" action="addUser.php" method="post" accept-charset="utf-8">
 	<ul>
-		<?php if (!empty($errMsg)) { ?>
-			<li><?php echo join('<br />', $errMsg); ?></li>
-		<?php } ?>
 		<li> Username: <input type="text" name="username" placeholder="Username" required /></li>
 		<li> Password: <input type="password" name="password" placeholder="Password" required /></li>
 		<li> Confirm Password: <input type="password" name="confirmPassword" placeholder="Retype Password" required /></li>

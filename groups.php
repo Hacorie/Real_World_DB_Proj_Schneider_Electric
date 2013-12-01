@@ -21,7 +21,7 @@
 		$stmt->execute();
 
 		if ($db->affected_rows == 1) {
-
+			$flash = $_POST['GName'] . ' group was added!';
 		} else {
 			$errMsg[] = 'Error adding Group';
 			$errMsg[] = $db->error;
@@ -40,7 +40,7 @@
 		$stmt->execute();
 
 		if ($db->affected_rows == 1) {
-
+			$flash = $_POST['GName'] . ' group was deleted!';
 		} else {
 			$errMsg[] = 'Error deleting Group';
 			$errMsg[] = $db->error;
@@ -50,9 +50,11 @@
 
 	}
 
+	$error = join('<br />', $errMsg);
+
 	// Get a list of groups
-	$groups = dbQuery($db, 'SELECT Groups.GName, COUNT(*) AS Count
-			FROM Groups INNER JOIN Member_Of ON Groups.GName = Member_Of.GName
+	$groups = dbQuery($db, 'SELECT Groups.GName, COUNT(DISTINCT Member_Of.Username) AS Count
+			FROM Groups LEFT JOIN Member_Of ON Groups.GName = Member_Of.GName
 			GROUP BY Groups.GName
 			ORDER BY Groups.GName');
 
@@ -76,9 +78,6 @@
 
 <form name="addGroup" action="groups.php" method="post" accept-charset="utf-8">
 		<ul>
-			<?php if (!empty($errMsg)) { ?>
-				<li><?php echo join('<br />', $errMsg); ?></li>
-			<?php } ?>
 			<li>Group Name: <input type="text" name="GName" placeholder="Group Name" required /></li>
 			<li><input type="submit" name="add" value="Create Group" /></li>
 		</ul>
