@@ -55,6 +55,7 @@ function isAdmin() {
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">Administration <b class="caret"></b></a>
 					<ul class="dropdown-menu">
 						<li <?php isActive('View Log');?>><a href="viewLog.php">Login Record</a></li>
+						<li <?php isActive('Edit Multipliers');?>><a href="editMults.php">Edit Multipliers</a></li>
 						<li class="divider"></li>
 						<li <?php isActive('Manage Users');?>><a href="users.php">Manage Users</a></li>
 						<li <?php isActive('Manage Groups');?>><a href="groups.php">Manage Groups</a></li>
