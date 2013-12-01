@@ -40,9 +40,9 @@ function isActive($id) {
 		<div class="collapse navbar-collapse">
 			<ul class="nav navbar-nav">
 				<li <?php isActive('Home');?>><a href="homepage.php">Home</a></li>
-				<li><a href="search.html">Search</a></li>
+				<li <?php isActive('Add Tag');?>><a href="searchTag.php">Search</a></li>
 				<li <?php isActive('Add Tag');?>><a href="addTag.php">Insert</a></li>
-				<li><a href="view.html">View</a></li>
+				<li <?php isActive('Add Tag');?>><a href="viewTag.php">View</a></li>
 				<!-- ADMIN LIST ITEMS -->
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">Administration <b class="caret"></b></a>

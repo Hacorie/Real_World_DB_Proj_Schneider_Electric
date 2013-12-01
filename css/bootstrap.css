@@ -8,6 +8,31 @@
 
 /*! normalize.css v2.1.3 | MIT License | git.io/normalize */
 
+/*	search table css 	*/
+
+#tags_table {
+	width: 100%;
+}
+
+#th_rev, #th_hvl, #th_cc4, #th_mclad, #th_mvcc, #th_spec{
+	width: 4%;
+	text-align: center;
+}
+
+#th_install{
+	text-align: right;
+}
+
+#th_desc{
+	width: 18%;
+}
+
+#th_tag{
+	8%;
+}
+
+/* 	end search table css 	*/
+
 article,
 aside,
 details,
