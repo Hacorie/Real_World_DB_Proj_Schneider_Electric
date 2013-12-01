@@ -79,7 +79,11 @@
 				<tbody>
 				<?php foreach($searchResults as $tag) { ?>
 					<tr>
-						<th><?php echo $tag['Num']; ?></th>
+						<th>
+							<a href="viewTag.php?tag=<?php echo $tag['Num']; ?>&rev=<?php echo $tag['Revision'];?>">
+								<?php echo $tag['Num']; ?>
+							</a>
+						</th>
 						<th><?php echo $tag['Revision']; ?></th>
 						<th><?php echo $tag['CreationDate']; ?></th>
 						<th><?php echo $tag['Description']; ?></th>
