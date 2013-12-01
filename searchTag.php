@@ -11,19 +11,29 @@
 
 		$db = dbConnect();
 
-		$sql = "SELECT * FROM Tag WHERE Num = ? OR Description LIKE ?";
+		$sql = "SELECT Num, Revision, CreationDate, Description, Subcategory, TagNotes, InstallCost, PriceNotes, Owner 
+			FROM Tag WHERE Num = ? OR Description LIKE ?";
 		$stmt = $db->prepare($sql);
 		$query = $_GET['query'];
 		$like = '%' . $query . '%';
 		$stmt->bind_param("is", $query, $like);
 
 		$stmt->execute();
-
-		$result = $stmt->get_result();
+		$stmt->bind_result($num, $revision, $creationDate, $description, $category, $notes, $cost, $priceNotes, $owner);
 
 		$searchResults = array();
-		while ($row = $result->fetch_assoc()) {
-			$searchResults[] = $row;
+		while ($stmt->fetch()) {
+			$searchResults[] = array(
+				'Num' => $num,
+				'Revision' => $revision,
+				'CreationDate' => $creationDate,
+				'Description' => $description,
+				'Subcategory' => $category,
+				'Notes' => $notes,
+				'InstallCost' => $cost,
+				'PriceNotes' => $priceNotes,
+				'Owner' => $owner
+				);
 		}
 
 	}
