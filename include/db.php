@@ -15,4 +15,13 @@
 		return $db;
 	}
 	
+	function dbQuery($db, $query) {
+		$res = $db->query($query);
+		$rows = Array();
+		while ($row = $res->fetch_assoc()) {
+			$rows[] = $row;
+		}
+
+		return $rows;
+	}
 ?>

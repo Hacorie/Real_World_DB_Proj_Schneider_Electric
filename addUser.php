@@ -8,11 +8,7 @@
 	$db = dbConnect();
 
 	// Get a list of groups
-	$res = $db->query('SELECT GName from Groups');
-	$groups = Array();
-	while ($row = $res->fetch_assoc()) {
-		$groups[] = $row;
-	}
+	$groups = dbQuery($db, 'SELECT GName from Groups');
 
 	$errMsg = Array();
 
