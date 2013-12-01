@@ -6,7 +6,7 @@
 ?>
 
 <?php include "include/header.php"; ?>  
-<table>
+<table border="1">
 	<tr>
 		<th> ID </th>
 		<th> User Name </th>
