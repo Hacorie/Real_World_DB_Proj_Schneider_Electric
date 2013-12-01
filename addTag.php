@@ -1,7 +1,49 @@
 <?php
-	
+		
+	require_once('include/db.php');
+
 	session_start();
 	$title = 'Add Tag';
+
+	if (isset($_POST['submit'])) {
+
+		$db = dbConnect();
+
+		// Add an entry to the log_in table
+		$sql = "INSERT INTO Tag(Revision, LeadTime, CreationDate, Description, TagNotes, 
+				PriceNotes, PriceExpire, MaterialCost, LaborCost, EngineeringCost, 
+				InstallCost, Subcategory, Complexity, Owner)
+				VALUES (1, ?, CURRENT_DATE, ?, ?, ?, ADDDATE(CURRENT_DATE, INTERVAL ? MONTH), ?, ?, ?, ?, ?, ?, ?)";
+		$stmt = $db->prepare($sql);
+		$totalCost = $_POST['mCost'] + $_POST['labor'] + $_POST['engineering'];
+		$stmt->bind_param("isssiddddsss", 
+			$_POST['leadTime'],
+			$_POST['desc'],
+			$_POST['tagNotes'],
+			$_POST['priceNotes'],
+			$_POST['priceExpiration'],
+			$_POST['mCost'],
+			$_POST['labor'],
+			$_POST['engineering'],
+			$totalCost,
+			$_POST['sCategory'],
+			$_POST['complexity'],
+			$_SESSION['username']);
+
+		$stmt->execute();
+
+		if ($db->affected_rows == 1) {
+			// Success
+			
+		} else {
+			$errMsg[] = 'Error adding Tag';
+			$errMsg[] = $db->error;
+		}
+
+		$stmt->close();
+
+	}
+
 
 ?>
 
