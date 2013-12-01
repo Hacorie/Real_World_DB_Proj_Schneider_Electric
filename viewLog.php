@@ -37,21 +37,14 @@
 		<th> IP Address </th>
 		<th> Machine Name </th>
 	</tr>
-	<?php foreach($groups as $group) { ?>
+	<?php foreach($log as $item) { ?>
 		<tr>
-			<td> <?php echo $group['UID'] ?> </td> 
-			<td> <?php echo $group['UName'] ?> </td> 
-			<td> <?php echo $group['LTime'] ?> </td> 
-			<td> <?php echo $group['IP'] ?> </td> 
-			<td> <?php echo $group['MName'] ?> </td> 
+			<td> <?php echo $item['UID'] ?> </td> 
+			<td> <?php echo $item['UName'] ?> </td> 
+			<td> <?php echo $item['LTime'] ?> </td> 
+			<td> <?php echo $item['IP'] ?> </td> 
+			<td> <?php echo $item['MName'] ?> </td> 
 	<?php } ?>
-	<tr>
-		<td>UID</td>
-		<td>UName</td>
-		<td>LTime</td>
-		<td>IP</td>
-		<td>MName</td>
-	</tr>
 </table>
 
 <?php include "include/footer.php"; ?>
