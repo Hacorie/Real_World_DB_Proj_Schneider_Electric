@@ -1,6 +1,35 @@
-<?php
+<?
+
+	require_once('include/db.php');
+
 	session_start();
 	$title = 'Search a Tag';
+
+	echo "<br /><Br /><Br />";
+
+	if (isset($_GET['query'])) {
+
+		$db = dbConnect();
+
+		$sql = "SELECT * FROM Tag WHERE Num = ? OR Description LIKE ?";
+		$stmt = $db->prepare($sql);
+		$query = $_GET['query'];
+		$like = '%' . $query . '%';
+		$stmt->bind_param("is", $query, $like);
+
+		$stmt->execute();
+
+		$result = $stmt->get_result();
+
+		$searchResults = array();
+		while ($row = $result->fetch_assoc()) {
+			$searchResults[] = $row;
+		}
+
+	}
+
+
+
 ?>
 
 <?php include "include/header.php"; ?>
@@ -10,84 +39,58 @@
 
 </div>
 	<div class="large-3">
-		<input type="text" id="userSearch" placeholder="Enter a Tag" />
+		<form action="searchTag.php" method="GET">
+			<input type="text" name="query" id="userSearch" placeholder="Enter a Tag" <?php if (isset($_GET['query'])) { echo 'value="'.$_GET['query'].'"'; } ?> />
+			<input type="submit" name="search" value="Search" />
 	</div>
 	<div class="lead">
 		<div class="alert-box success radius" id="userResult" style="display:none;"></div>
 		<div class="alert-box alert radius" id="userError" style="display:none;"></div>
 	</div>
-	<div>
-	<table class="table table-bordered" id="tags_table">
-	<thead>
-		<tr>
-			<th id="th_tag">Tag</th>
-			<th id="th_rev">Rev</th>
-			<th id="th_date">Date</th>
-			<th id="th_desc">Description</th>
-			<th id="th_subcat">Sub Cat.</th>
-			<th id="th_hvl">HVL</th>
-			<th id="th_cc4">HVL CC4</th>
-			<th id="th_mclad">Metal Clad</th>
-			<th id="th_mvcc"> MV MCC</th>
-			<th id="th_spec">Special Items</th>
-			<th id="th_nodes">Notes</th>
-			<th id="th_install">Install Cost</th>
-			<th id="th_pricenote">Price Note</th>
-			<th id="th_creator">Created By</th>
-		</tr>
-	</thead>
-	<tbody>
-	<!--- Fill in with PHP Results --->
-	<tr class="active">
-		<th>07-5804</th>
-		<th>0</th>
-		<th>05/02/2013</th>
-		<th>This Tag is for a MiCom is for a "Single or Three Phase High Impedance Differential</th>
-		<th>Relays</th>
-		<th>Yes</th>
-		<th>Yes</th>
-		<th>Yes</th>
-		<th>Yes</th>
-		<th>No</th>
-		<th>Q2C #33215451 - Nova Chemicals</th>
-		<th>$750.76</th>
-		<th>Price is per each</th>
-		<th>D. White</th>
-	</tr>
-	<tr>
-		<th>07-5804</th>
-		<th>0</th>
-		<th>05/02/2013</th>
-		<th>This Tag is for a MiCom is for a "Single or Three Phase High Impedance Differential</th>
-		<th>Relays</th>
-		<th>Yes</th>
-		<th>Yes</th>
-		<th>Yes</th>
-		<th>Yes</th>
-		<th>No</th>
-		<th>Q2C #33215451 - Nova Chemicals</th>
-		<th>$750.76</th>
-		<th>Price is per each</th>
-		<th>D. White</th>
-	</tr>
-	<tr class="active">
-		<th>07-5804</th>
-		<th>0</th>
-		<th>05/02/2013</th>
-		<th>This Tag is for a MiCom is for a "Single or Three Phase High Impedance Differential</th>
-		<th>Relays</th>
-		<th>Yes</th>
-		<th>Yes</th>
-		<th>Yes</th>
-		<th>Yes</th>
-		<th>No</th>
-		<th>Q2C #33215451 - Nova Chemicals</th>
-		<th>$750.76</th>
-		<th>Price is per each</th>
-		<th>D. White</th>
-	</tr>
-	</tbody>
-	</table>
+	<?php if (!empty($searchResults)) { ?>
+		<div>
+			<table class="table table-bordered" id="tags_table">
+				<thead>
+					<tr>
+						<th id="th_tag">Tag</th>
+						<th id="th_rev">Rev</th>
+						<th id="th_date">Date</th>
+						<th id="th_desc">Description</th>
+						<th id="th_subcat">Sub Cat.</th>
+						<th id="th_hvl">HVL</th>
+						<th id="th_cc4">HVL CC4</th>
+						<th id="th_mclad">Metal Clad</th>
+						<th id="th_mvcc"> MV MCC</th>
+						<th id="th_spec">Special Items</th>
+						<th id="th_nodes">Notes</th>
+						<th id="th_install">Install Cost</th>
+						<th id="th_pricenote">Price Note</th>
+						<th id="th_creator">Created By</th>
+					</tr>
+				</thead>
+				<tbody>
+				<?php foreach($searchResults as $tag) { ?>
+					<tr>
+						<th><?php echo $tag['Num']; ?></th>
+						<th><?php echo $tag['Revision']; ?></th>
+						<th><?php echo $tag['CreationDate']; ?></th>
+						<th><?php echo $tag['Description']; ?></th>
+						<th><?php echo $tag['Subcategory']; ?></th>
+						<th></th>
+						<th></th>
+						<th></th>
+						<th></th>
+						<th></th>
+						<th><?php echo $tag['Notes']; ?></th>
+						<th><?php echo $tag['InstallCost']; ?></th>
+						<th><?php echo $tag['PriceNotes']; ?></th>
+						<th><?php echo $tag['Owner']; ?></th>
+					</tr>
+				<?php } ?>
+				</tbody>
+			</table>
+		</div>
+	<?php } ?>
 </div>
 
 <?php include "include/footer.php"; ?>
