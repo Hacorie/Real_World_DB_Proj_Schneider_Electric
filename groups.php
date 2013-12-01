@@ -50,7 +50,10 @@
 	}
 
 	// Get a list of groups
-	$groups = dbQuery($db, 'SELECT GName from Groups');
+	$groups = dbQuery($db, 'SELECT Groups.GName, COUNT(*) AS Count
+			FROM Groups INNER JOIN Member_Of ON Groups.GName = Member_Of.GName
+			GROUP BY Groups.GName
+			ORDER BY Groups.GName');
 
 ?>
 
@@ -59,7 +62,7 @@
 <ul>
 	<?php foreach($groups as $group) { ?>
 		<li>
-			<?php echo $group['GName'] ?>
+			<?php echo $group['GName']; ?> (<?php echo $group['Count']; ?>)
 			<?php if (!in_array($group['GName'], $specialGroups)) { ?>
 				<form action="groups.php" method="post">
 					<input type="hidden" name="GName" value="<?php echo $group['GName'] ?>" />
