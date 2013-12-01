@@ -33,6 +33,56 @@
 
 /* 	end search table css 	*/
 
+
+/*	add tag table css 		*/
+
+#section_wrapper{
+	width: 100%;
+	overflow: hidden;
+}
+
+#section1{
+	float: left;
+	width: 60%;
+	margin-bottom: 20px;
+	margin-right:	10px;
+}
+
+#section2{
+	clear: left;
+	margin-bottom: 100px;
+}
+
+#section3{
+	float: right;
+	border-collapse: collapse;
+}
+#addTagDiv{
+	width: 100%;
+}
+
+#addTag_tagNum, #addTag_date, #addTag_leadTime, #addTag_rev{
+	width: 100%;
+}
+
+#pricingTable{
+	border-collapse: collapse;
+}
+
+#tagTable{
+	width: 100%;
+}
+
+#tagDescCell{
+	width: 100%;
+}
+
+#productLineCell{
+	width: 70%;
+}
+
+/*	end add tag table css 	*/
+
 article,
 aside,
 details,
