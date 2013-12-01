@@ -1,6 +1,8 @@
 <?php
 	require_once('include/db.php');
 
+	$specialGroups = array("Administrator", "OE", "Tag Members", "User");
+
 	session_start();
 	$title = 'Manage Groups';
 
@@ -28,7 +30,7 @@
 
 	}
 
-	if (isset($_POST['delete'])) {
+	if (isset($_POST['delete']) && !in_array($_POST['GName'], $specialGroups)) {
 
 		$sql = "DELETE FROM Groups WHERE GName = ?";
 		$stmt = $db->prepare($sql);
@@ -62,10 +64,12 @@
 	<?php foreach($groups as $group) { ?>
 		<li>
 			<?php echo $group['GName'] ?>
-			<form action="groups.php" method="post">
-				<input type="hidden" name="GName" value="<?php echo $group['GName'] ?>" />
-				<input type="submit" name="delete" value="Delete" />
-			</form>
+			<?php if (!in_array($group['GName'], $specialGroups)) { ?>
+				<form action="groups.php" method="post">
+					<input type="hidden" name="GName" value="<?php echo $group['GName'] ?>" />
+					<input type="submit" name="delete" value="Delete" />
+				</form>
+			<?php } ?>
 		</li>
 	<?php } ?>
 </ul>
