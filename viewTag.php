@@ -1,6 +1,6 @@
 <?php
 	session_start();
-	$title = 'Home';
+	$title = 'View Tag';
 ?>
 
 <?php include "include/header.php"; ?>

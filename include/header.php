@@ -7,6 +7,13 @@ function isActive($id) {
 	}
 }
 
+function isAdmin() {
+	global $admin;
+	if (isset($admin) && $admin) {
+		echo " active";
+	}
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -40,17 +47,17 @@ function isActive($id) {
 		<div class="collapse navbar-collapse">
 			<ul class="nav navbar-nav">
 				<li <?php isActive('Home');?>><a href="homepage.php">Home</a></li>
-				<li <?php isActive('Add Tag');?>><a href="searchTag.php">Search</a></li>
+				<li <?php isActive('Search Tags');?>><a href="searchTag.php">Search</a></li>
 				<li <?php isActive('Add Tag');?>><a href="addTag.php">Insert</a></li>
-				<li <?php isActive('Add Tag');?>><a href="viewTag.php">View</a></li>
+				<li <?php isActive('View Tag');?>><a href="viewTag.php">View</a></li>
 				<!-- ADMIN LIST ITEMS -->
-				<li class="dropdown">
+				<li class="dropdown <?php isAdmin(); ?>">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">Administration <b class="caret"></b></a>
 					<ul class="dropdown-menu">
-						<li><a href="viewLog.php">Login Record</a></li>
+						<li <?php isActive('View Log');?>><a href="viewLog.php">Login Record</a></li>
 						<li class="divider"></li>
-						<li><a href="addUser.php">Add User</a></li>
-						<li><a href="groups.php">Manage Groups</a></li>
+						<li <?php isActive('Add User');?>><a href="addUser.php">Add User</a></li>
+						<li <?php isActive('Manage Groups');?>><a href="groups.php">Manage Groups</a></li>
 					</ul>
 				</li>
 				<li><a href="logout.php">Logout</a></li>

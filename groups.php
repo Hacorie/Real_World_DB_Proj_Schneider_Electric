@@ -5,6 +5,7 @@
 
 	session_start();
 	$title = 'Manage Groups';
+	$admin = true;
 
 	$db = dbConnect();
 

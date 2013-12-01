@@ -3,9 +3,7 @@
 	require_once('include/db.php');
 
 	session_start();
-	$title = 'Search a Tag';
-
-	echo "<br /><Br /><Br />";
+	$title = 'Search Tags';
 
 	if (isset($_GET['query'])) {
 

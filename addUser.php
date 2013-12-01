@@ -4,6 +4,7 @@
 
 	session_start();
 	$title = 'Add User';
+	$admin = true;
 
 	$db = dbConnect();
 
