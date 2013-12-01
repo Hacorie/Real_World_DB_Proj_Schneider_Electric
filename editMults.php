@@ -7,9 +7,38 @@
 
 	$db = dbConnect();
 
-	$country = dbQuery($db, 'SELECT * from Country');
+	if (isset($_POST['submitCountry'])) {
+		$countries = dbQuery($db, 'SELECT * from Country');
+		$sql = "UPDATE Country SET Multiplier = ? WHERE CName = ?";
+		$stmt = $db->prepare($sql);
+		
+		$stmt->bind_param("ds", $value, $country);
+		foreach ($countries as $entry) {
+			$country = $entry['CName'];
+			if (array_key_exists($country, $_POST)) {
+				$value = $_POST[$country];
+				$stmt->execute();
+			}
+		}
+	}
 
-	$res = $db->query('SELECT * from Product_Type');
+	if (isset($_POST['submitParts'])) {
+		$parts = dbQuery($db, 'SELECT * from Product_Type');
+		$sql = "UPDATE Product_Type SET Multiplier = ? WHERE PName = ?";
+		$stmt = $db->prepare($sql);
+		
+		$stmt->bind_param("ds", $value, $part);
+		foreach ($parts as $entry) {
+			$part = $entry['PName'];
+			if (array_key_exists($part, $_POST)) {
+				$value = $_POST[$part];
+				$stmt->execute();
+			}
+		}
+	}
+
+
+	$country = dbQuery($db, 'SELECT * from Country');
 	$parts = dbQuery($db, 'SELECT * from Product_Type')
 
 ?>
@@ -25,8 +54,8 @@
 
 			<?php foreach($country as $item) { ?>
 			<tr>
-				<td> <input type="text" name="country" placeholder="Country Name" value="<?php echo $item['CName'] ?>" required /> </td>
-				<td> <input type="text" name="cmultiplier" placeholder="Multiplier" value="<?php echo $item['Multiplier'] ?>" required /> </td>
+				<td><?php echo $item['CName'] ?></td>
+				<td><input type="text" name="<?php echo $item['CName'] ?>" value="<?php echo $item['Multiplier'] ?>" /></td>
 			</tr>
 			<?php } ?>
 		</table>
@@ -44,13 +73,13 @@
 			</tr>
 			<?php foreach($parts as $item) { ?>
 			<tr>
-				<td> <input type="text" name="part" placeholder="Part Name" value="<?php echo $item['PName'] ?>" required /> </td>
-				<td> <input type="text" name="pmultiplier" placeholder="Multiplier" value="<?php echo $item['Multiplier'] ?>" required /> </td>
+				<td><?php echo $item['PName'] ?></td>
+				<td><input type="text" name="<?php echo $item['PName'] ?>" value="<?php echo $item['Multiplier'] ?>" /></td>
 			</tr>
 			<?php } ?>
 		</table>
 		
-		<li><input type="submit" name="submitCountry" value="Edit Country Multipliers" /></li>
+		<li><input type="submit" name="submitParts" value="Edit Part Multipliers" /></li>
 	</ul>
 </form>
 <?php include "include/footer.php"; ?>
