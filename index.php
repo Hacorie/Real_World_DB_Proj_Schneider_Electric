@@ -1,5 +1,7 @@
 <?php
 
+	require_once('include/db.php');
+
 	// Should be called after the user has been verified
 	// Stores username in Session variable and adds entry to database log
 	// Redirects to the homepage
@@ -24,23 +26,6 @@
 		// Redirect to homepage
 		header('Location: homepage.php');
 	}
-
-	// Generate a unique token for authentication
-	function generateToken() {
-		return uniqid(mt_rand(), true);
-	}
-
-	function dbConnect() {
-		$db = new mysqli("mysql.cs.mtsu.edu", "ncr2g", "donthackmebro", "ncr2g");
-		
-		if ($db->connect_errno) {
-			echo "Failed to connect to MySQL: " . $db->connect_error;
-			exit(1);
-		}
-
-		return $db;
-	}
-
 
 	$error = false;
 

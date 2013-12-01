@@ -1,14 +1,5 @@
 <?php
-	function dbConnect() {
-		$db = new mysqli("mysql.cs.mtsu.edu", "ncr2g", "donthackmebro", "ncr2g");
-		
-		if ($db->connect_errno) {
-			echo "Failed to connect to MySQL: " . $db->connect_error;
-			exit(1);
-		}
-
-		return $db;
-	}
+	require_once('include/db.php');
 
 	session_start();
 	$title = 'Manage Groups';
