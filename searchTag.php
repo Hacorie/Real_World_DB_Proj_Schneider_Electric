@@ -10,7 +10,12 @@
 		$db = dbConnect();
 
 		$sql = "SELECT Num, Revision, CreationDate, Description, Subcategory, TagNotes, InstallCost, PriceNotes, Owner 
-			FROM Tag WHERE Num = ? OR Description LIKE ?";
+			FROM Tag AS T WHERE (Num = ? OR Description LIKE ?)";
+
+		if (!(isset($_GET['old']) && $_GET['old'] == 'yes')) {
+			$sql .= " AND Revision = (SELECT MAX(Revision) FROM Tag WHERE Num = T.Num)";
+		}
+
 		$stmt = $db->prepare($sql);
 		$query = $_GET['query'];
 		$like = '%' . $query . '%';
@@ -49,6 +54,7 @@
 	<div class="large-3">
 		<form action="searchTag.php" method="GET">
 			<input type="text" name="query" id="userSearch" placeholder="Enter a Tag" <?php if (isset($_GET['query'])) { echo 'value="'.$_GET['query'].'"'; } ?> />
+			<input type="checkbox" name="old" value="yes" <?php if (isset($_GET['old'])) { echo 'checked="checked"'; } ?> /> Include Older Revisions?
 			<input type="submit" name="search" value="Search" />
 	</div>
 	<div class="lead">
