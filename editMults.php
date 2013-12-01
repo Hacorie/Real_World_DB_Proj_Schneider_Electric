@@ -35,7 +35,7 @@
 <?php include "include/header.php"; ?>  
 <form name="editCountryMults" action="editMults.php" method="post" accept-charset="utf-8">
 	<ul> Country Multipliers <br>
-		<table>
+		<table border="1">
 			<tr>
 				<th> Country </th>
 				<th> Multiplier</th>
@@ -55,7 +55,7 @@
 <br><br>
 <form name="editPartMults" action="editMults.php" method="post" accept-charset="utf-8">
 	<ul> Part Multipliers <br>
-		<table>
+		<table border = "1">
 			<tr>
 				<th> Part </th>
 				<th> Multiplier</th>
