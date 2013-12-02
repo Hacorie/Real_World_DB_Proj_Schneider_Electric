@@ -91,7 +91,7 @@
 </table>
 
 <div class="page-header">
-	<h1>Create a User</h1>
+	<h1>Create a Group</h1>
 </div> 
 
 <form name="addGroup" action="groups.php" method="post" accept-charset="utf-8">
