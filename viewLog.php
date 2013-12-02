@@ -21,8 +21,11 @@
 
 ?>
 
-<?php include "include/header.php"; ?>  
-<table border="1">
+<?php include "include/header.php"; ?> 
+<div class="page-header">
+	<h1>Login Record</h1>
+</div>  
+<table class="table table-bordered table-striped">
 	<tr>
 		<th> ID </th>
 		<th> User Name </th>
