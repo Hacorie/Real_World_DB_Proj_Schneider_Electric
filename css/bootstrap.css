@@ -21,6 +21,23 @@
 	margin-left: auto;
 }
 
+#attachmentList{
+	clear: right;
+}
+
+#attachmentCheckbox{
+	float: left;
+	margin-right: 10px;
+}
+
+#attachmentButton{
+	margin-top: 10px;
+	margin-bottom: 10px;
+	width: 100%;
+	float: right;
+	clear: right;
+}
+
 /*	search table css 	*/
 
 #tags_table {

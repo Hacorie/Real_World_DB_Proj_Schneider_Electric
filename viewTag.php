@@ -185,10 +185,18 @@
 		<tr><td>&nbsp;</td></tr>
 		<tr><td>&nbsp;</td></tr>
 	</table>
-	<input type="checkbox" name="vehicle" value="Obsolete" />Click Box to Make TAG Permanently Obsolete<br />
-	<button class="btn btn-primary" id="viewTag_button">Make Revision</button>
-	<button class="btn" id="viewTag_button">Go to Datasheet</button><br />
-	<button class="btn" id="viewTag_button">Review Attachments</button><br />
+	<button class="btn btn-danger" id="attachmentButton">Click Box to Make TAG Permanently Obsolete</button><br />
+	<button class="btn btn-primary" id="attachmentButton">Make Revision</button><br /><br />
+	<hr style="clear: both"/>
+	<div id="attachmentList">
+	<strong>Attachments:</strong>
+	<ul style="list-style-type: none">	
+		<li>Attachment1.pdf<input type="checkbox" value="MVMCC" id="attachmentCheckbox" /></li>
+		<li>Attachment2.txt<input type="checkbox" value="MVMCC" id="attachmentCheckbox" /></li>
+		<li>TheNRealEngine-eBook.pdf<input type="checkbox" value="MVMCC" id="attachmentCheckbox" /></li>
+		<!-- Add PHP to retrieve list of attachments and their respective links --->
+	</ul>
+	</div>
 	</div>	
 	<div id="section2">
 		<strong>Product Lines Tag May be Applied To:</strong>

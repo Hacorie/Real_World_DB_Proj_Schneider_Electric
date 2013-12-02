@@ -93,10 +93,21 @@
 		<tr><td>&nbsp;</td></tr>
 		<tr><td>&nbsp;</td></tr>
 	</table>
-	<input type="checkbox" name="vehicle" value="Obsolete" />Click Box to Make TAG Permanently Obsolete<br />
-	<button class="btn btn-success" id="addTag_button">Save</button><br />
-	<button class="btn" id="addTag_button">Attachments</button><br />
-	<button class="btn" id="addTag_backButton">Back</button><br />
+	<button class="btn btn-danger" id="attachmentButton">Click Box to Make TAG Permanently Obsolete</button><br />
+	<button class="btn btn-success" id="attachmentButton">Save</button><br /><br />
+	<hr style="clear: both"/>
+	<div id="attachmentList">
+	<strong>Attachments:</strong>
+	<ul style="list-style-type: none">	
+		<li>Attachment1.pdf<input type="checkbox" value="MVMCC" id="attachmentCheckbox" /></li>
+		<li>Attachment2.txt<input type="checkbox" value="MVMCC" id="attachmentCheckbox" /></li>
+		<li>TheNRealEngine-eBook.pdf<input type="checkbox" value="MVMCC" id="attachmentCheckbox" /></li>
+		<!-- Add PHP to retrieve list of attachments and their respective links --->
+	</ul><br />
+	<form>
+		<input type="file" name="file" id="file"><br />
+		<button class="btn btn-success" id="viewTag_button">Add</button></form><button class="btn btn-danger" id="viewTag_button">Delete</button><br />
+	</div>
 	</div>	
 	<div id="section2">
 		<strong>Product Lines Tag May be Applied To:</strong>
