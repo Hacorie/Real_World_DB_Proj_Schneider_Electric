@@ -37,7 +37,7 @@
 /*	add tag table css 		*/
 
 #section_wrapper{
-	width: 100%;
+	width: 90%;
 	overflow: hidden;
 }
 
@@ -57,6 +57,13 @@
 	float: right;
 	border-collapse: collapse;
 }
+
+#section4{
+	clear: left;
+	width: 50%;
+	margin-bottom: 100px;
+}
+
 #addTagDiv{
 	width: 100%;
 }
@@ -81,7 +88,39 @@
 	width: 70%;
 }
 
+#addTag_button {
+	margin-top: 10px;
+	margin-bottom: 10px;
+	width: 65%;
+	float: right;
+	clear: right;
+}
+
+#addTag_backButton {
+	margin-top: 150px;
+	margin-bottom: 10px;
+	width: 65%;
+	float: right;
+	clear: right;
+}
+
+#addTag_checkbox{
+	float: left;
+	margin-left: 20px;
+	margin-right: 20px;
+}
+
 /*	end add tag table css 	*/
+
+#viewTag_button{
+	margin-top: 10px;
+	margin-bottom: 10px;
+	margin-right: 5px;
+	width: 48%;
+	overflow: hidden;
+	float: left;
+	clear: right;
+}
 
 article,
 aside,

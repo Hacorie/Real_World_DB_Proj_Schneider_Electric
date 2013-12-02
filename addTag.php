@@ -3,7 +3,7 @@
 	require_once('include/db.php');
 
 	session_start();
-	$title = 'Add Tag';
+	$title = 'Add / Insert a Tag';
 
 	if (isset($_POST['submit'])) {
 
@@ -127,19 +127,20 @@
 		</tr>
 		<tr>
 			<td>Price Expires:</td>
-			<td><input type="text" placeholder="XX/XX/XXXX" /></td>
+			<td><input type="text" placeholder="##/##/####" /></td>
 		</tr>
 		<tr><td>&nbsp;</td></tr>
 		<tr><td>&nbsp;</td></tr>
 		<tr><td>&nbsp;</td></tr>
 	</table>
 	<input type="checkbox" name="vehicle" value="Obsolete" />Click Box to Make TAG Permanently Obsolete<br />
-	<button class="btn btn-success">Save</button><br />
-	<button class="btn">Attachments</button><br />
+	<button class="btn btn-success" id="addTag_button">Save</button><br />
+	<button class="btn" id="addTag_button">Attachments</button><br />
+	<button class="btn" id="addTag_backButton">Back</button><br />
 	</div>	
 	<div id="section2">
 		<strong>Product Lines Tag May be Applied To:</strong>
-	<table width=50%>
+	<table width=60%>
 		<tr>
 			<td></td>
 			<td>USA$</td>
@@ -172,7 +173,46 @@
 		</tr>
 	</table>
 	</div>
+	<div id="section4">
+	<div id="addTag_checkbox"><input id="addTag_checkbox" type="checkbox" name="quote" value="Quote" />Quote </div>
+	<div id="addTag_checkbox"><input id="addTag_checkbox" type="checkbox" name="fOrder" value="Factory Order" />Factory Order</div>
+	<br />
+	<table class="table-bordered" width=100%>
+	<tr>
+		<th>Tag Number</th>
+		<th>FO Number Applied To</th>
+		<th>Notes</th>
+	</tr>
+	<tr>
+		<td><input type="text" /></td>
+		<td><input type="text" /></td>
+		<td><input type="text" /></td>
+	</tr>
+	<tr>
+		<td><input type="text" /></td>
+		<td><input type="text" /></td>
+		<td><input type="text" /></td>
+	</tr>
+	<tr>
+		<td><input type="text" /></td>
+		<td><input type="text" /></td>
+		<td><input type="text" /></td>
+	</tr>
+	<tr>
+		<td><input type="text" /></td>
+		<td><input type="text" /></td>
+		<td><input type="text" /></td>
+	</tr>
+	<tr>
+		<td><input type="text" /></td>
+		<td><input type="text" /></td>
+		<td><input type="text" /></td>
+	</tr>
+	</table>
+	<button class="btn" id="addTag_button">Apply FO</button><br />
+	</div>
 </div>
+<!--- OLD BACKEND CODE
 	<ul>
 		<li> Description: <input type="text" name="desc" placeholder="Tag Description" required /></li>
 		<li> Tag Notes: <input type="text" name="tagNotes" placeholder="Tag Notes" required /></li>
@@ -188,5 +228,6 @@
 		
 		<li><input type="submit" name="submit" value="Create Tag" /></li>
 	</ul>
+-->
 </form>
 <?php include "include/footer.php"; ?>
