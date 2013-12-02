@@ -1,4 +1,3 @@
-DROP TABLE Type;
 DROP TABLE Per_Hour;
 DROP TABLE Country;
 DROP TABLE Product_Type;
@@ -11,3 +10,4 @@ DROP TABLE User;
 DROP TABLE Complexity;
 DROP TABLE Subcategory;
 DROP TABLE Tag;
+DROP TABLE Attachment;
