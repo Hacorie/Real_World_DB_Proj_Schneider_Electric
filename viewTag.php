@@ -103,7 +103,7 @@
 		<td><input id="addTag_tagNum" type="text" name="tagNum" value="<?php echo $tag['Num']; ?>" /></td>
 		<td><input id="addTag_rev" type="text" name="rev" value="<?php echo $tag['Revision']; ?>" /></td>
 		<td><input id="addTag_date" type="text" name="date" value="<?php echo $tag['CreationDate']; ?>" /></td>
-        <td>
+<!--        <td>
             <select id="addTag_sCategory" name="sCategory">
                 <?php $arr = $tag['subCatArr']; foreach($arr as $item) { ?>
                     <option value="<?php echo $item['SName'] ?>" <?php if($item['SName'] == $tag['Subcategory']){ echo "selected";}?>> <?php echo $item['SName'] ?>  </option>
@@ -111,7 +111,7 @@
             </select>
         </td>
 
-        <td>
+  DO  NOT DELETE THIS!      <td>
             <select id="addTag_leadTime" name="complexity">
                 <?php $arr = $tag['compArr']; foreach($arr as $item) { ?>
                     <option value="<?php echo $item['CName'] ?>" <?php if($item['CName'] == $tag['Complexity']){ echo "selected";}?>> <?php echo $item['CName'] ?>  </option>
@@ -119,8 +119,9 @@
             </select>
 
         </td>
-		<!--<td><input id="addTag_sCategory" type="text" name="sCategory" value="<?php echo $tag['Subcategory']; ?>" /></td>
-		<td><input id="addTag_complexity" type="text" name="complexity" value="<?php echo $tag['Complexity']; ?>" /></td> -->
+-->
+		<td><input id="addTag_sCategory" type="text" name="sCategory" value="<?php echo $tag['Subcategory']; ?>" /></td>
+		<td><input id="addTag_complexity" type="text" name="complexity" value="<?php echo $tag['Complexity']; ?>" /></td>
         <td><input id="addTag_leadTime"type="text" name="leadTime" value="<?php echo $tag['LeadTime']; ?>" /></td>
 	</tr>
 	</table>
