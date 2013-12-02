@@ -1,29 +1,30 @@
-DROP TABLE IF EXISTS Tag;
-CREATE TABLE Tag
+DROP TABLE IF EXISTS User;
+CREATE TABLE User
 (
-	Num INT AUTO_INCREMENT,
-	Revision INT,
-	LeadTime INT,
-	CreationDate DATE,
-	Description VARCHAR(500),
-	TagNotes VARCHAR(500),
-	PriceNotes VARCHAR(500),
-	PriceExpire DATE,
-	MaterialCost DECIMAL(7,3),
-	LaborCost DECIMAL(7,3),
-	EngineeringCost DECIMAL(7,3),
-	InstallCost DECIMAL(7,3),
-	AttachmentPath VARCHAR(100),	
-	Subcategory  VARCHAR(30),
-	Complexity VARCHAR(30),
-	Owner VARCHAR(30),
-
-	FOREIGN KEY(Subcategory) REFERENCES Subcategory(SName),
-	FOREIGN KEY(Complexity) REFERENCES Complexity(CName),
-	FOREIGN KEY(Owner)  REFERENCES User(UName),
-
-	Primary Key(Num, Revision)
+	UName VARCHAR(30),
+	Password VARCHAR(40),
+	PRIMARY KEY (UName)
 );
+
+DROP TABLE IF EXISTS Groups;
+CREATE TABLE Groups
+(
+	GName VARCHAR(30),
+	PRIMARY KEY(GName)
+);
+
+DROP TABLE IF EXISTS Member_Of;
+CREATE TABLE Member_Of
+(
+	UName VARCHAR(30),
+	GName VARCHAR(30),
+
+	FOREIGN KEY(UName) REFERENCES User(UName),
+	FOREIGN KEY(GName) REFERENCES Groups(GName),
+
+	PRIMARY KEY(UName, GName)
+);
+
 
 DROP TABLE IF EXISTS Subcategory;
 CREATE TABLE Subcategory
@@ -39,19 +40,41 @@ CREATE TABLE Complexity
 	PRIMARY KEY(CName)
 );
 
-DROP TABLE IF EXISTS User;
-CREATE TABLE User
+DROP TABLE IF EXISTS Tag;
+CREATE TABLE Tag
 (
-	UName VARCHAR(30),
-	Password VARCHAR(40),
-	PRIMARY KEY (UName)
+	Num INT AUTO_INCREMENT,
+	Revision INT,
+	LeadTime INT,
+	CreationDate DATE,
+	Description VARCHAR(500),
+	TagNotes VARCHAR(500),
+	PriceNotes VARCHAR(500),
+	PriceExpire DATE,
+	MaterialCost DECIMAL(7,3),
+	LaborCost DECIMAL(7,3),
+	EngineeringCost DECIMAL(7,3),
+	InstallCost DECIMAL(7,3),
+	Subcategory  VARCHAR(30),
+	Complexity VARCHAR(30),
+	Owner VARCHAR(30),
+
+	FOREIGN KEY(Subcategory) REFERENCES Subcategory(SName),
+	FOREIGN KEY(Complexity) REFERENCES Complexity(CName),
+	FOREIGN KEY(Owner)  REFERENCES User(UName),
+
+	Primary Key(Num, Revision)
 );
 
-DROP TABLE IF EXISTS Groups;
-CREATE TABLE Groups
+DROP TABLE IF EXISTS Attachment;
+CREATE TABLE Attachment
 (
-	GName VARCHAR(30),
-	PRIMARY KEY(GName)
+	Tag INT,
+	Name VARCHAR(30),
+	Path VARCHAR(200),
+
+	FOREIGN KEY(Tag) REFERENCES Tag(Num),
+	PRIMARY KEY(Tag, Name)
 );
 
 DROP TABLE IF EXISTS Applied_FO_Table;
@@ -86,17 +109,7 @@ CREATE TABLE Country
 	PRIMARY KEY(CName)
 );
 
-DROP TABLE IF EXISTS Member_Of;
-CREATE TABLE Member_Of
-(
-	Username VARCHAR(30),
-	GName VARCHAR(30),
 
-	FOREIGN KEY(Username) REFERENCES User(UName),
-	FOREIGN KEY(GName) REFERENCES Groups(GName),
-
-	PRIMARY KEY(Username, GName)
-);
 
 DROP TABLE IF EXISTS Type;
 CREATE TABLE Type
