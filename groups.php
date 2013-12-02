@@ -63,25 +63,42 @@
 
 
 <?php include "include/header.php"; ?>
-<ul>
+
+<div class="page-header">
+	<h1>Delete a Group</h1>
+</div> 
+
+<table class="table table-bordered table-striped" style="width: 25%">
+<tr>
+	<th><strong>Group Name</strong></th>
+	<th><strong>Count</strong></th>
+	<th><strong>Action</strong></th>
+</tr>
 	<?php foreach($groups as $group) { ?>
-		<li>
-			<?php echo $group['GName']; ?> (<?php echo $group['Count']; ?>)
+		<tr>
+			<td><?php echo $group['GName']; ?> </td><td>(<?php echo $group['Count']; ?>)</td>
 			<?php if (!in_array($group['GName'], $specialGroups)) { ?>
 				<form action="groups.php" method="post">
 					<input type="hidden" name="GName" value="<?php echo $group['GName'] ?>" />
-					<input type="submit" name="delete" value="Delete" />
+					<td><button type="submit" name="delete" class="btn btn-xs btn-danger">Delete</button></td>
 				</form>
+			<?php } else { ?>
+				<td><button class="btn btn-xs">Disabled</button></td>
+
 			<?php } ?>
-		</li>
+		</tr>
 	<?php } ?>
-</ul>
+</table>
+
+<div class="page-header">
+	<h1>Create a User</h1>
+</div> 
 
 <form name="addGroup" action="groups.php" method="post" accept-charset="utf-8">
-		<ul>
-			<li>Group Name: <input type="text" name="GName" placeholder="Group Name" required /></li>
-			<li><input type="submit" name="add" value="Create Group" /></li>
-		</ul>
+		<table class="table table-bordered table-striped" style="width: 25%">
+			<tr><td>Group Name: </td><td><input type="text" name="GName" placeholder="Group Name" required /></tr>
+		</table>
+		<button type="submit" name="add" class="btn btn-success">Create User</button>
 </form>
 
 <?php include "include/footer.php"; ?>

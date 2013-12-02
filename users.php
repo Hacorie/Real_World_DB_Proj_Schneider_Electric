@@ -123,6 +123,6 @@
 			<?php } ?>
 		</td></tr>
 </table>
-		<button type="submit" name="submit" class="btn btn btn-success">Create User</button>
+		<button type="submit" name="submit" class="btn btn-success">Create User</button>
 </form>
 <?php include "include/footer.php"; ?>
