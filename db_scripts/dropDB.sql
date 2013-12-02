@@ -10,3 +10,4 @@ DROP TABLE User;
 DROP TABLE Complexity;
 DROP TABLE Subcategory;
 DROP TABLE Tag;
+DROP TABLE Attachment;
