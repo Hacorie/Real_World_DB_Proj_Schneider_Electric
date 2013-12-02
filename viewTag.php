@@ -73,6 +73,8 @@
 			$products[$product['PName']] = $product['Multiplier'];
 		}
 
+		$attachments = dbQuery($db, "SELECT * FROM Attachment WHERE Tag = '" . intval($_GET['tag']) . "'");
+
 	}
 
 
@@ -190,11 +192,10 @@
 	<hr style="clear: both"/>
 	<div id="attachmentList">
 	<strong>Attachments:</strong>
-	<ul style="list-style-type: none">	
-		<li>Attachment1.pdf<input type="checkbox" value="MVMCC" id="attachmentCheckbox" /></li>
-		<li>Attachment2.txt<input type="checkbox" value="MVMCC" id="attachmentCheckbox" /></li>
-		<li>TheNRealEngine-eBook.pdf<input type="checkbox" value="MVMCC" id="attachmentCheckbox" /></li>
-		<!-- Add PHP to retrieve list of attachments and their respective links --->
+	<ul style="list-style-type: none">
+		<?php if (!empty($attachments)) { foreach($attachments as $attachment) { ?>
+			<li><input type="checkbox" value="<?php echo $attachment['Name']; ?>" /> <?php echo $attachment['Name']; ?></li>
+		<?php } } ?>
 	</ul>
 	</div>
 	</div>	
