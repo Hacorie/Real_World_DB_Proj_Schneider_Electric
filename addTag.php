@@ -71,7 +71,7 @@
 	</tr>
 	<tr>
 		<td><input id="addTag_tagNum" type="text" name="tagNum" placeholder="XX-XXXX" required /></td>
-		<td><input id="addTag_rev" type="text" name="rev" placeholder="#" required /></td>
+		<td><input id="addTag_rev" type="text" name="rev" placeholder="1" content="1" required /></td>
 		<td><input id="addTag_date" type="text" name="date" placeholder="##/##/####" required /></td>
         <td>
             <select id="addTag_sCategory" name="sCategory">
@@ -152,21 +152,9 @@
 		<tr><td>&nbsp;</td></tr>
 		<tr><td>&nbsp;</td></tr>
 	</table>
-	<button class="btn btn-danger" id="attachmentButton">Click Box to Make TAG Permanently Obsolete</button><br />
+	<br />
 	<button class="btn btn-success" id="attachmentButton">Save</button><br /><br />
 	<hr style="clear: both"/>
-	<div id="attachmentList">
-	<strong>Attachments:</strong>
-	<ul style="list-style-type: none">	
-		<li>Attachment1.pdf<input type="checkbox" value="MVMCC" id="attachmentCheckbox" /></li>
-		<li>Attachment2.txt<input type="checkbox" value="MVMCC" id="attachmentCheckbox" /></li>
-		<li>TheNRealEngine-eBook.pdf<input type="checkbox" value="MVMCC" id="attachmentCheckbox" /></li>
-		<!-- Add PHP to retrieve list of attachments and their respective links --->
-	</ul><br />
-	<form>
-		<input type="file" name="file" id="file"><br />
-		<button class="btn btn-success" id="viewTag_button">Add</button></form><button class="btn btn-danger" id="viewTag_button">Delete</button><br />
-	</div>
 	</div>	
 	<div id="section2">
 		<strong>Product Lines Tag May be Applied To:</strong>
@@ -203,45 +191,7 @@
 		</tr>
 	</table>
 	</div>
-	<div id="section4">
-	<div id="addTag_checkbox"><input id="addTag_checkbox" type="checkbox" name="quote" value="Quote" />Quote </div>
-	<div id="addTag_checkbox"><input id="addTag_checkbox" type="checkbox" name="fOrder" value="Factory Order" />Factory Order</div>
-	<br />
-	<table class="table-bordered" width=100%>
-	<tr>
-		<th>Tag Number</th>
-		<th>FO Number Applied To</th>
-		<th>Notes</th>
-	</tr>
-	<tr>
-		<td><input type="text" /></td>
-		<td><input type="text" /></td>
-		<td><input type="text" /></td>
-	</tr>
-	<tr>
-		<td><input type="text" /></td>
-		<td><input type="text" /></td>
-		<td><input type="text" /></td>
-	</tr>
-	<tr>
-		<td><input type="text" /></td>
-		<td><input type="text" /></td>
-		<td><input type="text" /></td>
-	</tr>
-	<tr>
-		<td><input type="text" /></td>
-		<td><input type="text" /></td>
-		<td><input type="text" /></td>
-	</tr>
-	<tr>
-		<td><input type="text" /></td>
-		<td><input type="text" /></td>
-		<td><input type="text" /></td>
-	</tr>
-	</table>
-	<button class="btn" id="addTag_button">Apply FO</button><br />
 	</div>
-</div>
 <!--- OLD BACKEND CODE
 	<ul>
 		<li> Description: <input type="text" name="desc" placeholder="Tag Description" required /></li>

@@ -235,9 +235,16 @@
 	</table>
 	</div>
 	<div id="section4">
-	<div id="addTag_checkbox"><input id="addTag_checkbox" type="checkbox" name="quote" value="Quote" />Quote </div>
-	<div id="addTag_checkbox"><input id="addTag_checkbox" type="checkbox" name="fOrder" value="Factory Order" />Factory Order</div>
-	<br />
+
+<!-- Nav tabs -->
+<ul class="nav nav-tabs nav-success">
+  <li><a href="#quote" data-toggle="tab">Quote</a></li>
+  <li><a href="#factoryorder" data-toggle="tab">Factory Order</a></li>
+</ul>
+
+<!-- Tab panes -->
+<div class="tab-content" style="margin-bottom: 100px" >
+  <div class="tab-pane active" id="quote">
 	<table class="table-bordered" width=100%>
 	<tr>
 		<th>Tag Number</th>
@@ -245,32 +252,28 @@
 		<th>Notes</th>
 	</tr>
 	<tr>
-		<td><input type="text" /></td>
-		<td><input type="text" /></td>
-		<td><input type="text" /></td>
-	</tr>
-	<tr>
-		<td><input type="text" /></td>
-		<td><input type="text" /></td>
-		<td><input type="text" /></td>
-	</tr>
-	<tr>
-		<td><input type="text" /></td>
-		<td><input type="text" /></td>
-		<td><input type="text" /></td>
-	</tr>
-	<tr>
-		<td><input type="text" /></td>
-		<td><input type="text" /></td>
-		<td><input type="text" /></td>
-	</tr>
-	<tr>
-		<td><input type="text" /></td>
-		<td><input type="text" /></td>
-		<td><input type="text" /></td>
+		<td>Hi</td>
+		<td>Chyna</td>
+		<td>BOOM</td>
 	</tr>
 	</table>
-	</div>
+  </div>
+  <div class="tab-pane" id="factoryorder">
+	<table class="table-bordered" width=100%>
+	<tr>
+		<th>Tag Number</th>
+		<th>FO Number Applied To</th>
+		<th>Notes</th>
+	</tr>
+	<tr>
+		<td>Hello</td>
+		<td>Shawn Michaels</td>
+		<td>ROASTED</td>
+	</tr>
+	</table>
+  </div>
+
+</div>
 </div>
 </form>
 

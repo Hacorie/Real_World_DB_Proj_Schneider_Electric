@@ -38,6 +38,12 @@
 	clear: right;
 }
 
+#appliedFO_addButton{
+	width: 25%;
+	float: right;
+	margin-top: 5px;
+}
+
 /*	search table css 	*/
 
 #tags_table {
@@ -80,7 +86,7 @@
 
 #section2{
 	clear: left;
-	margin-bottom: 100px;
+	margin-bottom: 145px;
 }
 
 #section3{
@@ -91,7 +97,6 @@
 #section4{
 	clear: left;
 	width: 50%;
-	margin-bottom: 100px;
 }
 
 #addTagDiv{
