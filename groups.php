@@ -53,7 +53,7 @@
 	$error = join('<br />', $errMsg);
 
 	// Get a list of groups
-	$groups = dbQuery($db, 'SELECT Groups.GName, COUNT(DISTINCT Member_Of.Username) AS Count
+	$groups = dbQuery($db, 'SELECT Groups.GName, COUNT(DISTINCT Member_Of.UName) AS Count
 			FROM Groups LEFT JOIN Member_Of ON Groups.GName = Member_Of.GName
 			GROUP BY Groups.GName
 			ORDER BY Groups.GName');

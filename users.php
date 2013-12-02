@@ -30,7 +30,7 @@
 
 			if ($db->affected_rows == 1) {
 				// Add groups
-				$sql = "INSERT INTO Member_Of(Username, GName) VALUES (?, ?)";
+				$sql = "INSERT INTO Member_Of(UName, GName) VALUES (?, ?)";
 				$stmt = $db->prepare($sql);
 				
 				$stmt->bind_param("ss", $_POST['username'], $g);
@@ -54,7 +54,7 @@
 
 	if (isset($_POST['delete'])) {
 
-		$sql = "DELETE FROM Member_Of WHERE Username = ?";
+		$sql = "DELETE FROM Member_Of WHERE UName = ?";
 		$stmt = $db->prepare($sql);
 	
 		$stmt->bind_param("s", $_POST['UName']);
