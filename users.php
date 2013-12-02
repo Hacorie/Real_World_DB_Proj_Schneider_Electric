@@ -86,30 +86,43 @@
 ?>
 
 <?php include "include/header.php"; ?>
-<ul>
+
+<div class="page-header">
+	<h1>Delete a User</h1>
+</div> 
+
+<table class="table table-bordered table-striped" style="width: 15%">
+<tr>
+	<th><strong>Users</strong></th>
+	<th><strong>Action</strong></th>
+</tr>
 	<?php foreach($users as $user) { ?>
-		<li>
+		<tr><td>
 			<?php echo $user['UName']; ?>
 			<form action="users.php" method="post">
-				<input type="hidden" name="UName" value="<?php echo $user['UName'] ?>" />
-				<input type="submit" name="delete" value="Delete" />
+				<input type="hidden" name="UName" value="<?php echo $user['UName'] ?>" /></td><td>
+				<button type="submit" name="delete" class="btn btn-xs btn-danger">Delete</button>
 			</form>
-		</li>
+		</td></tr>
 	<?php } ?>
-</ul>
+</table>
+
+<div class="page-header">
+	<h1>Add a User</h1>
+</div> 
 
 <form name="addUser" action="users.php" method="post" accept-charset="utf-8">
-	<ul>
-		<li> Username: <input type="text" name="username" placeholder="Username" required /></li>
-		<li> Password: <input type="password" name="password" placeholder="Password" required /></li>
-		<li> Confirm Password: <input type="password" name="confirmPassword" placeholder="Retype Password" required /></li>
-		<li>
-			Groups:<br>
+<table class="table table-bordered table-striped" style="width: 15%">
+		<tr> <td> Username:</td><td> <input type="text" name="username" placeholder="Username" required /></td></tr>
+		<tr> <td> Password:</td><td> <input type="password" name="password" placeholder="Password" required /></td></tr>
+		<tr> <td> Confirm Password:</td><td> <input type="password" name="confirmPassword" placeholder="Retype Password" required /></td></tr>
+		<tr> <td>
+			Groups:<br></td><td>
 			<?php foreach($groups as $group) { ?>
 				<input type="checkbox" name="group[]" value="<?php echo $group['GName'] ?>" /> <?php echo $group['GName'] ?><br />
 			<?php } ?>
-		</li>
-		<li><input type="submit" name="submit" value="Create User" /></li>
-	</ul>
+		</td></tr>
+</table>
+		<button type="submit" name="submit" class="btn btn btn-success">Create User</button>
 </form>
 <?php include "include/footer.php"; ?>
