@@ -64,7 +64,7 @@
 	</div>
 	<?php if (!empty($searchResults)) { ?>
 		<div>
-			<table class="table table-bordered" id="tags_table">
+			<table class="table table-bordered table-striped" id="tags_table">
 				<thead>
 					<tr>
 						<th id="th_tag">Tag</th>
