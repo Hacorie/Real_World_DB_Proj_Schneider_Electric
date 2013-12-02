@@ -5,22 +5,24 @@
 	session_start();
 	gateway(0);
 	$title = 'View Tag';
-
+	
 	// Verify that a valid tag was specified
 	if (isset($_GET['tag']) && isset($_GET['rev'])) {
 
 
 		// Get the tag
 		$db = dbConnect();
-		$stmt = $db->prepare("SELECT Num, Revision, CreationDate, Description, Subcategory, TagNotes, InstallCost, PriceNotes, Owner
-		 FROM Tag WHERE Num = ? AND Revision = ?");
+		$stmt = $db->prepare("SELECT Num, Revision, CreationDate, Description, Subcategory, Complexity, PriceExpire,
+			TagNotes, InstallCost, PriceNotes, Owner, LeadTime, MaterialCost, LaborCost, EngineeringCost
+			FROM Tag WHERE Num = ? AND Revision = ?");
 		$stmt->bind_param("ii", $_GET['tag'], $_GET['rev']);
 		$stmt->execute();
 		$stmt->store_result();
 
 		if ($stmt->num_rows > 0) {
 
-			$stmt->bind_result($num, $revision, $creationDate, $description, $category, $notes, $cost, $priceNotes, $owner);
+			$stmt->bind_result($num, $revision, $creationDate, $description, $category, $complexity, $priceExpire,
+				$notes, $cost, $priceNotes, $owner, $leadTime, $mat, $labor, $eng);
 
 			$stmt->fetch();
 			$stmt->close();
@@ -31,10 +33,16 @@
 					'CreationDate' => $creationDate,
 					'Description' => $description,
 					'Subcategory' => $category,
+					'Complexity' => $complexity,
+					'PriceExpire' => $priceExpire,
 					'Notes' => $notes,
 					'InstallCost' => $cost,
 					'PriceNotes' => $priceNotes,
-					'Owner' => $owner
+					'Owner' => $owner,
+					'LeadTime' => $leadTime,
+					'MaterialCost' => $mat,
+					'LaborCost' => $labor,
+					'EngineeringCost' => $eng
 					);
 
 			
@@ -52,7 +60,6 @@
 <?php include "include/header.php"; ?>
 
 <?php if (isset($tag)) { ?>
-	<?php print_r($tag); ?>
 
 <div class="page-header">
 	<h1>View a Tag</h1>
@@ -70,12 +77,12 @@
 		<td>Lead Time</td>
 	</tr>
 	<tr>
-		<td><input id="addTag_tagNum" type="text" name="tagNum" placeholder="XX-XXXX" required /></td>
-		<td><input id="addTag_rev" type="text" name="rev" placeholder="#" required /></td>
-		<td><input id="addTag_date" type="text" name="date" placeholder="##/##/####" required /></td>
-		<td><input id="addTag_sCategory" type="text" name="sCategory" placeholder="Sub Category Name (pull from list of sub categories in DB)" required /></td>
-		<td><input id="addTag_complexity" type="text" name="complexity" placeholder="Drop Down for Complexities" required /></td>
-		<td><input id="addTag_leadTime"type="text" name="leadTime" placeholder="Lead Time" required /></td>
+		<td><input id="addTag_tagNum" type="text" name="tagNum" value="<?php echo $tag['Num']; ?>" /></td>
+		<td><input id="addTag_rev" type="text" name="rev" value="<?php echo $tag['Revision']; ?>" /></td>
+		<td><input id="addTag_date" type="text" name="date" value="<?php echo $tag['CreationDate']; ?>" /></td>
+		<td><input id="addTag_sCategory" type="text" name="sCategory" value="<?php echo $tag['Subcategory']; ?>" /></td>
+		<td><input id="addTag_complexity" type="text" name="complexity" value="<?php echo $tag['Complexity']; ?>" /></td>
+		<td><input id="addTag_leadTime"type="text" name="leadTime" value="<?php echo $tag['LeadTime']; ?>" /></td>
 	</tr>
 	</table>
 	<table id="tagTable">
@@ -83,7 +90,7 @@
 		<td>Tag Description:</td>
 	</tr>
 	<tr>
-		<td ><input id="tagDescCell" type="text" name="desc" placeholder="Enter a Tag Description" required /></td>
+		<td ><input id="tagDescCell" type="text" name="desc" value="<?php echo $tag['Description']; ?>" /></td>
 	</tr>
 	</table>
 	<table id="tagTable">
@@ -91,7 +98,7 @@
 		<td>Tag Notes:</td>
 	</tr>
 	<tr>
-		<td ><input id="tagDescCell"type="text" name="tagNotes" placeholder="Enter Tag Notes" required /></td>
+		<td ><input id="tagDescCell"type="text" name="tagNotes" value="<?php echo $tag['Notes']; ?>" /></td>
 	</tr>
 	</table>
 	<table id="tagTable">
@@ -99,7 +106,7 @@
 		<td>Price Note:</td>
 	</tr>
 	<tr>
-		<td ><input id="tagDescCell" type="text" name="priceNotes" placeholder="Enter Price Notes" required /></td>
+		<td ><input id="tagDescCell" type="text" name="priceNotes" value="<?php echo $tag['PriceNotes']; ?>" /></td>
 	</tr>
 	</table>
 	</div>
@@ -109,30 +116,30 @@
 	<table id="pricingTable">
 		<tr>
 			<td>Material:</td>
-			<td><input type="text" placeholder="$X.XX" /></td>
+			<td><input type="text" value="<?php echo $tag['MaterialCost']; ?>" /></td>
 		</tr>
 		<tr>
 			<td>Labor:</td>
-			<td><input type="text" placeholder="$X.XX" /></td>
+			<td><input type="text" value="<?php echo $tag['LaborCost']; ?>" /></td>
 		</tr>
 		<tr style="border-bottom: 1px solid #000;">
 			<td>Engineering:</td>
-			<td><input type="text" placeholder="$X.XX" /></td>
+			<td><input type="text" value="<?php echo $tag['EngineeringCost']; ?>" /></td>
 		</tr>
 		<tr>
 			<td>Initial Cost:</td>
-			<td><input type="text" placeholder="$SUM" /></td>
+			<td><input type="text" value="<?php echo $tag['InstallCost']; ?>" /></td>
 		</tr>
 		<tr><td>&nbsp;</td></tr>
 		<tr><td>&nbsp;</td></tr>
 		<tr><td>&nbsp;</td></tr>
 		<tr>
 			<td>TAG Member:</td>
-			<td><input type="text" placeholder="Name" /></td>
+			<td><input type="text" value="<?php echo $tag['Owner']; ?>" /></td>
 		</tr>
 		<tr>
 			<td>Price Expires:</td>
-			<td><input type="text" placeholder="##/##/####" /></td>
+			<td><input type="text" value="<?php echo $tag['PriceExpire']; ?>" /></td>
 		</tr>
 		<tr><td>&nbsp;</td></tr>
 		<tr><td>&nbsp;</td></tr>
