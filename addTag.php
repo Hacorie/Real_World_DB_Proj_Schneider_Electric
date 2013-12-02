@@ -45,6 +45,10 @@
 
 	}
 
+    $db = dbConnect(); 
+    $complexity = dbQuery($db, 'SELECT CName FROM Complexity');
+    $subCategory = dbQuery($db, 'SELECT SName FROM Subcategory');
+    
 
 ?>
 
@@ -69,8 +73,22 @@
 		<td><input id="addTag_tagNum" type="text" name="tagNum" placeholder="XX-XXXX" required /></td>
 		<td><input id="addTag_rev" type="text" name="rev" placeholder="#" required /></td>
 		<td><input id="addTag_date" type="text" name="date" placeholder="##/##/####" required /></td>
-		<td><input id="addTag_sCategory" type="text" name="sCategory" placeholder="Sub Category Name (pull from list of sub categories in DB)" required /></td>
-		<td><input id="addTag_complexity" type="text" name="complexity" placeholder="Drop Down for Complexities" required /></td>
+        <td>
+            <select id="addTag_sCategory" name="sCategory">
+                <?php foreach($subCategory as $category) { ?>
+                    <option value="<?php echo $category['SName'] ?>" > <?php echo $category['SName'] ?> </option>
+                <?php } ?>
+            </select>
+        </td>
+        <td>
+            <select id="addTag_complexity" name="complexity">
+                <?php foreach($complexity as $item) { ?>
+                    <option value="<?php echo $item['CName'] ?>" > <?php echo $item['CName'] ?> </option>
+                <?php } ?>
+            </select>
+        </td>
+		<!--<td><input id="addTag_sCategory" type="text" name="sCategory" placeholder="Sub Category Name (pull from list of sub categories in DB)" required /></td>
+		<td><input id="addTag_complexity" type="text" name="complexity" placeholder="Drop Down for Complexities" required /></td>-->
 		<td><input id="addTag_leadTime"type="text" name="leadTime" placeholder="Lead Time" required /></td>
 	</tr>
 	</table>
