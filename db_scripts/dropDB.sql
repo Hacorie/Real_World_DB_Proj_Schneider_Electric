@@ -1,4 +1,3 @@
-DROP TABLE Type;
 DROP TABLE Per_Hour;
 DROP TABLE Country;
 DROP TABLE Product_Type;

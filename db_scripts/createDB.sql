@@ -58,6 +58,10 @@ CREATE TABLE Tag
 	Subcategory  VARCHAR(30),
 	Complexity VARCHAR(30),
 	Owner VARCHAR(30),
+	HVL BOOLEAN,
+	HVLCC BOOLEAN,
+	MC BOOLEAN,
+	MVMCC BOOLEAN,
 
 	FOREIGN KEY(Subcategory) REFERENCES Subcategory(SName),
 	FOREIGN KEY(Complexity) REFERENCES Complexity(CName),
@@ -107,23 +111,6 @@ CREATE TABLE Country
 	Multiplier Decimal(7,3),
 
 	PRIMARY KEY(CName)
-);
-
-
-
-DROP TABLE IF EXISTS Type;
-CREATE TABLE Type
-(
-	PName VARCHAR(30),
-	CName VARCHAR(30),
-	Num INT,
-	Revision INT,
-
-	FOREIGN KEY(Num, Revision) REFERENCES Tag(Num, Revision),
-	FOREIGN KEY(PName) REFERENCES Product_Type(PName),
-	FOREIGN KEY(CName) REFERENCES Country(CName),
-
-	PRIMARY KEY (PName, CName, Num, Revision)
 );
 
 DROP TABLE IF EXISTS Log;
