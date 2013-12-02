@@ -278,7 +278,36 @@
 </form>
 
 <?php } else { ?>
-	Try searching for a tag.
+<div class="page-header">
+	<h1>View a Tag</h1>
+</div>
+
+<div>
+			<table class="table table-bordered table-striped" id="tags_table">
+				<thead>
+					<tr>
+						<th id="th_tag">Tag</th>
+						<th id="th_rev">Rev</th>
+						<th id="th_date">Date</th>
+						<th id="th_desc">Description</th>
+						<th id="th_subcat">Sub Cat.</th>
+						<th id="th_hvl">HVL</th>
+						<th id="th_cc4">HVL CC4</th>
+						<th id="th_mclad">Metal Clad</th>
+						<th id="th_mvcc"> MV MCC</th>
+						<th id="th_spec">Special Items</th>
+						<th id="th_nodes">Notes</th>
+						<th id="th_install">Install Cost</th>
+						<th id="th_pricenote">Price Note</th>
+						<th id="th_creator">Created By</th>
+					</tr>
+				</thead>
+				<tbody>
+				<!--- Need to retrieve via PHP --->
+				</tbody>
+			</table>
+		</div>
+ 
 <?php } ?>
 
 <?php include "include/footer.php"; ?>
