@@ -1,6 +1,7 @@
 <?php
 	
 	session_start();
+	gateway(2);
 	$title = 'Edit Tag';
 
 ?>

@@ -24,4 +24,10 @@
 
 		return $rows;
 	}
+
+	function gateway($role) {
+		if (!isset($_SESSION['username']) || !isset($_SESSION['role']) || $_SESSION['role'] < $role) {
+			header('Location: index.php');
+		}
+	}
 ?>

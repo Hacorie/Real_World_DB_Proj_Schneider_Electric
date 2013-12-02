@@ -3,6 +3,7 @@
 	require_once('include/db.php');
 
 	session_start();
+	gateway(2);
 	$title = 'Add / Insert a Tag';
 
 	if (isset($_POST['submit'])) {

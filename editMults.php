@@ -3,6 +3,7 @@
 	require_once('include/db.php');
 
 	session_start();
+	gateway(3);
 	$title = 'Edit Multipliers';
 
 	$db = dbConnect();

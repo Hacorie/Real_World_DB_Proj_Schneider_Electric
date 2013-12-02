@@ -4,6 +4,7 @@
 	$specialGroups = array("Administrator", "OE", "Tag Members", "User");
 
 	session_start();
+	gateway(3);
 	$title = 'Manage Groups';
 	$admin = true;
 

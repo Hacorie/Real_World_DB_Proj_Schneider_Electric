@@ -3,6 +3,7 @@
 	require_once('include/db.php');
 
 	session_start();
+	gateway(1);
 	$title = 'Search Tags';
 
 	if (isset($_GET['query'])) {

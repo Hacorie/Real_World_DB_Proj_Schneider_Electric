@@ -3,6 +3,7 @@
 	require_once('include/db.php');
 
 	session_start();
+	gateway(0);
 	$title = 'View Tag';
 
 	// Verify that a valid tag was specified
