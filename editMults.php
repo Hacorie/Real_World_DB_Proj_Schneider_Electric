@@ -46,8 +46,10 @@
 
 <?php include "include/header.php"; ?>  
 <form name="editCountryMults" action="editMults.php" method="post" accept-charset="utf-8">
-	<ul> Country Multipliers <br>
-		<table border="1">
+	<ul> <div class="page-header">
+			<h1>Country Multipliers</h1>
+		</div>  <br>
+		<table class="table table-bordered table-striped" style="width: 40%">
 			<tr>
 				<th> Country </th>
 				<th> Multiplier</th>
@@ -60,14 +62,16 @@
 			</tr>
 			<?php } ?>
 		</table>
-		
-		<li><input type="submit" name="submitCountry" value="Edit Country Multipliers" /></li>
+	
+		<button type="submit" name="submitCountry" class="btn btn-primary">Edit Country Multipliers</button>
 	</ul>
 </form>
 <br><br>
 <form name="editPartMults" action="editMults.php" method="post" accept-charset="utf-8">
-	<ul> Part Multipliers <br>
-		<table border = "1">
+	<ul> <div class="page-header">
+			<h1>Part Multipliers</h1>
+		</div> <br>
+		<table class="table table-bordered table-striped" style="width: 40%">
 			<tr>
 				<th> Part </th>
 				<th> Multiplier</th>
@@ -80,7 +84,7 @@
 			<?php } ?>
 		</table>
 		
-		<li><input type="submit" name="submitParts" value="Edit Part Multipliers" /></li>
+		<button type="submit" name="submitParts" class="btn btn-primary">Edit Part Multipliers</button>
 	</ul>
 </form>
 <?php include "include/footer.php"; ?>
