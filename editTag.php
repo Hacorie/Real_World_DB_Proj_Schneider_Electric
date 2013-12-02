@@ -1,4 +1,6 @@
 <?php
+
+	require_once('include/db.php');
 	
 	session_start();
 	gateway(2);
