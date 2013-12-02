@@ -11,6 +11,20 @@
 		session_start();
 		$_SESSION['username'] = $username;
 
+		// Add role to sessions variables
+		$groups = dbQuery($db, "SELECT GName FROM Member_Of WHERE UName = '$username'");
+
+		$roles = array("User", "OE", "Tag Members", "Administrator");
+		$role = 0;
+		foreach ($groups as $group) {
+			$index = array_search($group['GName'], $roles);
+			if ($index !== false && $index > $role) {
+				$role = $index;
+			}
+		}
+
+		$_SESSION['role'] = $role;
+
 		// Add an entry to the log table
 		$host = gethostbyaddr($_SERVER['REMOTE_ADDR']);
 		$sql = "INSERT INTO Log(UName, LTime, IP, MName) 

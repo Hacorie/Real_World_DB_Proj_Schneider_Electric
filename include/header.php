@@ -51,16 +51,18 @@ function isAdmin() {
 				<li <?php isActive('Add Tag');?>><a href="addTag.php">Insert</a></li>
 				<li <?php isActive('View Tag');?>><a href="viewTag.php">View</a></li>
 				<!-- ADMIN LIST ITEMS -->
-				<li class="dropdown <?php isAdmin(); ?>">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown">Administration <b class="caret"></b></a>
-					<ul class="dropdown-menu">
-						<li <?php isActive('View Log');?>><a href="viewLog.php">Login Record</a></li>
-						<li <?php isActive('Edit Multipliers');?>><a href="editMults.php">Edit Multipliers</a></li>
-						<li class="divider"></li>
-						<li <?php isActive('Manage Users');?>><a href="users.php">Manage Users</a></li>
-						<li <?php isActive('Manage Groups');?>><a href="groups.php">Manage Groups</a></li>
-					</ul>
-				</li>
+				<?php if ($_SESSION['role'] >= 3) { ?>
+					<li class="dropdown <?php isAdmin(); ?>">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Administration <b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							<li <?php isActive('View Log');?>><a href="viewLog.php">Login Record</a></li>
+							<li <?php isActive('Edit Multipliers');?>><a href="editMults.php">Edit Multipliers</a></li>
+							<li class="divider"></li>
+							<li <?php isActive('Manage Users');?>><a href="users.php">Manage Users</a></li>
+							<li <?php isActive('Manage Groups');?>><a href="groups.php">Manage Groups</a></li>
+						</ul>
+					</li>
+				<?php } ?>
 				<li><a href="logout.php">Logout</a></li>
 			</ul>
 		</div>
