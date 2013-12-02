@@ -5,7 +5,7 @@
 	session_start();
 	gateway(0);
 	$title = 'View Tag';
-	
+
 	// Verify that a valid tag was specified
 	if (isset($_GET['tag']) && isset($_GET['rev'])) {
 
@@ -13,7 +13,8 @@
 		// Get the tag
 		$db = dbConnect();
 		$stmt = $db->prepare("SELECT Num, Revision, CreationDate, Description, Subcategory, Complexity, PriceExpire,
-			TagNotes, InstallCost, PriceNotes, Owner, LeadTime, MaterialCost, LaborCost, EngineeringCost
+			TagNotes, InstallCost, PriceNotes, Owner, LeadTime, MaterialCost, LaborCost, EngineeringCost,
+			HVL, HVLCC, MC, MVMCC
 			FROM Tag WHERE Num = ? AND Revision = ?");
 		$stmt->bind_param("ii", $_GET['tag'], $_GET['rev']);
 		$stmt->execute();
@@ -22,7 +23,7 @@
 		if ($stmt->num_rows > 0) {
 
 			$stmt->bind_result($num, $revision, $creationDate, $description, $category, $complexity, $priceExpire,
-				$notes, $cost, $priceNotes, $owner, $leadTime, $mat, $labor, $eng);
+				$notes, $cost, $priceNotes, $owner, $leadTime, $mat, $labor, $eng, $hvl, $hvlcc, $mc, $mvmcc);
 
 			$stmt->fetch();
 			$stmt->close();
@@ -42,12 +43,29 @@
 					'LeadTime' => $leadTime,
 					'MaterialCost' => $mat,
 					'LaborCost' => $labor,
-					'EngineeringCost' => $eng
-					);
+					'EngineeringCost' => $eng,
+					'HVL' => $hvl,
+					'HVLCC' => $hvlcc,
+					'MC' => $mc,
+					'MVMCC' => $mvmcc
+				);
 
 			
 		} else {
 			$error = "Invalid Tag Number or Revision";
+		}
+
+		// Get the multipliers
+		$countryDB = dbQuery($db, 'SELECT * FROM Country');
+		$countries = array();
+		foreach($countryDB as $country) {
+			$countries[$country['CName']] = $country['Multiplier'];
+		}
+
+		$productDB = dbQuery($db, 'SELECT * FROM Product_Type');
+		$products = array();
+		foreach($productDB as $product) {
+			$products[$product['PName']] = $product['Multiplier'];
 		}
 
 	}
@@ -160,28 +178,28 @@
 			<td>Mexico$</td>
 		</tr>
 		<tr>
-			<td><input type="checkbox" name="vehicle" value="HVL" />HVL</td>
-			<td><input type="text" placeholder="$X.XX" /></td>
-			<td><input type="text" placeholder="$X.XX" /></td>
-			<td><input type="text" placeholder="$X.XX" /></td>
+			<td><input type="checkbox" <?php if($tag['HVL'] == 1) { echo 'checked="checked"'; }?> />HVL</td>
+			<td><input type="text" value="<?php echo $tag['InstallCost'] * $products['HVL'] * $countries['USA']; ?>" /></td>
+			<td><input type="text" value="<?php echo $tag['InstallCost'] * $products['HVL'] * $countries['Canada']; ?>" /></td>
+			<td><input type="text" value="<?php echo $tag['InstallCost'] * $products['HVL'] * $countries['Mexico']; ?>" /></td>
 		</tr>
 		<tr>
-			<td><input type="checkbox" name="vehicle" value="HVL/CC" />HVL/CC</td>
-			<td><input type="text" placeholder="$X.XX" /></td>
-			<td><input type="text" placeholder="$X.XX" /></td>
-			<td><input type="text" placeholder="$X.XX" /></td>
+			<td><input type="checkbox" <?php if($tag['HVLCC'] == 1) { echo 'checked="checked"'; }?> />HVL/CC</td>
+			<td><input type="text" value="<?php echo $tag['InstallCost'] * $products['HVL/CC'] * $countries['USA']; ?>" /></td>
+			<td><input type="text" value="<?php echo $tag['InstallCost'] * $products['HVL/CC'] * $countries['Canada']; ?>" /></td>
+			<td><input type="text" value="<?php echo $tag['InstallCost'] * $products['HVL/CC'] * $countries['Mexico']; ?>" /></td>
 		</tr>
 		<tr>
-			<td><input type="checkbox" name="vehicle" value="Metal Clad" />Metal Clad</td>
-			<td><input type="text" placeholder="$X.XX" /></td>
-			<td><input type="text" placeholder="$X.XX" /></td>
-			<td><input type="text" placeholder="$X.XX" /></td>
+			<td><input type="checkbox" <?php if($tag['MC'] == 1) { echo 'checked="checked"'; }?> />Metal Clad</td>
+			<td><input type="text" value="<?php echo $tag['InstallCost'] * $products['Metal Clad'] * $countries['USA']; ?>" /></td>
+			<td><input type="text" value="<?php echo $tag['InstallCost'] * $products['Metal Clad'] * $countries['Canada']; ?>" /></td>
+			<td><input type="text" value="<?php echo $tag['InstallCost'] * $products['Metal Clad'] * $countries['Mexico']; ?>" /></td>
 		</tr>
 		<tr>
-			<td><input type="checkbox" name="vehicle" value="MVMCC" />MVMCC</td>
-			<td><input type="text" placeholder="$X.XX" /></td>
-			<td><input type="text" placeholder="$X.XX" /></td>
-			<td><input type="text" placeholder="$X.XX" /></td>
+			<td><input type="checkbox" <?php if($tag['MVMCC'] == 1) { echo 'checked="checked"'; }?> />MVMCC</td>
+			<td><input type="text" value="<?php echo $tag['InstallCost'] * $products['MVMCC'] * $countries['USA']; ?>" /></td>
+			<td><input type="text" value="<?php echo $tag['InstallCost'] * $products['MVMCC'] * $countries['Canada']; ?>" /></td>
+			<td><input type="text" value="<?php echo $tag['InstallCost'] * $products['MVMCC'] * $countries['Mexico']; ?>" /></td>
 		</tr>
 	</table>
 	</div>
