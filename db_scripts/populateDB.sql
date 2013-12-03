@@ -65,3 +65,6 @@ INSERT INTO Tag VALUES
 INSERT INTO Attachment VALUES
 	(6001, 'test.txt', NULL),
 	(6003, 'test.pdf', NULL);
+
+INSERT INTO Per_Hour VALUES
+    (1, 74.28, 64.24);

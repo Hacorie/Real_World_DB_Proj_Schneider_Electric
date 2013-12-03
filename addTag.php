@@ -62,12 +62,16 @@
     $id = dbQuery($db, "SELECT Auto_increment FROM information_schema.tables WHERE table_name='Tag'");
     $complexity = dbQuery($db, 'SELECT CName FROM Complexity');
     $subCategory = dbQuery($db, 'SELECT SName FROM Subcategory');
+    $laborMult = dbQuery($db, "SELECT Labor FROM Per_Hour");
+    $enginMult = dbQuery($db, "SELECT Engineering FROM Per_Hour");
+    $labor = $laborMult[0]['Labor'];
+    $engin = $enginMult[0]['Engineering']; 
+
     
 
 ?>
 
-<?php include "include/header.php"; ?> 
-
+<?php include "include/header.php";?> 
 <div class="page-header">
 	<h1>Add a Tag</h1>
 </div> 
@@ -135,21 +139,21 @@
 	<table id="pricingTable">
 		<tr>
 			<td>Material:</td>
-			<td><input type="text" name="mCost" placeholder="Price" /></td>
+			<td><input type="text" id="mCost" name="mCost" placeholder="Price" /></td>
 		</tr>
 		<tr>
 			<td>Labor:</td>
-			<td><input type="text" name="lprice" disabled="disabled" /></td>
-			<td><input type="text" name="labor" placeholder="Hours" /></td>
+			<td><input type="text" id="lprice" name="lprice" disabled="disabled" /></td>
+			<td><input type="text" id="labor"name="labor" placeholder="Hours" /></td>
 		</tr>
 		<tr style="border-bottom: 1px solid #000;" >
 			<td>Engineering:</td>
-			<td><input type="text" name="eprice" disabled="disabled" /></td>
-			<td><input type="text" name="engineering" placeholder="Hours" /></td>
+			<td><input type="text" id="eprice"  name="eprice" disabled="disabled" /></td>
+			<td><input type="text" id="engineering" name="engineering" placeholder="Hours" /></td>
 		</tr>
 		<tr>
 			<td>Initial Cost:</td>
-			<td><input type="text" name="install" disabled="disabled" /></td>
+			<td><input type="text" id="install"  name="install" disabled="disabled" /></td>
 		</tr>
 		<tr id="emptyRow"><td>&nbsp;</td></tr>
 		<tr id="emptyRow"><td>&nbsp;</td></tr>
@@ -209,4 +213,52 @@
 	</div>
 	</div>
 </form>
+<script src="//code.jquery.com/jquery-1.9.1.js"></script>
+<script>
+$("#labor")
+    .change(function() {
+        var cost = $(this).val();
+        cost *= <?php echo $labor;?>;
+        $("#lprice").val(cost);
+        var mCost = parseInt($("#mCost").val());
+        var lCost = parseFloat(cost);
+        var eCost = parseFloat($("#eprice").val());
+        if(isNaN(eCost))
+            eCost = 0;
+        if(isNaN(mCost))
+            mCost = 0;
+
+        $("#install").val(mCost + lCost + eCost );
+    })
+
+$("#engineering")
+    .change(function() {
+        var cost = $(this).val();
+        cost *= <?php echo $engin;?>;
+        $("#eprice").val(cost);
+        var mCost = parseInt($("#mCost").val());
+        var eCost = parseFloat(cost);
+        var lCost = parseFloat($("#lprice").val());
+        if(isNaN(lCost))
+            lCost = 0;
+        if(isNaN(mCost))
+            mCost = 0;
+
+        $("#install").val(mCost + lCost + eCost );
+    })
+
+$("#mCost")
+    .change(function() {
+        var cost = $(this).val();
+        var lCost = parseFloat($("#lprice").val());
+        var eCost = parseFloat($("#eprice").val());
+        var mCost = parseFloat(cost);
+        if(isNaN(lCost))
+            lCost = 0;
+        if(isNaN(eCost))
+            eCost = 0;
+        $("#install").val(mCost + lCost + eCost );
+    })
+        
+</script>
 <?php include "include/footer.php"; ?>
