@@ -298,13 +298,31 @@
 
 <!-- Nav tabs -->
 <ul class="nav nav-tabs nav-success">
+  <li><a href="#all" data-toggle="tab">All</a></li>
   <li><a href="#quote" data-toggle="tab">Quote</a></li>
   <li><a href="#factoryorder" data-toggle="tab">Factory Order</a></li>
 </ul>
 
+
 <!-- Tab panes -->
-<div class="tab-content" style="margin-top: -100px" >
-  <div class="tab-pane active" id="quote">
+<div class="tab-content" style="margin-bottom: 100px; margin-top:-100px;" >
+  <div class="tab-pane active" id="all">
+	<table class="table-bordered" width=100%>
+	<tr>
+		<th>Tag Number</th>
+		<th>FO Number Applied To</th>
+		<th>Notes</th>
+	</tr>
+	<?php if (!empty($fotable)) { foreach($fotable as $fo) { ?>
+		<tr>
+			<td><?php echo $tag['Num']; ?></td>
+			<td><?php echo $fo['FONumber']; ?></td>
+			<td><?php echo $tag['Notes']; ?></td>
+		</tr>
+	<?php } } ?>
+	</table>
+  </div>
+  <div class="tab-pane" id="quote">
 	<table class="table-bordered" width=100%>
 	<tr>
 		<th>Tag Number</th>
@@ -351,7 +369,8 @@
 	<input type="text" placeholder="Enter Notes" />
 	<button class="btn btn-success" id="appliedFO_addButton">Add to FO</button><br />
 	</form>
-</div>
+  </div>
+
 </div>
 
 	</div>
