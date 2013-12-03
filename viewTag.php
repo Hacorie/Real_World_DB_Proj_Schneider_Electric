@@ -103,12 +103,12 @@
 		<td>Lead Time</td>
 	</tr>
 	<tr>
-		<td><input id="addTag_tagNum" type="text" name="tagNum" value="<?php echo $tag['Num']; ?>" /></td>
-		<td><input id="addTag_rev" type="text" name="rev" value="<?php echo $tag['Revision']; ?>" /></td>
-		<td><input id="addTag_date" type="text" name="date" value="<?php echo $tag['CreationDate']; ?>" /></td>
-		<td><input id="addTag_sCategory" type="text" name="sCategory" value="<?php echo $tag['Subcategory']; ?>" /></td>
-		<td><input id="addTag_complexity" type="text" name="complexity" value="<?php echo $tag['Complexity']; ?>" /></td>
-        <td><input id="addTag_leadTime"type="text" name="leadTime" value="<?php echo $tag['LeadTime']; ?>" /></td>
+		<td><input id="addTag_tagNum" type="text" name="tagNum" value="<?php echo $tag['Num']; ?>" disabled="disabled" /></td>
+		<td><input id="addTag_rev" type="text" name="rev" value="<?php echo $tag['Revision']; ?>" disabled="disabled"  /></td>
+		<td><input id="addTag_date" type="text" name="date" value="<?php echo $tag['CreationDate']; ?>" disabled="disabled"  /></td>
+		<td><input id="addTag_sCategory" type="text" name="sCategory" value="<?php echo $tag['Subcategory']; ?>" disabled="disabled"  /></td>
+		<td><input id="addTag_complexity" type="text" name="complexity" value="<?php echo $tag['Complexity']; ?>" disabled="disabled"  /></td>
+        <td><input id="addTag_leadTime"type="text" name="leadTime" value="<?php echo $tag['LeadTime']; ?>" disabled="disabled"  /></td>
 	</tr>
 	</table>
 	<table id="tagTable">
@@ -116,7 +116,7 @@
 		<td>Tag Description:</td>
 	</tr>
 	<tr>
-		<td ><input id="tagDescCell" type="text" name="desc" value="<?php echo $tag['Description']; ?>" /></td>
+		<td ><input id="tagDescCell" type="text" name="desc" value="<?php echo $tag['Description']; ?>" disabled="disabled"  /></td>
 	</tr>
 	</table>
 	<table id="tagTable">
@@ -124,7 +124,7 @@
 		<td>Tag Notes:</td>
 	</tr>
 	<tr>
-		<td ><input id="tagDescCell"type="text" name="tagNotes" value="<?php echo $tag['Notes']; ?>" /></td>
+		<td ><input id="tagDescCell"type="text" name="tagNotes" value="<?php echo $tag['Notes']; ?>" disabled="disabled"  /></td>
 	</tr>
 	</table>
 	<table id="tagTable">
@@ -132,40 +132,41 @@
 		<td>Price Note:</td>
 	</tr>
 	<tr>
-		<td ><input id="tagDescCell" type="text" name="priceNotes" value="<?php echo $tag['PriceNotes']; ?>" /></td>
+		<td ><input id="tagDescCell" type="text" name="priceNotes" value="<?php echo $tag['PriceNotes']; ?>" disabled="disabled"  /></td>
 	</tr>
 	</table>
 	</div>
 
 	<div id="section3">
+		<?php if ($_SESSION['role'] > 0) { ?>
 		<strong><i>Pricing Information</i></strong>
 	<table id="pricingTable">
 		<tr>
 			<td>Material:</td>
-			<td><input type="text" value="<?php echo $tag['MaterialCost']; ?>" /></td>
+			<td><input type="text" value="<?php echo $tag['MaterialCost']; ?>" disabled="disabled"  /></td>
 		</tr>
 		<tr>
 			<td>Labor:</td>
-			<td><input type="text" value="<?php echo $tag['LaborCost']; ?>" /></td>
+			<td><input type="text" value="<?php echo $tag['LaborCost']; ?>" disabled="disabled"  /></td>
 		</tr>
 		<tr style="border-bottom: 1px solid #000;">
 			<td>Engineering:</td>
-			<td><input type="text" value="<?php echo $tag['EngineeringCost']; ?>" /></td>
+			<td><input type="text" value="<?php echo $tag['EngineeringCost']; ?>" disabled="disabled"  /></td>
 		</tr>
 		<tr>
 			<td>Initial Cost:</td>
-			<td><input type="text" value="<?php echo $tag['InstallCost']; ?>" /></td>
+			<td><input type="text" value="<?php echo $tag['InstallCost']; ?>" disabled="disabled"  /></td>
 		</tr>
 		<tr id="emptyRow"><td>&nbsp;</td></tr>
 		<tr id="emptyRow"><td>&nbsp;</td></tr>
 		<tr id="emptyRow"><td>&nbsp;</td></tr>
 		<tr>
 			<td>TAG Member:</td>
-			<td><input type="text" value="<?php echo $tag['Owner']; ?>" /></td>
+			<td><input type="text" value="<?php echo $tag['Owner']; ?>" disabled="disabled"  /></td>
 		</tr>
 		<tr>
 			<td>Price Expires:</td>
-			<td><input type="text" value="<?php echo $tag['PriceExpire']; ?>" /></td>
+			<td><input type="text" value="<?php echo $tag['PriceExpire']; ?>" disabled="disabled"  /></td>
 		</tr>
 		<tr id="emptyRow"><td>&nbsp;</td></tr>
 		<tr id="emptyRow"><td>&nbsp;</td></tr>
@@ -178,10 +179,11 @@
 	<strong>Attachments:</strong>
 	<ul style="list-style-type: none">
 		<?php if (!empty($attachments)) { foreach($attachments as $attachment) { ?>
-			<li><input type="checkbox" value="<?php echo $attachment['Name']; ?>" /> <?php echo $attachment['Name']; ?></li>
+			<li><input type="checkbox" value="<?php echo $attachment['Name']; ?>"  disabled="disabled" /> <?php echo $attachment['Name']; ?></li>
 		<?php } } ?>
 	</ul>
 	</div>
+	<?php } ?>
 	</div>	
 	<div id="section2">
 		<strong>Product Lines Tag May be Applied To:</strong>
@@ -193,28 +195,28 @@
 			<td>Mexico$</td>
 		</tr>
 		<tr>
-			<td><input type="checkbox" <?php if($tag['HVL'] == 1) { echo 'checked="checked"'; }?> />HVL</td>
-			<td><input type="text" value="<?php echo $tag['InstallCost'] * $products['HVL'] * $countries['USA']; ?>" /></td>
-			<td><input type="text" value="<?php echo $tag['InstallCost'] * $products['HVL'] * $countries['Canada']; ?>" /></td>
-			<td><input type="text" value="<?php echo $tag['InstallCost'] * $products['HVL'] * $countries['Mexico']; ?>" /></td>
+			<td><input type="checkbox" <?php if($tag['HVL'] == 1) { echo 'checked="checked"'; }?>  disabled="disabled" />HVL</td>
+			<td><input type="text" value="<?php echo $tag['InstallCost'] * $products['HVL'] * $countries['USA']; ?>"  disabled="disabled" /></td>
+			<td><input type="text" value="<?php echo $tag['InstallCost'] * $products['HVL'] * $countries['Canada']; ?>" disabled="disabled"  /></td>
+			<td><input type="text" value="<?php echo $tag['InstallCost'] * $products['HVL'] * $countries['Mexico']; ?>" disabled="disabled"  /></td>
 		</tr>
 		<tr>
-			<td><input type="checkbox" <?php if($tag['HVLCC'] == 1) { echo 'checked="checked"'; }?> />HVL/CC</td>
-			<td><input type="text" value="<?php echo $tag['InstallCost'] * $products['HVL/CC'] * $countries['USA']; ?>" /></td>
-			<td><input type="text" value="<?php echo $tag['InstallCost'] * $products['HVL/CC'] * $countries['Canada']; ?>" /></td>
-			<td><input type="text" value="<?php echo $tag['InstallCost'] * $products['HVL/CC'] * $countries['Mexico']; ?>" /></td>
+			<td><input type="checkbox" <?php if($tag['HVLCC'] == 1) { echo 'checked="checked"'; }?>  disabled="disabled" />HVL/CC</td>
+			<td><input type="text" value="<?php echo $tag['InstallCost'] * $products['HVL/CC'] * $countries['USA']; ?>" disabled="disabled"  /></td>
+			<td><input type="text" value="<?php echo $tag['InstallCost'] * $products['HVL/CC'] * $countries['Canada']; ?>"  disabled="disabled" /></td>
+			<td><input type="text" value="<?php echo $tag['InstallCost'] * $products['HVL/CC'] * $countries['Mexico']; ?>"  disabled="disabled" /></td>
 		</tr>
 		<tr>
-			<td><input type="checkbox" <?php if($tag['MC'] == 1) { echo 'checked="checked"'; }?> />Metal Clad</td>
-			<td><input type="text" value="<?php echo $tag['InstallCost'] * $products['Metal Clad'] * $countries['USA']; ?>" /></td>
-			<td><input type="text" value="<?php echo $tag['InstallCost'] * $products['Metal Clad'] * $countries['Canada']; ?>" /></td>
-			<td><input type="text" value="<?php echo $tag['InstallCost'] * $products['Metal Clad'] * $countries['Mexico']; ?>" /></td>
+			<td><input type="checkbox" <?php if($tag['MC'] == 1) { echo 'checked="checked"'; }?>  disabled="disabled" />Metal Clad</td>
+			<td><input type="text" value="<?php echo $tag['InstallCost'] * $products['Metal Clad'] * $countries['USA']; ?>"  disabled="disabled" /></td>
+			<td><input type="text" value="<?php echo $tag['InstallCost'] * $products['Metal Clad'] * $countries['Canada']; ?>"  disabled="disabled" /></td>
+			<td><input type="text" value="<?php echo $tag['InstallCost'] * $products['Metal Clad'] * $countries['Mexico']; ?>"  disabled="disabled" /></td>
 		</tr>
 		<tr>
-			<td><input type="checkbox" <?php if($tag['MVMCC'] == 1) { echo 'checked="checked"'; }?> />MVMCC</td>
-			<td><input type="text" value="<?php echo $tag['InstallCost'] * $products['MVMCC'] * $countries['USA']; ?>" /></td>
-			<td><input type="text" value="<?php echo $tag['InstallCost'] * $products['MVMCC'] * $countries['Canada']; ?>" /></td>
-			<td><input type="text" value="<?php echo $tag['InstallCost'] * $products['MVMCC'] * $countries['Mexico']; ?>" /></td>
+			<td><input type="checkbox" <?php if($tag['MVMCC'] == 1) { echo 'checked="checked"'; }?>  disabled="disabled" />MVMCC</td>
+			<td><input type="text" value="<?php echo $tag['InstallCost'] * $products['MVMCC'] * $countries['USA']; ?>"  disabled="disabled" /></td>
+			<td><input type="text" value="<?php echo $tag['InstallCost'] * $products['MVMCC'] * $countries['Canada']; ?>"  disabled="disabled" /></td>
+			<td><input type="text" value="<?php echo $tag['InstallCost'] * $products['MVMCC'] * $countries['Mexico']; ?>"  disabled="disabled" /></td>
 		</tr>
 	</table>
 	</div>
