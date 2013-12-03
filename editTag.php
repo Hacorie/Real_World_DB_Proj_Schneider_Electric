@@ -10,6 +10,31 @@
 
 	$db = dbConnect();
 
+	if (isset($_POST['fosubmit'])) {
+		$sql = "INSERT INTO Applied_FO_Table VALUES (?, ?, ?, ?, ?)";
+		$stmt = $db->prepare($sql);
+
+		$stmt->bind_param("isiis",
+			$_POST['fonumber'],
+			$_POST['notes'],
+			$_POST['tag'],
+			$_POST['rev'],
+			$_POST['type']);
+
+		$stmt->execute();
+
+		if ($db->affected_rows == 1) {
+			// Success
+			$flash = 'FO added!';
+			
+		} else {
+			$error = 'Error adding FO<br />' . $db->error;
+		}
+
+		$stmt->close();
+
+	}
+
 	if (isset($_POST['submit'])) {
 
 		// Add an entry to the log_in table
@@ -339,11 +364,13 @@
 		<?php } ?>	
 	<?php } } ?>
 	</table>
-	<form style="margin-top: 20px;">
-	<input type="text" placeholder="Enter Tag Number" />
-	<input type="text" placeholder="Enter FO Number Applied To" />
-	<input type="text" placeholder="Enter Notes" />
-	<button class="btn btn-success" id="appliedFO_addButton">Add to FO</button><br />
+	<form style="margin-top: 20px;" action="editTag.php?tag=<?php echo $tag['Num']; ?>" method="post">
+		<input type="hidden" name="tag" value="<?php echo $tag['Num']; ?>" />
+		<input type="hidden" name="rev" value="<?php echo $tag['Revision']; ?>" />
+		<input type="hidden" name="type" value="Q" />
+		<input type="text" placeholder="Enter FO Number Applied To" name="fonumber" />
+		<input type="text" placeholder="Enter Notes" name="notes" />
+		<input type="submit" name="fosubmit" class="btn btn-success" id="appliedFO_addButton" value="Add to FO" /><br />
 	</form>
   </div>
   <div class="tab-pane" id="factoryorder">
@@ -363,11 +390,13 @@
 		<?php } ?>	
 	<?php } } ?>
 	</table>
-	<form style="margin-top: 20px;">
-	<input type="text" placeholder="Enter Tag Number" />
-	<input type="text" placeholder="Enter FO Number Applied To" />
-	<input type="text" placeholder="Enter Notes" />
-	<button class="btn btn-success" id="appliedFO_addButton">Add to FO</button><br />
+	<form style="margin-top: 20px;" action="editTag.php?tag=<?php echo $tag['Num']; ?>" method="post">
+		<input type="hidden" name="tag" value="<?php echo $tag['Num']; ?>" />
+		<input type="hidden" name="rev" value="<?php echo $tag['Revision']; ?>" />
+		<input type="hidden" name="type" value="F" />
+		<input type="text" placeholder="Enter FO Number Applied To" name="fonumber" />
+		<input type="text" placeholder="Enter Notes" name="notes" />
+		<input type="submit" name="fosubmit" class="btn btn-success" id="appliedFO_addButton" value="Add to FO" /><br />
 	</form>
   </div>
 
