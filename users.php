@@ -125,7 +125,7 @@
 			<?php echo $user['UName']; ?>
 			<form action="users.php" method="post">
 				<input type="hidden" name="UName" value="<?php echo $user['UName'] ?>" /></td><td>
-				<button type="submit" name="edit" class="btn btn-xs btn-primary" style="margin-right: 5px" >Edit</button>
+				<a href="editUser.php?user=<?php echo $user['UName']; ?>" class="btn btn-xs btn-primary" style="margin-right: 5px" >Edit</a>
 				<button type="submit" name="delete" class="btn btn-xs btn-danger">Delete</button>
 			</form>
 		</td></tr>

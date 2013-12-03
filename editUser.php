@@ -4,84 +4,34 @@
 
 	session_start();
 	gateway(3);
-	$title = 'Manage Users';
-	$admin = true;
+	$title = 'Edit User';
 
 	$db = dbConnect();
+	$username = $db->real_escape_string($_GET['user']);
+	$groups = dbQuery($db, 'SELECT * FROM Groups');
 	
-	// Get a list of groups
-	$groups = dbQuery($db, 'SELECT GName from Groups');
 
-	$errMsg = Array();
-
-	// If the add form was submitted
 	if (isset($_POST['submit'])) {
-		if ($_POST['password'] != $_POST['confirmPassword']) {
-			$errMsg[] = 'Passwords do not match.';
-		} else {
+		$db->query("DELETE FROM Member_Of WHERE UName = '$username'");
 
-
-			// Add an entry to the log_in table
-			$sql = "INSERT INTO User(UName, Password) 
-					VALUES (?, ?)";
-			$stmt = $db->prepare($sql);
-			
-			$stmt->bind_param("ss", $_POST['username'], sha1($_POST['password']));
-			$stmt->execute();
-
-			if ($db->affected_rows == 1) {
-				// Add groups
-				$sql = "INSERT INTO Member_Of(UName, GName) VALUES (?, ?)";
-				$stmt = $db->prepare($sql);
-				
-				$stmt->bind_param("ss", $_POST['username'], $g);
-
-				$grp = $_POST['group'];
-				foreach ($grp as $g) {
-					$stmt->execute();
-				}
-
-				$flash = "User added!";
-			} else {
-				$errMsg[] = 'Error adding User';
-				$errMsg[] = $db->error;
+		foreach($groups as $group) {
+			if (in_array($group['GName'], $_POST['group'])) {
+				$db->query("INSERT INTO Member_Of VALUES ('$username', '{$group['GName']}')");
 			}
-			$stmt->close();
-
-
 		}
 
 	}
 
-	if (isset($_POST['delete'])) {
+	// Get the user's groups
+	$groupsDB = dbQuery($db, "SELECT * FROM Member_Of WHERE UName = '$username'");
 
-		$sql = "DELETE FROM Member_Of WHERE UName = ?";
-		$stmt = $db->prepare($sql);
-	
-		$stmt->bind_param("s", $_POST['UName']);
-		$stmt->execute();
+	$groupMember = array();
 
-		$sql = "DELETE FROM User WHERE UName = ?";
-		$stmt = $db->prepare($sql);
-	
-		$stmt->bind_param("s", $_POST['UName']);
-		$stmt->execute();
-
-		if ($db->affected_rows == 1) {
-			$flash = $_POST['UName'] . ' was removed!';
-		} else {
-			$errMsg[] = 'Error deleting User';
-			$errMsg[] = $db->error;
-		}
-		$stmt->close();
-
-
+	foreach($groupsDB as $group) {
+		$groupMember[] = $group['GName'];
 	}
 
-	$error = join('<br />', $errMsg);
-
-	// Get a list of groups
-	$users = dbQuery($db, 'SELECT UName FROM User');
+	
 
 ?>
 
@@ -93,13 +43,13 @@
 	<hr />
 </div> 
 
-<form name="addUser" action="users.php" method="post" accept-charset="utf-8">
+<form name="editUser" action="editUser.php?user=<?php echo $username; ?>" method="post" accept-charset="utf-8">
 <table class="table table-bordered table-striped" style="width: 15%">
-		<tr> <td> Username:</td><td> <input type="text" name="username" placeholder="Username" required disabled="disabled"/></td></tr>
+		<tr> <td> Username:</td><td> <input type="text" name="username" value="<?php echo $username; ?>" disabled="disabled"/></td></tr>
 		<tr> <td>
 			Groups:<br></td><td>
 			<?php foreach($groups as $group) { ?>
-				<input type="checkbox" name="group[]" value="<?php echo $group['GName'] ?>" /> <?php echo $group['GName'] ?><br />
+				<input type="checkbox" name="group[]" value="<?php echo $group['GName']; ?>" <?php if(in_array($group['GName'], $groupMember)) { echo 'checked="checked"';}?> /> <?php echo $group['GName']; ?><br />
 			<?php } ?>
 		</td></tr>
 </table>

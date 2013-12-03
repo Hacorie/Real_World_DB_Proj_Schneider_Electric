@@ -98,7 +98,7 @@
 		</form>
 	</div>
 
-	<div class="large-3" <?php if (isset($_GET['search'])) { echo 'style="display: none;"'; } ?> id="advancedSearch">
+	<div class="large-3" <?php if (!isset($_GET['advSearch'])) { echo 'style="display: none;"'; } ?> id="advancedSearch">
 		<form action="searchTag.php" method="GET">
 			<table class="table table-bordered table-striped" style="width: 55%;">
 				<tr><td><strong>Tag Number:</strong></td><td><input type="text" name="tag" id="userSearch" style="margin-right: 10px;" <?php if (isset($_GET['tag'])) { echo 'value="'.$_GET['tag'].'"'; } ?> /></td><td><strong>Notes:</strong></td><td><input type="text" name="notes" id="userSearch" style="margin-right: 10px;"  <?php if (isset($_GET['notes'])) { echo 'value="'.$_GET['notes'].'"'; } ?> /></td></tr>
