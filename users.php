@@ -87,28 +87,10 @@
 
 <?php include "include/header.php"; ?>
 
-<div class="page-header">
-	<h1>Delete a User</h1>
-</div> 
-
-<table class="table table-bordered table-striped" style="width: 15%">
-<tr>
-	<th><strong>Users</strong></th>
-	<th><strong>Action</strong></th>
-</tr>
-	<?php foreach($users as $user) { ?>
-		<tr><td>
-			<?php echo $user['UName']; ?>
-			<form action="users.php" method="post">
-				<input type="hidden" name="UName" value="<?php echo $user['UName'] ?>" /></td><td>
-				<button type="submit" name="delete" class="btn btn-xs btn-danger">Delete</button>
-			</form>
-		</td></tr>
-	<?php } ?>
-</table>
-
-<div class="page-header">
+<div style="float: left; overflow: hidden; margin-right: 200px;">
+<div>
 	<h1>Add a User</h1>
+	<hr />
 </div> 
 
 <form name="addUser" action="users.php" method="post" accept-charset="utf-8">
@@ -125,4 +107,29 @@
 </table>
 		<button type="submit" name="submit" class="btn btn-success">Create User</button>
 </form>
+</div>
+
+<div style="float: left;">
+<div>
+	<h1>Modify a User</h1>
+	<hr />
+</div> 
+
+<table class="table table-bordered table-striped" style="width: 80%">
+<tr>
+	<th><strong>Users</strong></th>
+	<th><strong>Action</strong></th>
+</tr>
+	<?php foreach($users as $user) { ?>
+		<tr><td>
+			<?php echo $user['UName']; ?>
+			<form action="users.php" method="post">
+				<input type="hidden" name="UName" value="<?php echo $user['UName'] ?>" /></td><td>
+				<button type="submit" name="edit" class="btn btn-xs btn-primary" style="margin-right: 5px" >Edit</button>
+				<button type="submit" name="delete" class="btn btn-xs btn-danger">Delete</button>
+			</form>
+		</td></tr>
+	<?php } ?>
+</table>
+</div>
 <?php include "include/footer.php"; ?>

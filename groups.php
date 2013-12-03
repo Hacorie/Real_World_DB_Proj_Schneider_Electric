@@ -64,11 +64,25 @@
 
 <?php include "include/header.php"; ?>
 
+<div style="float: left; overflow: hidden; margin-right: 200px;">
+<div class="page-header">
+	<h1>Create a Group</h1>
+</div> 
+
+<form name="addGroup" action="groups.php" method="post" accept-charset="utf-8">
+		<table class="table table-bordered table-striped" style="width: 25%">
+			<tr><td>Group Name: </td><td><input type="text" name="GName" placeholder="Group Name" required /></tr>
+		</table>
+		<button type="submit" name="add" class="btn btn-success">Create User</button>
+</form>
+</div>
+
+<div style="float: left;">
 <div class="page-header">
 	<h1>Delete a Group</h1>
 </div> 
 
-<table class="table table-bordered table-striped" style="width: 25%">
+<table class="table table-bordered table-striped">
 <tr>
 	<th><strong>Group Name</strong></th>
 	<th><strong>Count</strong></th>
@@ -89,16 +103,5 @@
 		</tr>
 	<?php } ?>
 </table>
-
-<div class="page-header">
-	<h1>Create a Group</h1>
-</div> 
-
-<form name="addGroup" action="groups.php" method="post" accept-charset="utf-8">
-		<table class="table table-bordered table-striped" style="width: 25%">
-			<tr><td>Group Name: </td><td><input type="text" name="GName" placeholder="Group Name" required /></tr>
-		</table>
-		<button type="submit" name="add" class="btn btn-success">Create User</button>
-</form>
-
+</div>
 <?php include "include/footer.php"; ?>
