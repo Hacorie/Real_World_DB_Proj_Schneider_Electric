@@ -69,7 +69,7 @@
 <?php include "include/header.php"; ?> 
 
 <div class="page-header">
-	<h1>Add / Insert a Tag</h1>
+	<h1>Add a Tag</h1>
 </div> 
 <form name="addtag" action="addTag.php" method="post" accept-charset="utf-8">
 	<div id="section_wrapper">
@@ -101,8 +101,6 @@
                 <?php } ?>
             </select>
         </td>
-		<!--<td><input id="addTag_sCategory" type="text" name="sCategory" placeholder="Sub Category Name (pull from list of sub categories in DB)" required /></td>
-		<td><input id="addTag_complexity" type="text" name="complexity" placeholder="Drop Down for Complexities" required /></td>-->
 		<td><input id="addTag_leadTime"type="text" name="leadTime" placeholder="Lead Time" /></td>
 	</tr>
 	</table>
@@ -137,7 +135,7 @@
 	<table id="pricingTable">
 		<tr>
 			<td>Material:</td>
-			<td><input type="text" name="mcost" placeholder="Price" /></td>
+			<td><input type="text" name="mCost" placeholder="Price" /></td>
 		</tr>
 		<tr>
 			<td>Labor:</td>
@@ -164,7 +162,7 @@
 		</tr>
 		<tr>
 			<td>Price Expires:</td>
-			<td><input type="text" placeholder="##/##/####" /></td>
+			<td><input type="text" name="priceExpiration" placeholder="Months" /></td>
 		</tr>
 		<tr><td>&nbsp;</td></tr>
 		<tr><td>&nbsp;</td></tr>
@@ -184,28 +182,28 @@
 			<td>Mexico$</td>
 		</tr>
 		<tr>
-			<td><input type="checkbox" name="hvl" value="HVL" />HVL</td>
-			<td><input type="text" placeholder="$X.XX" /></td>
-			<td><input type="text" placeholder="$X.XX" /></td>
-			<td><input type="text" placeholder="$X.XX" /></td>
+			<td><input type="checkbox" name="hvl" value="HVL" /> HVL</td>
+			<td><input type="text" /></td>
+			<td><input type="text" /></td>
+			<td><input type="text" /></td>
 		</tr>
 		<tr>
-			<td><input type="checkbox" name="hvlcc" value="HVL/CC" />HVL/CC</td>
-			<td><input type="text" placeholder="$X.XX" /></td>
-			<td><input type="text" placeholder="$X.XX" /></td>
-			<td><input type="text" placeholder="$X.XX" /></td>
+			<td><input type="checkbox" name="hvlcc" value="HVL/CC" /> HVL/CC</td>
+			<td><input type="text" /></td>
+			<td><input type="text" /></td>
+			<td><input type="text" /></td>
 		</tr>
 		<tr>
-			<td><input type="checkbox" name="mc" value="Metal Clad" />Metal Clad</td>
-			<td><input type="text" placeholder="$X.XX" /></td>
-			<td><input type="text" placeholder="$X.XX" /></td>
-			<td><input type="text" placeholder="$X.XX" /></td>
+			<td><input type="checkbox" name="mc" value="Metal Clad" /> Metal Clad</td>
+			<td><input type="text" /></td>
+			<td><input type="text" /></td>
+			<td><input type="text" /></td>
 		</tr>
 		<tr>
-			<td><input type="checkbox" name="mvmcc" value="MVMCC" />MVMCC</td>
-			<td><input type="text" placeholder="$X.XX" /></td>
-			<td><input type="text" placeholder="$X.XX" /></td>
-			<td><input type="text" placeholder="$X.XX" /></td>
+			<td><input type="checkbox" name="mvmcc" value="MVMCC" /> MVMCC</td>
+			<td><input type="text" /></td>
+			<td><input type="text" /></td>
+			<td><input type="text" /></td>
 		</tr>
 	</table>
 	</div>
