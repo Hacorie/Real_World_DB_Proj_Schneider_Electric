@@ -4,7 +4,7 @@
 
 	session_start();
 	gateway(3);
-	$title = 'Manage Users';
+	$title = 'Edit Complexities';
 	$admin = true;
 
 	$db = dbConnect();
@@ -94,8 +94,8 @@
 </div> 
 
 <form name="addUser" action="users.php" method="post" accept-charset="utf-8">
-<table class="table table-bordered table-striped" style="width: 15%">
-		<tr> <td> Complexity Name:</td><td> <input type="text" name="cname" placeholder="Name" required /></td></tr>
+<table class="table table-bordered table-striped" style="width: 100%">
+		<tr> <td> <strong>Complexity Name:</strong></td><td> <input type="text" name="cname" placeholder="Name" required /></td></tr>
 </table>
 		<button type="submit" name="submit" class="btn btn-success">Create Complexity</button>
 </form>
@@ -115,7 +115,7 @@
 	<?php foreach($users as $user) { ?>
 		<tr><td>
 			<?php echo $user['UName']; ?>
-			<form action="editCompSubCat.php" method="post">
+			<form action="editComp.php" method="post">
 				<input type="hidden" name="UName" value="<?php echo $user['UName'] ?>" /></td><td>
 				<button type="submit" name="delete" class="btn btn-xs btn-danger">Delete</button>
 			</form>

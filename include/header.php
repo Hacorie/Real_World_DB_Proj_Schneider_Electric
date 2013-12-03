@@ -59,6 +59,7 @@ function isAdmin() {
 							<li <?php isActive('View Log');?>><a href="viewLog.php">Login Record</a></li>
 							<li <?php isActive('Edit Multipliers');?>><a href="editMults.php">Edit Multipliers</a></li>
 							<li <?php isActive('Edit Complexities');?>><a href="editComp.php">Edit Complexities</a></li>
+							<li <?php isActive('Edit Sub-Categories');?>><a href="editSC.php">Edit Sub-Categories</a></li>
 							<li class="divider"></li>
 							<li <?php isActive('Manage Users');?>><a href="users.php">Manage Users</a></li>
 							<li <?php isActive('Manage Groups');?>><a href="groups.php">Manage Groups</a></li>

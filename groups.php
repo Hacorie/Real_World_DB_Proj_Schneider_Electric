@@ -70,8 +70,8 @@
 </div> 
 
 <form name="addGroup" action="groups.php" method="post" accept-charset="utf-8">
-		<table class="table table-bordered table-striped" style="width: 25%">
-			<tr><td>Group Name: </td><td><input type="text" name="GName" placeholder="Group Name" required /></tr>
+		<table class="table table-bordered table-striped" style="width: 100%">
+			<tr><td><strong>Group Name: </strong></td><td><input type="text" name="GName" placeholder="Group Name" required /></tr>
 		</table>
 		<button type="submit" name="add" class="btn btn-success">Create User</button>
 </form>
