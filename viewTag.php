@@ -138,6 +138,7 @@
 	</div>
 
 	<div id="section3">
+		<?php if ($_SESSION['role'] > 0) { ?>
 		<strong><i>Pricing Information</i></strong>
 	<table id="pricingTable">
 		<tr>
@@ -182,6 +183,7 @@
 		<?php } } ?>
 	</ul>
 	</div>
+	<?php } ?>
 	</div>	
 	<div id="section2">
 		<strong>Product Lines Tag May be Applied To:</strong>
