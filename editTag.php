@@ -242,17 +242,17 @@
 		</tr>
 		<tr>
 			<td>Labor:</td>
-			<td><input id="lprice" type="text" placeholder="Labor Cost" /></td>
+			<td><input id="lprice" type="text" placeholder="Labor Cost" readonly="readonly" /></td>
 			<td><input type="text" id="labor"  name="labor" placeholder="Hours" value="<?php echo $tag['LaborCost']; ?>" /></td>
 		</tr>
 		<tr style="border-bottom: 1px solid #000;">
 			<td>Engineering:</td>
-			<td><input type="text" id="eprice" placeholder="Engineering Cost"  /></td>
+			<td><input type="text" id="eprice" placeholder="Engineering Cost" readonly="readonly" /></td>
 			<td><input type="text" id="engineering" name="engineering" placeholder="Hours" value="<?php echo $tag['EngineeringCost']; ?>" /></td>
 		</tr>
 		<tr>
 			<td>Initial Cost:</td>
-			<td><input type="text" id="install" value="<?php echo $tag['InstallCost']; ?>" /></td>
+			<td><input type="text" id="install" value="<?php echo $tag['InstallCost']; ?>" readonly="readonly" /></td>
 		</tr>
 		<tr><td>&nbsp;</td></tr>
 		<tr><td>&nbsp;</td></tr>
