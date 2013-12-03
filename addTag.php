@@ -8,18 +8,25 @@
 	gateway(2);
 	$title = 'Add / Insert a Tag';
 
-	$db = dbConnect(); 
+	$db = dbConnect();
 
 	if (isset($_POST['submit'])) {
 
 		// Add an entry to the log_in table
 		$sql = "INSERT INTO Tag(Revision, LeadTime, CreationDate, Description, TagNotes, 
 				PriceNotes, PriceExpire, MaterialCost, LaborCost, EngineeringCost, 
-				InstallCost, Subcategory, Complexity, Owner)
-				VALUES (1, ?, CURRENT_DATE, ?, ?, ?, ADDDATE(CURRENT_DATE, INTERVAL ? MONTH), ?, ?, ?, ?, ?, ?, ?)";
+				InstallCost, Subcategory, Complexity, Owner, HVL, HVLCC, MC, MVMCC)
+				VALUES (1, ?, CURRENT_DATE, ?, ?, ?, ADDDATE(CURRENT_DATE, INTERVAL ? MONTH), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		$stmt = $db->prepare($sql);
+
 		$totalCost = $_POST['mCost'] + $_POST['labor'] + $_POST['engineering'];
-		$stmt->bind_param("isssiddddsss", 
+
+		$hvl = (isset($_POST['hvl']) ? 1 : 0);
+		$hvlcc = (isset($_POST['hvlcc']) ? 1 : 0);
+		$mc = (isset($_POST['mc']) ? 1 : 0);
+		$mvmcc = (isset($_POST['mvmcc']) ? 1 : 0);
+
+		$stmt->bind_param("isssiddddsssiiii", 
 			$_POST['leadTime'],
 			$_POST['desc'],
 			$_POST['tagNotes'],
@@ -31,16 +38,21 @@
 			$totalCost,
 			$_POST['sCategory'],
 			$_POST['complexity'],
-			$_SESSION['username']);
+			$_SESSION['username'],
+			$hvl,
+			$hvlcc,
+			$mc,
+			$mvmcc);
 
 		$stmt->execute();
 
 		if ($db->affected_rows == 1) {
 			// Success
+			$flash = 'Tag added!';
+			Header('Location: homepage.php');
 			
 		} else {
-			$errMsg[] = 'Error adding Tag';
-			$errMsg[] = $db->error;
+			$error = 'Error adding Tag<br />' . $db->error;
 		}
 
 		$stmt->close();
@@ -155,7 +167,7 @@
 		<tr><td>&nbsp;</td></tr>
 	</table>
 	<br />
-	<button class="btn btn-success" id="attachmentButton">Save</button><br /><br />
+	<input type="submit" name="submit" class="btn btn-success" id="attachmentButton" value="Save" /><br /><br />
 	<hr style="clear: both"/>
 	</div>	
 	<div id="section2">
@@ -168,25 +180,25 @@
 			<td>Mexico$</td>
 		</tr>
 		<tr>
-			<td><input type="checkbox" name="vehicle" value="HVL" />HVL</td>
+			<td><input type="checkbox" name="hvl" value="HVL" />HVL</td>
 			<td><input type="text" placeholder="$X.XX" /></td>
 			<td><input type="text" placeholder="$X.XX" /></td>
 			<td><input type="text" placeholder="$X.XX" /></td>
 		</tr>
 		<tr>
-			<td><input type="checkbox" name="vehicle" value="HVL/CC" />HVL/CC</td>
+			<td><input type="checkbox" name="hvlcc" value="HVL/CC" />HVL/CC</td>
 			<td><input type="text" placeholder="$X.XX" /></td>
 			<td><input type="text" placeholder="$X.XX" /></td>
 			<td><input type="text" placeholder="$X.XX" /></td>
 		</tr>
 		<tr>
-			<td><input type="checkbox" name="vehicle" value="Metal Clad" />Metal Clad</td>
+			<td><input type="checkbox" name="mc" value="Metal Clad" />Metal Clad</td>
 			<td><input type="text" placeholder="$X.XX" /></td>
 			<td><input type="text" placeholder="$X.XX" /></td>
 			<td><input type="text" placeholder="$X.XX" /></td>
 		</tr>
 		<tr>
-			<td><input type="checkbox" name="vehicle" value="MVMCC" />MVMCC</td>
+			<td><input type="checkbox" name="mvmcc" value="MVMCC" />MVMCC</td>
 			<td><input type="text" placeholder="$X.XX" /></td>
 			<td><input type="text" placeholder="$X.XX" /></td>
 			<td><input type="text" placeholder="$X.XX" /></td>
@@ -194,22 +206,5 @@
 	</table>
 	</div>
 	</div>
-<!--- OLD BACKEND CODE
-	<ul>
-		<li> Description: <input type="text" name="desc" placeholder="Tag Description" required /></li>
-		<li> Tag Notes: <input type="text" name="tagNotes" placeholder="Tag Notes" required /></li>
-		<li> Price Notes: <input type="text" name="priceNotes" placeholder="Price Notes" required /></li>
-		<li> Sub Category: <input type="text" name="sCategory" placeholder="Sub Category Name (pull from list of sub categories in DB)" required /></li>
-		<li> Material Cost: <input type="text" name="mCost" placeholder="Cost of Materials" required /></li>
-		<li> Labor Hours: <input type="text" name="labor" placeholder="Hours of Labor" required /></li>
-		<li> Engineering Hours: <input type="text" name="engineering" placeholder="Hours of Engineering" required /></li>
-		<li> Price Expiration Date: <input type="text" name="priceExpiration" placeholder="Price Expiration mm/dd/yyyy" required /></li>
-		<li> Lead Time: <input type="text" name="leadTime" placeholder="Lead Time" required /></li>
-		<li> Complexity: <input type="text" name="complexity" placeholder="Drop Down for Complexities" required /></li>
-		<li> Attachments: will get back to this</li>
-		
-		<li><input type="submit" name="submit" value="Create Tag" /></li>
-	</ul>
--->
 </form>
 <?php include "include/footer.php"; ?>
