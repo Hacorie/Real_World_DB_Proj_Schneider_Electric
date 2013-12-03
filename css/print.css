@@ -1,3 +1,8 @@
+#logo{
+	visibility: visible;
+	float: right;
+}
+
 @media print{
 	
 #section1, #section2, #section3, #plTable{
@@ -8,12 +13,39 @@
 	display: none;
 }
 
+#navbar, #footer{
+	display: none;
+}
+
+
+#section2 {
+	margin-bottom: 0;
+}
+
+.nav-tabs{
+	display: none;
+}
+
+.tab-content{
+	margin-top: 60px;
+}
+
+#section4{
+	width: 100%;
+}
+
 .page-header{
 	margin-top: -80px;
 }
 
-#section2 {
-	margin-bottom: 0;
+#pheader[
+	display: none
+	float: left;
+}
+
+#logo{
+	visibility: visible;
+	float: right;
 }
 
 }

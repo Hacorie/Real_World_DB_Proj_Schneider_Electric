@@ -86,8 +86,8 @@
 
 <?php if (isset($tag)) { ?>
 
-<div class="page-header">
-	<h1>View a Tag</h1>
+<div class="page-header" style="overflow: auto;">
+	<h1 id="pheader">View a Tag</h1>
 </div> 
 <form name="addtag" action="addTag.php" method="post" accept-charset="utf-8">
 	<div id="section_wrapper">
@@ -172,9 +172,9 @@
 			<td>Initial Cost:</td>
 			<td><input type="text" value="<?php echo $tag['InstallCost']; ?>" /></td>
 		</tr>
-		<tr><td>&nbsp;</td></tr>
-		<tr><td>&nbsp;</td></tr>
-		<tr><td>&nbsp;</td></tr>
+		<tr id="emptyRow"><td>&nbsp;</td></tr>
+		<tr id="emptyRow"><td>&nbsp;</td></tr>
+		<tr id="emptyRow"><td>&nbsp;</td></tr>
 		<tr>
 			<td>TAG Member:</td>
 			<td><input type="text" value="<?php echo $tag['Owner']; ?>" /></td>
@@ -183,9 +183,9 @@
 			<td>Price Expires:</td>
 			<td><input type="text" value="<?php echo $tag['PriceExpire']; ?>" /></td>
 		</tr>
-		<tr><td>&nbsp;</td></tr>
-		<tr><td>&nbsp;</td></tr>
-		<tr><td>&nbsp;</td></tr>
+		<tr id="emptyRow"><td>&nbsp;</td></tr>
+		<tr id="emptyRow"><td>&nbsp;</td></tr>
+		<tr id="emptyRow"><td>&nbsp;</td></tr>
 	</table>
 	<button class="btn btn-danger" id="attachmentButton">Click Box to Make TAG Permanently Obsolete</button><br />
 	<button class="btn btn-primary" id="attachmentButton">Make Revision</button><br /><br />
@@ -201,7 +201,7 @@
 	</div>	
 	<div id="section2">
 		<strong>Product Lines Tag May be Applied To:</strong>
-	<table width=60%>
+	<table width=60% id="plTable">
 		<tr>
 			<td></td>
 			<td>USA$</td>
@@ -238,13 +238,33 @@
 
 <!-- Nav tabs -->
 <ul class="nav nav-tabs nav-success">
+  <li><a href="#all" data-toggle="tab">All</a></li>
   <li><a href="#quote" data-toggle="tab">Quote</a></li>
   <li><a href="#factoryorder" data-toggle="tab">Factory Order</a></li>
 </ul>
 
 <!-- Tab panes -->
 <div class="tab-content" style="margin-bottom: 100px" >
-  <div class="tab-pane active" id="quote">
+  <div class="tab-pane active" id="all">
+	<table class="table-bordered" width=100%>
+	<tr>
+		<th>Tag Number</th>
+		<th>FO Number Applied To</th>
+		<th>Notes</th>
+	</tr>
+	<tr>
+		<td>Hi</td>
+		<td>Chyna</td>
+		<td>BOOM</td>
+	</tr>
+	<tr>
+		<td>Hello</td>
+		<td>Shawn Michaels</td>
+		<td>ROASTED</td>
+	</tr>
+	</table>
+  </div>
+  <div class="tab-pane" id="quote">
 	<table class="table-bordered" width=100%>
 	<tr>
 		<th>Tag Number</th>
