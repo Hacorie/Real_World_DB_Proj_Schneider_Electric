@@ -1,0 +1,19 @@
+@media print{
+	
+#section1, #section2, #section3, #plTable{
+	width: 100%;
+}
+
+#attachmentButton, #emptyRow{
+	display: none;
+}
+
+.page-header{
+	margin-top: -80px;
+}
+
+#section2 {
+	margin-bottom: 0;
+}
+
+}

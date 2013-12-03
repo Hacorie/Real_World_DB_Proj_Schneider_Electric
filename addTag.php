@@ -151,9 +151,9 @@
 			<td>Initial Cost:</td>
 			<td><input type="text" name="install" disabled="disabled" /></td>
 		</tr>
-		<tr><td>&nbsp;</td></tr>
-		<tr><td>&nbsp;</td></tr>
-		<tr><td>&nbsp;</td></tr>
+		<tr id="emptyRow"><td>&nbsp;</td></tr>
+		<tr id="emptyRow"><td>&nbsp;</td></tr>
+		<tr id="emptyRow"><td>&nbsp;</td></tr>
 	</table>
 	<table id="pricingTable">
 		<tr>
@@ -164,9 +164,9 @@
 			<td>Price Expires:</td>
 			<td><input type="text" name="priceExpiration" placeholder="Months" /></td>
 		</tr>
-		<tr><td>&nbsp;</td></tr>
-		<tr><td>&nbsp;</td></tr>
-		<tr><td>&nbsp;</td></tr>
+		<tr id="emptyRow"><td>&nbsp;</td></tr>
+		<tr id="emptyRow"><td>&nbsp;</td></tr>
+		<tr id="emptyRow"><td>&nbsp;</td></tr>
 	</table>
 	<br />
 	<input type="submit" name="submit" class="btn btn-success" id="attachmentButton" value="Save" /><br /><br />
@@ -174,7 +174,7 @@
 	</div>	
 	<div id="section2">
 		<strong>Product Lines Tag May be Applied To:</strong>
-	<table width=60%>
+	<table width=60% id="plTable">
 		<tr>
 			<td></td>
 			<td>USA$</td>

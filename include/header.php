@@ -28,6 +28,7 @@ function isAdmin() {
 		<title><?php echo $title; ?></title>
 		<link href="css/bootstrap.css" rel="stylesheet">
 		<link href="css/sticky-footer-navbar.css" rel="stylesheet">
+		<link href="css/print.css" rel="stylesheet">
 	</head>
 
 	<body>
