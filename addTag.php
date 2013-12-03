@@ -141,10 +141,12 @@
 		</tr>
 		<tr>
 			<td>Labor:</td>
+			<td><input type="text" name="lprice" disabled="disabled" /></td>
 			<td><input type="text" name="labor" placeholder="Hours" /></td>
 		</tr>
-		<tr style="border-bottom: 1px solid #000;">
+		<tr style="border-bottom: 1px solid #000;" >
 			<td>Engineering:</td>
+			<td><input type="text" name="eprice" disabled="disabled" /></td>
 			<td><input type="text" name="engineering" placeholder="Hours" /></td>
 		</tr>
 		<tr>
@@ -154,6 +156,8 @@
 		<tr><td>&nbsp;</td></tr>
 		<tr><td>&nbsp;</td></tr>
 		<tr><td>&nbsp;</td></tr>
+	</table>
+	<table id="pricingTable">
 		<tr>
 			<td>TAG Member:</td>
 			<td><input type="text" value="<?php echo $_SESSION['username'];?>" disabled="disabled" /></td>
