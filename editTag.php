@@ -162,6 +162,10 @@
 	}
 
 
+    $laborMult = dbQuery($db, "SELECT Labor FROM Per_Hour");
+    $enginMult = dbQuery($db, "SELECT Engineering FROM Per_Hour");
+    $labor = $laborMult[0]['Labor'];
+    $engin = $enginMult[0]['Engineering']; 
 
 
 ?>
@@ -234,21 +238,21 @@
 	<table id="pricingTable">
 		<tr>
 			<td>Material:</td>
-			<td><input type="text" value="<?php echo $tag['MaterialCost']; ?>" /></td>
+			<td><input type="text" id="mCost" value="<?php echo $tag['MaterialCost']; ?>" /></td>
 		</tr>
 		<tr>
 			<td>Labor:</td>
-			<td><input type="text" value="<?php echo $tag['LaborCost']; ?>" /></td>
-			<td><input type="text" name="labor" placeholder="Hours" /></td>
+			<td><input id="lprice" type="text" placeholder="Labor Cost" /></td>
+			<td><input type="text" id="labor"  name="labor" placeholder="Hours" value="<?php echo $tag['LaborCost']; ?>" /></td>
 		</tr>
 		<tr style="border-bottom: 1px solid #000;">
 			<td>Engineering:</td>
-			<td><input type="text" value="<?php echo $tag['EngineeringCost']; ?>" /></td>
-			<td><input type="text" name="engineering" placeholder="Hours" /></td>
+			<td><input type="text" id="eprice" placeholder="Engineering Cost"  /></td>
+			<td><input type="text" id="engineering" name="engineering" placeholder="Hours" value="<?php echo $tag['EngineeringCost']; ?>" /></td>
 		</tr>
 		<tr>
 			<td>Initial Cost:</td>
-			<td><input type="text" value="<?php echo $tag['InstallCost']; ?>" /></td>
+			<td><input type="text" id="install" value="<?php echo $tag['InstallCost']; ?>" /></td>
 		</tr>
 		<tr><td>&nbsp;</td></tr>
 		<tr><td>&nbsp;</td></tr>
@@ -404,6 +408,55 @@
 
 	</div>
 </div>
+
+<script src="//code.jquery.com/jquery-1.9.1.js"></script>
+<script>
+$("#labor")
+    .change(function() {
+        var cost = $(this).val();
+        cost *= <?php echo $labor;?>;
+        $("#lprice").val(cost);
+        var mCost = parseInt($("#mCost").val());
+        var lCost = parseFloat(cost);
+        var eCost = parseFloat($("#eprice").val());
+        if(isNaN(eCost))
+            eCost = 0;
+        if(isNaN(mCost))
+            mCost = 0;
+
+        $("#install").val(mCost + lCost + eCost );
+    }).change()
+
+$("#engineering")
+    .change(function() {
+        var cost = $(this).val();
+        cost *= <?php echo $engin;?>;
+        $("#eprice").val(cost);
+        var mCost = parseInt($("#mCost").val());
+        var eCost = parseFloat(cost);
+        var lCost = parseFloat($("#lprice").val());
+        if(isNaN(lCost))
+            lCost = 0;
+        if(isNaN(mCost))
+            mCost = 0;
+
+        $("#install").val(mCost + lCost + eCost );
+    }).change()
+
+$("#mCost")
+    .change(function() {
+        var cost = $(this).val();
+        var lCost = parseFloat($("#lprice").val());
+        var eCost = parseFloat($("#eprice").val());
+        var mCost = parseFloat(cost);
+        if(isNaN(lCost))
+            lCost = 0;
+        if(isNaN(eCost))
+            eCost = 0;
+        $("#install").val(mCost + lCost + eCost );
+    }).change()
+        
+</script>
 
 <!--- OLD BACKEND CODE
 	<ul>
