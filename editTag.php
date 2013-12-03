@@ -1,10 +1,88 @@
 <?php
-
-	require_once('include/db.php');
 	
+	require_once('include/db.php');
+
 	session_start();
 	gateway(2);
 	$title = 'Edit Tag';
+
+	// Verify that a valid tag was specified
+	if (isset($_GET['tag'])) {
+
+
+		// Get the tag
+		$db = dbConnect();
+		$stmt = $db->prepare("SELECT Num, Revision, CreationDate, Description, Subcategory, Complexity, PriceExpire,
+			TagNotes, InstallCost, PriceNotes, Owner, LeadTime, MaterialCost, LaborCost, EngineeringCost,
+			HVL, HVLCC, MC, MVMCC
+			FROM Tag AS T WHERE Num = ? AND Revision = (SELECT MAX(Revision) FROM Tag WHERE Num = T.Num)");
+		$stmt->bind_param("i", $_GET['tag']);
+		$stmt->execute();
+		$stmt->store_result();
+
+		if ($stmt->num_rows > 0) {
+
+			$stmt->bind_result($num, $revision, $creationDate, $description, $category, $complexity, $priceExpire,
+				$notes, $cost, $priceNotes, $owner, $leadTime, $mat, $labor, $eng, $hvl, $hvlcc, $mc, $mvmcc);
+
+			$stmt->fetch();
+			$stmt->close();
+
+            $compArr = dbQuery($db, 'SELECT CName FROM Complexity');
+            $subCatArr = dbQuery($db, 'SELECT SName FROM Subcategory');
+
+			$tag = array(
+					'Num' => $num,
+					'Revision' => $revision,
+					'CreationDate' => $creationDate,
+					'Description' => $description,
+					'Subcategory' => $category,
+					'Complexity' => $complexity,
+					'PriceExpire' => $priceExpire,
+					'Notes' => $notes,
+					'InstallCost' => $cost,
+					'PriceNotes' => $priceNotes,
+					'Owner' => $owner,
+					'LeadTime' => $leadTime,
+					'MaterialCost' => $mat,
+					'LaborCost' => $labor,
+					'EngineeringCost' => $eng,
+					'HVL' => $hvl,
+					'HVLCC' => $hvlcc,
+					'MC' => $mc,
+					'MVMCC' => $mvmcc,
+                    'compArr' => $compArr,
+                    'subCatArr' => $subCatArr
+				);
+
+			
+		} else {
+			$error = "Invalid Tag Number";
+		}
+
+		// Get the multipliers
+		$countryDB = dbQuery($db, 'SELECT * FROM Country');
+		$countries = array();
+		foreach($countryDB as $country) {
+			$countries[$country['CName']] = $country['Multiplier'];
+		}
+
+		$productDB = dbQuery($db, 'SELECT * FROM Product_Type');
+		$products = array();
+		foreach($productDB as $product) {
+			$products[$product['PName']] = $product['Multiplier'];
+		}
+
+		$attachments = dbQuery($db, "SELECT * FROM Attachment WHERE Tag = '" . intval($_GET['tag']) . "'");
+		$fotable = dbQuery($db, "SELECT * FROM Applied_FO_Table WHERE Num = '" . intval($_GET['tag']) . "'");
+
+		$complexity = dbQuery($db, 'SELECT CName FROM Complexity');
+    	$subCategory = dbQuery($db, 'SELECT SName FROM Subcategory');
+
+	}
+
+
+
 
 ?>
 
@@ -25,12 +103,24 @@
 		<td>Lead Time</td>
 	</tr>
 	<tr>
-		<td><input id="addTag_tagNum" type="text" name="tagNum" placeholder="XX-XXXX" required /></td>
-		<td><input id="addTag_rev" type="text" name="rev" placeholder="#" required /></td>
-		<td><input id="addTag_date" type="text" name="date" placeholder="##/##/####" required /></td>
-		<td><input id="addTag_sCategory" type="text" name="sCategory" placeholder="Sub Category Name (pull from list of sub categories in DB)" required /></td>
-		<td><input id="addTag_complexity" type="text" name="complexity" placeholder="Drop Down for Complexities" required /></td>
-		<td><input id="addTag_leadTime"type="text" name="leadTime" placeholder="Lead Time" required /></td>
+		<td><input id="addTag_tagNum" type="text" name="tagNum" value="<?php echo $tag['Num']; ?>" disabled="disabled" /></td>
+		<td><input id="addTag_rev" type="text" name="rev" value="<?php echo $tag['Revision'] + 1; ?>" disabled="disabled" /></td>
+		<td><input id="addTag_date" type="text" name="date" value="<?php echo date('n/j/y'); ?>" disabled="disabled" /></td>
+		<td>
+            <select id="addTag_sCategory" name="sCategory">
+                <?php foreach($subCategory as $category) { ?>
+                    <option value="<?php echo $category['SName'] ?>" > <?php echo $category['SName'] ?> </option>
+                <?php } ?>
+            </select>
+        </td>
+        <td>
+            <select id="addTag_complexity" name="complexity">
+                <?php foreach($complexity as $item) { ?>
+                    <option value="<?php echo $item['CName'] ?>" > <?php echo $item['CName'] ?> </option>
+                <?php } ?>
+            </select>
+        </td>
+        <td><input id="addTag_leadTime"type="text" name="leadTime" value="<?php echo $tag['LeadTime']; ?>" /></td>
 	</tr>
 	</table>
 	<table id="tagTable">
@@ -38,7 +128,7 @@
 		<td>Tag Description:</td>
 	</tr>
 	<tr>
-		<td ><input id="tagDescCell" type="text" name="desc" placeholder="Enter a Tag Description" required /></td>
+		<td ><input id="tagDescCell" type="text" name="desc" value="<?php echo $tag['Description']; ?>" /></td>
 	</tr>
 	</table>
 	<table id="tagTable">
@@ -46,7 +136,7 @@
 		<td>Tag Notes:</td>
 	</tr>
 	<tr>
-		<td ><input id="tagDescCell"type="text" name="tagNotes" placeholder="Enter Tag Notes" required /></td>
+		<td ><input id="tagDescCell"type="text" name="tagNotes" value="<?php echo $tag['Notes']; ?>" /></td>
 	</tr>
 	</table>
 	<table id="tagTable">
@@ -54,7 +144,7 @@
 		<td>Price Note:</td>
 	</tr>
 	<tr>
-		<td ><input id="tagDescCell" type="text" name="priceNotes" placeholder="Enter Price Notes" required /></td>
+		<td ><input id="tagDescCell" type="text" name="priceNotes" value="<?php echo $tag['PriceNotes']; ?>" /></td>
 	</tr>
 	</table>
 	</div>
@@ -83,11 +173,11 @@
 		<tr><td>&nbsp;</td></tr>
 		<tr>
 			<td>TAG Member:</td>
-			<td><input type="text" placeholder="Name" /></td>
+			<td><input type="text" value="<?php echo $_SESSION['username'];?>" disabled="disabled" /></td>
 		</tr>
 		<tr>
 			<td>Price Expires:</td>
-			<td><input type="text" placeholder="##/##/####" /></td>
+			<td><input type="text" value="<?php echo $tag['PriceExpire']; ?>" /></td>
 		</tr>
 		<tr><td>&nbsp;</td></tr>
 		<tr><td>&nbsp;</td></tr>
@@ -102,7 +192,7 @@
 		<li>Attachment1.pdf<input type="checkbox" value="MVMCC" id="attachmentCheckbox" /></li>
 		<li>Attachment2.txt<input type="checkbox" value="MVMCC" id="attachmentCheckbox" /></li>
 		<li>TheNRealEngine-eBook.pdf<input type="checkbox" value="MVMCC" id="attachmentCheckbox" /></li>
-		<!-- Add PHP to retrieve list of attachments and their respective links --->
+		<!-- Add PHP to retrieve list of attachments and their respective links -->
 	</ul><br />
 	<form>
 		<input type="file" name="file" id="file"><br />
@@ -119,28 +209,28 @@
 			<td>Mexico$</td>
 		</tr>
 		<tr>
-			<td><input type="checkbox" name="vehicle" value="HVL" />HVL</td>
-			<td><input type="text" placeholder="$X.XX" /></td>
-			<td><input type="text" placeholder="$X.XX" /></td>
-			<td><input type="text" placeholder="$X.XX" /></td>
+			<td><input type="checkbox" <?php if($tag['HVL'] == 1) { echo 'checked="checked"'; }?> />HVL</td>
+			<td><input type="text" value="<?php echo $tag['InstallCost'] * $products['HVL'] * $countries['USA']; ?>" /></td>
+			<td><input type="text" value="<?php echo $tag['InstallCost'] * $products['HVL'] * $countries['Canada']; ?>" /></td>
+			<td><input type="text" value="<?php echo $tag['InstallCost'] * $products['HVL'] * $countries['Mexico']; ?>" /></td>
 		</tr>
 		<tr>
-			<td><input type="checkbox" name="vehicle" value="HVL/CC" />HVL/CC</td>
-			<td><input type="text" placeholder="$X.XX" /></td>
-			<td><input type="text" placeholder="$X.XX" /></td>
-			<td><input type="text" placeholder="$X.XX" /></td>
+			<td><input type="checkbox" <?php if($tag['HVLCC'] == 1) { echo 'checked="checked"'; }?> />HVL/CC</td>
+			<td><input type="text" value="<?php echo $tag['InstallCost'] * $products['HVL/CC'] * $countries['USA']; ?>" /></td>
+			<td><input type="text" value="<?php echo $tag['InstallCost'] * $products['HVL/CC'] * $countries['Canada']; ?>" /></td>
+			<td><input type="text" value="<?php echo $tag['InstallCost'] * $products['HVL/CC'] * $countries['Mexico']; ?>" /></td>
 		</tr>
 		<tr>
-			<td><input type="checkbox" name="vehicle" value="Metal Clad" />Metal Clad</td>
-			<td><input type="text" placeholder="$X.XX" /></td>
-			<td><input type="text" placeholder="$X.XX" /></td>
-			<td><input type="text" placeholder="$X.XX" /></td>
+			<td><input type="checkbox" <?php if($tag['MC'] == 1) { echo 'checked="checked"'; }?> />Metal Clad</td>
+			<td><input type="text" value="<?php echo $tag['InstallCost'] * $products['Metal Clad'] * $countries['USA']; ?>" /></td>
+			<td><input type="text" value="<?php echo $tag['InstallCost'] * $products['Metal Clad'] * $countries['Canada']; ?>" /></td>
+			<td><input type="text" value="<?php echo $tag['InstallCost'] * $products['Metal Clad'] * $countries['Mexico']; ?>" /></td>
 		</tr>
 		<tr>
-			<td><input type="checkbox" name="vehicle" value="MVMCC" />MVMCC</td>
-			<td><input type="text" placeholder="$X.XX" /></td>
-			<td><input type="text" placeholder="$X.XX" /></td>
-			<td><input type="text" placeholder="$X.XX" /></td>
+			<td><input type="checkbox" <?php if($tag['MVMCC'] == 1) { echo 'checked="checked"'; }?> />MVMCC</td>
+			<td><input type="text" value="<?php echo $tag['InstallCost'] * $products['MVMCC'] * $countries['USA']; ?>" /></td>
+			<td><input type="text" value="<?php echo $tag['InstallCost'] * $products['MVMCC'] * $countries['Canada']; ?>" /></td>
+			<td><input type="text" value="<?php echo $tag['InstallCost'] * $products['MVMCC'] * $countries['Mexico']; ?>" /></td>
 		</tr>
 	</table>
 	</div>
