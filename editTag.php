@@ -2,16 +2,71 @@
 	
 	require_once('include/db.php');
 
+	date_default_timezone_set('America/Chicago');
+
 	session_start();
 	gateway(2);
 	$title = 'Edit Tag';
+
+	$db = dbConnect();
+
+	if (isset($_POST['submit'])) {
+
+		// Add an entry to the log_in table
+		$sql = "INSERT INTO Tag(Num, Revision, LeadTime, CreationDate, Description, TagNotes, 
+				PriceNotes, PriceExpire, MaterialCost, LaborCost, EngineeringCost, 
+				InstallCost, Subcategory, Complexity, Owner, HVL, HVLCC, MC, MVMCC)
+				VALUES (?, ?, ?, CURRENT_DATE, ?, ?, ?, ADDDATE(CURRENT_DATE, INTERVAL ? MONTH), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		$stmt = $db->prepare($sql);
+
+		$totalCost = $_POST['mCost'] + $_POST['labor'] + $_POST['engineering'];
+
+		$hvl = (isset($_POST['hvl']) ? 1 : 0);
+		$hvlcc = (isset($_POST['hvlcc']) ? 1 : 0);
+		$mc = (isset($_POST['mc']) ? 1 : 0);
+		$mvmcc = (isset($_POST['mvmcc']) ? 1 : 0);
+
+		$stmt->bind_param("iiisssiddddsssiiii",
+			$_POST['tag'],
+			$_POST['rev'],
+			$_POST['leadTime'],
+			$_POST['desc'],
+			$_POST['tagNotes'],
+			$_POST['priceNotes'],
+			$_POST['priceExpiration'],
+			$_POST['mCost'],
+			$_POST['labor'],
+			$_POST['engineering'],
+			$totalCost,
+			$_POST['sCategory'],
+			$_POST['complexity'],
+			$_SESSION['username'],
+			$hvl,
+			$hvlcc,
+			$mc,
+			$mvmcc);
+
+		$stmt->execute();
+
+		if ($db->affected_rows == 1) {
+			// Success
+			$flash = 'Tag updated!';
+			Header('Location: viewTag.php?tag=' . $_POST['tag'] . '&rev=' . $_POST['rev']);
+			
+		} else {
+			$error = 'Error updating Tag<br />' . $db->error;
+		}
+
+		$stmt->close();
+
+	}
 
 	// Verify that a valid tag was specified
 	if (isset($_GET['tag'])) {
 
 
 		// Get the tag
-		$db = dbConnect();
+	
 		$stmt = $db->prepare("SELECT Num, Revision, CreationDate, Description, Subcategory, Complexity, PriceExpire,
 			TagNotes, InstallCost, PriceNotes, Owner, LeadTime, MaterialCost, LaborCost, EngineeringCost,
 			HVL, HVLCC, MC, MVMCC
@@ -90,7 +145,7 @@
 <div class="page-header">
 	<h1>Edit a Tag</h1>
 </div> 
-<form name="addtag" action="addTag.php" method="post" accept-charset="utf-8">
+<form name="addtag" action="editTag.php?tag=<?php echo $tag['Num']; ?>" method="post" accept-charset="utf-8">
 	<div id="section_wrapper">
 	<div id="section1">
 	<table id="addTagDiv">
@@ -103,9 +158,9 @@
 		<td>Lead Time</td>
 	</tr>
 	<tr>
-		<td><input id="addTag_tagNum" type="text" name="tagNum" value="<?php echo $tag['Num']; ?>" disabled="disabled" /></td>
-		<td><input id="addTag_rev" type="text" name="rev" value="<?php echo $tag['Revision'] + 1; ?>" disabled="disabled" /></td>
-		<td><input id="addTag_date" type="text" name="date" value="<?php echo date('n/j/y'); ?>" disabled="disabled" /></td>
+		<td><input id="addTag_tagNum" type="text" name="tag" value="<?php echo $tag['Num']; ?>" readonly="readonly" /></td>
+		<td><input id="addTag_rev" type="text" name="rev" value="<?php echo $tag['Revision'] + 1; ?>" readonly="readonly" /></td>
+		<td><input id="addTag_date" type="text" name="date" value="<?php echo date('n/j/y'); ?>" readonly="readonly" /></td>
 		<td>
             <select id="addTag_sCategory" name="sCategory">
                 <?php foreach($subCategory as $category) { ?>
@@ -154,21 +209,21 @@
 	<table id="pricingTable">
 		<tr>
 			<td>Material:</td>
-			<td><input type="text" placeholder="$X.XX" /></td>
+			<td><input type="text" value="<?php echo $tag['MaterialCost']; ?>" /></td>
 		</tr>
 		<tr>
 			<td>Labor:</td>
-			<td><input type="text" placeholder="$X.XX" /></td>
+			<td><input type="text" value="<?php echo $tag['LaborCost']; ?>" /></td>
 			<td><input type="text" name="labor" placeholder="Hours" /></td>
 		</tr>
 		<tr style="border-bottom: 1px solid #000;">
 			<td>Engineering:</td>
-			<td><input type="text" placeholder="$X.XX" /></td>
+			<td><input type="text" value="<?php echo $tag['EngineeringCost']; ?>" /></td>
 			<td><input type="text" name="engineering" placeholder="Hours" /></td>
 		</tr>
 		<tr>
 			<td>Initial Cost:</td>
-			<td><input type="text" placeholder="$SUM" /></td>
+			<td><input type="text" value="<?php echo $tag['InstallCost']; ?>" /></td>
 		</tr>
 		<tr><td>&nbsp;</td></tr>
 		<tr><td>&nbsp;</td></tr>
@@ -177,7 +232,7 @@
 	<table id="pricingTable">
 		<tr>
 			<td>TAG Member:</td>
-			<td><input type="text" value="<?php echo $_SESSION['username'];?>" disabled="disabled" /></td>
+			<td><input type="text" value="<?php echo $_SESSION['username'];?>" readonly="readonly" /></td>
 		</tr>
 		<tr>
 			<td>Price Expires:</td>
@@ -188,19 +243,19 @@
 		<tr><td>&nbsp;</td></tr>
 	</table>
 	<button class="btn btn-danger" id="attachmentButton">Click Box to Make TAG Permanently Obsolete</button><br />
-	<button class="btn btn-success" id="attachmentButton">Save</button><br /><br />
+	<input type="submit" name="submit" class="btn btn-success" id="attachmentButton" value="Save" /><br /><br />
 	<hr style="clear: both"/>
 	<div id="attachmentList">
 	<strong>Attachments:</strong>
-	<ul style="list-style-type: none">	
-		<li>Attachment1.pdf<input type="checkbox" value="MVMCC" id="attachmentCheckbox" /></li>
-		<li>Attachment2.txt<input type="checkbox" value="MVMCC" id="attachmentCheckbox" /></li>
-		<li>TheNRealEngine-eBook.pdf<input type="checkbox" value="MVMCC" id="attachmentCheckbox" /></li>
-		<!-- Add PHP to retrieve list of attachments and their respective links -->
+	<ul style="list-style-type: none">
+		<?php if (!empty($attachments)) { foreach($attachments as $attachment) { ?>
+			<li><input type="checkbox" value="<?php echo $attachment['Name']; ?>" /> <?php echo $attachment['Name']; ?></li>
+		<?php } } ?>
 	</ul><br />
-	<form>
+	
+
 		<input type="file" name="file" id="file"><br />
-		<button class="btn btn-success" id="viewTag_button">Add</button></form><button class="btn btn-danger" id="viewTag_button">Delete</button><br />
+		<button class="btn btn-success" id="viewTag_button">Add</button><button class="btn btn-danger" id="viewTag_button">Delete</button><br />
 	</div>
 	</div>	
 	<div id="section2">
@@ -213,31 +268,32 @@
 			<td>Mexico$</td>
 		</tr>
 		<tr>
-			<td><input type="checkbox" <?php if($tag['HVL'] == 1) { echo 'checked="checked"'; }?> />HVL</td>
+			<td><input type="checkbox" <?php if($tag['HVL'] == 1) { echo 'checked="checked"'; }?> name="hvl" value="HVL" />HVL</td>
 			<td><input type="text" value="<?php echo $tag['InstallCost'] * $products['HVL'] * $countries['USA']; ?>" /></td>
 			<td><input type="text" value="<?php echo $tag['InstallCost'] * $products['HVL'] * $countries['Canada']; ?>" /></td>
 			<td><input type="text" value="<?php echo $tag['InstallCost'] * $products['HVL'] * $countries['Mexico']; ?>" /></td>
 		</tr>
 		<tr>
-			<td><input type="checkbox" <?php if($tag['HVLCC'] == 1) { echo 'checked="checked"'; }?> />HVL/CC</td>
+			<td><input type="checkbox" <?php if($tag['HVLCC'] == 1) { echo 'checked="checked"'; }?> name="hvlcc" value="hvlcc" />HVL/CC</td>
 			<td><input type="text" value="<?php echo $tag['InstallCost'] * $products['HVL/CC'] * $countries['USA']; ?>" /></td>
 			<td><input type="text" value="<?php echo $tag['InstallCost'] * $products['HVL/CC'] * $countries['Canada']; ?>" /></td>
 			<td><input type="text" value="<?php echo $tag['InstallCost'] * $products['HVL/CC'] * $countries['Mexico']; ?>" /></td>
 		</tr>
 		<tr>
-			<td><input type="checkbox" <?php if($tag['MC'] == 1) { echo 'checked="checked"'; }?> />Metal Clad</td>
+			<td><input type="checkbox" <?php if($tag['MC'] == 1) { echo 'checked="checked"'; }?> name="mc" value="mc" />Metal Clad</td>
 			<td><input type="text" value="<?php echo $tag['InstallCost'] * $products['Metal Clad'] * $countries['USA']; ?>" /></td>
 			<td><input type="text" value="<?php echo $tag['InstallCost'] * $products['Metal Clad'] * $countries['Canada']; ?>" /></td>
 			<td><input type="text" value="<?php echo $tag['InstallCost'] * $products['Metal Clad'] * $countries['Mexico']; ?>" /></td>
 		</tr>
 		<tr>
-			<td><input type="checkbox" <?php if($tag['MVMCC'] == 1) { echo 'checked="checked"'; }?> />MVMCC</td>
+			<td><input type="checkbox" <?php if($tag['MVMCC'] == 1) { echo 'checked="checked"'; }?> name="mvmcc" value="mvmcc" />MVMCC</td>
 			<td><input type="text" value="<?php echo $tag['InstallCost'] * $products['MVMCC'] * $countries['USA']; ?>" /></td>
 			<td><input type="text" value="<?php echo $tag['InstallCost'] * $products['MVMCC'] * $countries['Canada']; ?>" /></td>
 			<td><input type="text" value="<?php echo $tag['InstallCost'] * $products['MVMCC'] * $countries['Mexico']; ?>" /></td>
 		</tr>
 	</table>
 	</div>
+</form>
 <div id="section4">
 
 <!-- Nav tabs -->
@@ -255,11 +311,15 @@
 		<th>FO Number Applied To</th>
 		<th>Notes</th>
 	</tr>
-	<tr>
-		<td>Hi</td>
-		<td>Chyna</td>
-		<td>BOOM</td>
-	</tr>
+	<?php if (!empty($fotable)) { foreach($fotable as $fo) { ?>
+		<?php if ($fo['Typeof'] == 'Q') { ?>
+			<tr>
+				<td><?php echo $tag['Num']; ?></td>
+				<td><?php echo $fo['FONumber']; ?></td>
+				<td><?php echo $tag['Notes']; ?></td>
+			</tr>
+		<?php } ?>	
+	<?php } } ?>
 	</table>
 	<form style="margin-top: 20px;">
 	<input type="text" placeholder="Enter Tag Number" />
@@ -275,11 +335,15 @@
 		<th>FO Number Applied To</th>
 		<th>Notes</th>
 	</tr>
-	<tr>
-		<td>Hello</td>
-		<td>Shawn Michaels</td>
-		<td>ROASTED</td>
-	</tr>
+	<?php if (!empty($fotable)) { foreach($fotable as $fo) { ?>
+		<?php if ($fo['Typeof'] == 'F') { ?>
+			<tr>
+				<td><?php echo $tag['Num']; ?></td>
+				<td><?php echo $fo['FONumber']; ?></td>
+				<td><?php echo $tag['Notes']; ?></td>
+			</tr>
+		<?php } ?>	
+	<?php } } ?>
 	</table>
 	<form style="margin-top: 20px;">
 	<input type="text" placeholder="Enter Tag Number" />
@@ -310,5 +374,4 @@
 		<li><input type="submit" name="submit" value="Create Tag" /></li>
 	</ul>
 -->
-</form>
 <?php include "include/footer.php"; ?>
