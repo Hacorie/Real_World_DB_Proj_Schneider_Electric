@@ -295,20 +295,15 @@
 			<table class="table table-bordered table-striped" id="tags_table">
 				<thead>
 					<tr>
-						<th id="th_tag">Tag</th>
-						<th id="th_rev">Rev</th>
-						<th id="th_date">Date</th>
-						<th id="th_desc">Description</th>
-						<th id="th_subcat">Sub Cat.</th>
-						<th id="th_hvl">HVL</th>
-						<th id="th_cc4">HVL CC4</th>
-						<th id="th_mclad">Metal Clad</th>
-						<th id="th_mvcc"> MV MCC</th>
-						<th id="th_spec">Special Items</th>
-						<th id="th_nodes">Notes</th>
-						<th id="th_install">Install Cost</th>
-						<th id="th_pricenote">Price Note</th>
-						<th id="th_creator">Created By</th>
+						<th id="th_tag" style="text-align: center;">Tag</th>
+						<th id="th_rev" style="text-align: center;">Rev</th>
+						<th id="th_date" style="text-align: center;">Date</th>
+						<th id="th_desc" style="text-align: center;">Description</th>
+						<th id="th_subcat" style="text-align: center;">Sub Cat.</th>
+						<th id="th_nodes" style="text-align: center;">Notes</th>
+						<th id="th_install" style="text-align: center;">Install Cost</th>
+						<th id="th_pricenote" style="text-align: center;">Price Note</th>
+						<th id="th_creator" style="text-align: center;">Created By</th>
 					</tr>
 				</thead>
 				<tbody>
