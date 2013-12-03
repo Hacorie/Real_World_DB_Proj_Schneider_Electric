@@ -6,12 +6,44 @@
 	gateway(1);
 	$title = 'Search Tags';
 
-	if (isset($_GET['query'])) {
+	if (isset($_GET['search']) || isset($_GET['advSearch'])) {
 
 		$db = dbConnect();
 
-		$sql = "SELECT Num, Revision, CreationDate, Description, Subcategory, TagNotes, InstallCost, PriceNotes, Owner 
-			FROM Tag AS T WHERE (Num = ? OR Description LIKE ?)";
+		$where = array(
+			"Num = ?",
+			"Revision = ?",
+			"CreationDate = ?",
+			"Description LIKE ?",
+			"Subcategory LIKE ?",
+			"TagNotes LIKE ?",
+			"PriceNotes LIKE ?",
+			"InstallCost = ?",
+			"Owner LIKE ?"
+			);
+
+		$sql = "SELECT Num, Revision, CreationDate, Description, Subcategory, TagNotes, InstallCost, PriceNotes, Owner FROM Tag AS T WHERE";
+		$sql .= ' (' . join(' OR ', $where) . ')';
+
+		$tag = $rev = $date = $desc = $category = $notes = $install = $price = $owner = '';
+
+		if (isset($_GET['search'])) {
+			$query = $_GET['query'];
+
+			$tag = $rev = $install = $query;
+			$date = $desc = $category = $notes = $price = $owner = '%' . $query . '%';
+		} else {
+			$tag = ($_GET['tag'] !== '' ? $_GET['tag'] : 'NULL');
+			$rev = ($_GET['rev'] !== '' ? $_GET['rev'] : 'NULL');
+			$date = ($_GET['date'] !== '' ? $_GET['date'] : 'NULL');
+			$desc = ($_GET['desc'] !== '' ? '%' . $_GET['desc'] . '%' : '');
+			$category = ($_GET['category'] !== '' ? '%' . $_GET['category'] . '%' : '');
+			$notes = ($_GET['notes'] !== '' ? '%' . $_GET['notes'] . '%' : '');
+			$price = ($_GET['price'] !== '' ? '%' . $_GET['price'] . '%' : '');
+			$install = ($_GET['install'] !== '' ? $_GET['install'] : 'NULL');
+			$owner = ($_GET['owner'] !== '' ? '%' . $_GET['owner'] . '%' : '');
+
+		}
 
 		if (!(isset($_GET['old']) && $_GET['old'] == 'yes')) {
 			$sql .= " AND Revision = (SELECT MAX(Revision) FROM Tag WHERE Num = T.Num)";
@@ -20,7 +52,7 @@
 		$stmt = $db->prepare($sql);
 		$query = $_GET['query'];
 		$like = '%' . $query . '%';
-		$stmt->bind_param("is", $query, $like);
+		$stmt->bind_param("iisssssds", $tag, $rev, $date, $desc, $category, $notes, $price, $install, $owner);
 
 		$stmt->execute();
 		$stmt->bind_result($num, $revision, $creationDate, $description, $category, $notes, $cost, $priceNotes, $owner);
@@ -55,7 +87,7 @@
   		<button type="button" class="btn btn-default" onClick="toggleAdvSearch();">Advanced</button>
 	</div>
 </div>
-	<div class="large-3" id="simpleSearch">
+	<div class="large-3" <?php if (isset($_GET['advSearch'])) { echo 'style="display: none;"'; } ?>id="simpleSearch">
 		<form action="searchTag.php" method="GET">
 			<table class="table table-bordered table-striped" style="width: 25%;">
 				<tr><td><input type="text" name="query" id="userSearch" style="width: 100%;" placeholder="Enter Search Criteria" <?php if (isset($_GET['query'])) { echo 'value="'.$_GET['query'].'"'; } ?> /></td></tr>
@@ -63,20 +95,22 @@
 			<input type="checkbox" name="old" style="margin-top: 10px;" value="yes" <?php if (isset($_GET['old'])) { echo 'checked="checked"'; } ?> /> Include Older Revisions?
 			<br />
 			<button class="btn btn-s btn-success" type="submit" name="search" style="margin-top: 10px;">Search</button>
+		</form>
 	</div>
 
-	<div class="large-3" style="display: none;" id="advancedSearch">
+	<div class="large-3" <?php if (isset($_GET['search'])) { echo 'style="display: none;"'; } ?> id="advancedSearch">
 		<form action="searchTag.php" method="GET">
-		<table class="table table-bordered table-striped" style="width: 55%;">
-			<tr><td><strong>Tag Number:</strong></td><td><input type="text" name="query" id="userSearch" style="margin-right: 10px;" placeholder="Enter a Tag No." <?php if (isset($_GET['query'])) { echo 'value="'.$_GET['query'].'"'; } ?> /></td><td><strong>Notes:</strong></td><td><input type="text" name="query" id="userSearch" style="margin-right: 10px;" placeholder="Enter Notes" <?php if (isset($_GET['query'])) { echo 'value="'.$_GET['query'].'"'; } ?> /></td></tr>
-			<tr><td><strong>Revision:</strong></td><td><input type="text" name="query" id="userSearch" style="margin-right: 10px;" placeholder="Enter a Revision No." <?php if (isset($_GET['query'])) { echo 'value="'.$_GET['query'].'"'; } ?> /></td><td><strong>Install Cost:</strong></td><td><input type="text" name="query" id="userSearch" style="margin-right: 10px;" placeholder="Enter Install Cost" <?php if (isset($_GET['query'])) { echo 'value="'.$_GET['query'].'"'; } ?> /></td></tr>
-			<tr><td><strong>Date:</strong></td><td><input type="text" name="query" id="userSearch" style="margin-right: 10px;" placeholder="Enter a Date" <?php if (isset($_GET['query'])) { echo 'value="'.$_GET['query'].'"'; } ?> /></td><td><strong>Price Note:</strong></td><td><input type="text" name="query" id="userSearch" style="margin-right: 10px;" placeholder="Enter a Price Note" <?php if (isset($_GET['query'])) { echo 'value="'.$_GET['query'].'"'; } ?> /></td></tr>
-			<tr><td><strong>Description:</strong></td><td><input type="text" name="query" id="userSearch" style="margin-right: 10px;" placeholder="Enter a Description" <?php if (isset($_GET['query'])) { echo 'value="'.$_GET['query'].'"'; } ?> /></td><td><strong>Created By:</strong></td><td><input type="text" name="query" id="userSearch" style="margin-right: 10px;" placeholder="Enter Creator" <?php if (isset($_GET['query'])) { echo 'value="'.$_GET['query'].'"'; } ?> /></td></tr>
-			<tr><td><strong>Sub-Category:</strong></td><td><input type="text" name="query" id="userSearch" style="margin-right: 10px;" placeholder="Enter a Sub-Category" <?php if (isset($_GET['query'])) { echo 'value="'.$_GET['query'].'"'; } ?> /></td></tr>
+			<table class="table table-bordered table-striped" style="width: 55%;">
+				<tr><td><strong>Tag Number:</strong></td><td><input type="text" name="tag" id="userSearch" style="margin-right: 10px;" <?php if (isset($_GET['tag'])) { echo 'value="'.$_GET['tag'].'"'; } ?> /></td><td><strong>Notes:</strong></td><td><input type="text" name="notes" id="userSearch" style="margin-right: 10px;"  <?php if (isset($_GET['notes'])) { echo 'value="'.$_GET['notes'].'"'; } ?> /></td></tr>
+				<tr><td><strong>Revision:</strong></td><td><input type="text" name="rev" id="userSearch" style="margin-right: 10px;" <?php if (isset($_GET['rev'])) { echo 'value="'.$_GET['rev'].'"'; } ?> /></td><td><strong>Install Cost:</strong></td><td><input type="text" name="cost" id="userSearch" style="margin-right: 10px;" <?php if (isset($_GET['cost'])) { echo 'value="'.$_GET['cost'].'"'; } ?> /></td></tr>
+				<tr><td><strong>Date:</strong></td><td><input type="text" name="date" id="userSearch" style="margin-right: 10px;" <?php if (isset($_GET['date'])) { echo 'value="'.$_GET['date'].'"'; } ?> /></td><td><strong>Price Note:</strong></td><td><input type="text" name="price" id="userSearch" style="margin-right: 10px;" <?php if (isset($_GET['price'])) { echo 'value="'.$_GET['price'].'"'; } ?> /></td></tr>
+				<tr><td><strong>Description:</strong></td><td><input type="text" name="desc" id="userSearch" style="margin-right: 10px;" <?php if (isset($_GET['desc'])) { echo 'value="'.$_GET['desc'].'"'; } ?> /></td><td><strong>Created By:</strong></td><td><input type="text" name="owner" id="userSearch" style="margin-right: 10px;" <?php if (isset($_GET['owner'])) { echo 'value="'.$_GET['owner'].'"'; } ?> /></td></tr>
+				<tr><td><strong>Sub-Category:</strong></td><td><input type="text" name="category" id="userSearch" style="margin-right: 10px;" <?php if (isset($_GET['category'])) { echo 'value="'.$_GET['category'].'"'; } ?> /></td></tr>
 			</table>
 			<input type="checkbox" name="old" style="margin-top: 15px;" value="yes" <?php if (isset($_GET['old'])) { echo 'checked="checked"'; } ?> /> Include Older Revisions?
 			<br />
-			<button class="btn btn-s btn-success" type="submit" name="search" style="margin-top: 10px;">Search</button>
+			<button class="btn btn-s btn-success" type="submit" name="advSearch" style="margin-top: 10px;">Search</button>
+		</form>
 	</div>
 
 	<div class="lead">
