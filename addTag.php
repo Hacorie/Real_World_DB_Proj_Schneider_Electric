@@ -2,13 +2,15 @@
 		
 	require_once('include/db.php');
 
+	date_default_timezone_set('America/Chicago');
+
 	session_start();
 	gateway(2);
 	$title = 'Add / Insert a Tag';
 
-	if (isset($_POST['submit'])) {
+	$db = dbConnect(); 
 
-		$db = dbConnect();
+	if (isset($_POST['submit'])) {
 
 		// Add an entry to the log_in table
 		$sql = "INSERT INTO Tag(Revision, LeadTime, CreationDate, Description, TagNotes, 
@@ -45,7 +47,7 @@
 
 	}
 
-    $db = dbConnect(); 
+    $id = dbQuery($db, "SELECT Auto_increment FROM information_schema.tables WHERE table_name='Tag'");
     $complexity = dbQuery($db, 'SELECT CName FROM Complexity');
     $subCategory = dbQuery($db, 'SELECT SName FROM Subcategory');
     
@@ -70,9 +72,9 @@
 		<td>Lead Time</td>
 	</tr>
 	<tr>
-		<td><input id="addTag_tagNum" type="text" name="tagNum" placeholder="XX-XXXX" required /></td>
-		<td><input id="addTag_rev" type="text" name="rev" placeholder="1" content="1" required /></td>
-		<td><input id="addTag_date" type="text" name="date" placeholder="##/##/####" required /></td>
+		<td><input id="addTag_tagNum" type="text" name="tagNum" value="<?php echo $id[0]['Auto_increment']; ?>" disabled="disabled" /></td>
+		<td><input id="addTag_rev" type="text" name="rev" value="1" disabled="disabled" /></td>
+		<td><input id="addTag_date" type="text" name="date" value="<?php echo date('n/j/y'); ?>" disabled="disabled" /></td>
         <td>
             <select id="addTag_sCategory" name="sCategory">
                 <?php foreach($subCategory as $category) { ?>
@@ -89,7 +91,7 @@
         </td>
 		<!--<td><input id="addTag_sCategory" type="text" name="sCategory" placeholder="Sub Category Name (pull from list of sub categories in DB)" required /></td>
 		<td><input id="addTag_complexity" type="text" name="complexity" placeholder="Drop Down for Complexities" required /></td>-->
-		<td><input id="addTag_leadTime"type="text" name="leadTime" placeholder="Lead Time" required /></td>
+		<td><input id="addTag_leadTime"type="text" name="leadTime" placeholder="Lead Time" /></td>
 	</tr>
 	</table>
 	<table id="tagTable">
@@ -97,7 +99,7 @@
 		<td>Tag Description:</td>
 	</tr>
 	<tr>
-		<td ><input id="tagDescCell" type="text" name="desc" placeholder="Enter a Tag Description" required /></td>
+		<td ><input id="tagDescCell" type="text" name="desc" placeholder="Enter a Tag Description" /></td>
 	</tr>
 	</table>
 	<table id="tagTable">
@@ -105,7 +107,7 @@
 		<td>Tag Notes:</td>
 	</tr>
 	<tr>
-		<td ><input id="tagDescCell"type="text" name="tagNotes" placeholder="Enter Tag Notes" required /></td>
+		<td ><input id="tagDescCell"type="text" name="tagNotes" placeholder="Enter Tag Notes" /></td>
 	</tr>
 	</table>
 	<table id="tagTable">
@@ -113,7 +115,7 @@
 		<td>Price Note:</td>
 	</tr>
 	<tr>
-		<td ><input id="tagDescCell" type="text" name="priceNotes" placeholder="Enter Price Notes" required /></td>
+		<td ><input id="tagDescCell" type="text" name="priceNotes" placeholder="Enter Price Notes" /></td>
 	</tr>
 	</table>
 	</div>
@@ -123,26 +125,26 @@
 	<table id="pricingTable">
 		<tr>
 			<td>Material:</td>
-			<td><input type="text" placeholder="$X.XX" /></td>
+			<td><input type="text" name="mcost" placeholder="Price" /></td>
 		</tr>
 		<tr>
 			<td>Labor:</td>
-			<td><input type="text" placeholder="$X.XX" /></td>
+			<td><input type="text" name="labor" placeholder="Hours" /></td>
 		</tr>
 		<tr style="border-bottom: 1px solid #000;">
 			<td>Engineering:</td>
-			<td><input type="text" placeholder="$X.XX" /></td>
+			<td><input type="text" name="engineering" placeholder="Hours" /></td>
 		</tr>
 		<tr>
 			<td>Initial Cost:</td>
-			<td><input type="text" placeholder="$SUM" /></td>
+			<td><input type="text" name="install" disabled="disabled" /></td>
 		</tr>
 		<tr><td>&nbsp;</td></tr>
 		<tr><td>&nbsp;</td></tr>
 		<tr><td>&nbsp;</td></tr>
 		<tr>
 			<td>TAG Member:</td>
-			<td><input type="text" placeholder="Name" /></td>
+			<td><input type="text" value="<?php echo $_SESSION['username'];?>" disabled="disabled" /></td>
 		</tr>
 		<tr>
 			<td>Price Expires:</td>
