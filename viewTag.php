@@ -78,7 +78,8 @@
 
 	}
 
-
+    $odb = dbConnect();
+    $tags = dbQuery( $odb, "SELECT Num, Revision, CreationDate, Description, Subcategory, TagNotes, InstallCost, PriceNotes, Owner FROM Tag AS T WHERE Revision = (SELECT MAX(Revision) FROM Tag WHERE Num = T.Num)");
 
 
 ?>
@@ -309,7 +310,24 @@
 					</tr>
 				</thead>
 				<tbody>
-				<!--- Need to retrieve via PHP --->
+				<?php foreach($tags as $tag) { ?>
+                    <tr>
+                        <td>
+							<a href="viewTag.php?tag=<?php echo $tag['Num']; ?>&rev=<?php echo $tag['Revision'];?>">
+                                <?php echo $tag['Num']; ?>
+                            </a>
+                        </td> 
+                        <td><?php echo $tag['Revision']; ?> </td> 
+                        <td><?php echo $tag['CreationDate']; ?> </td> 
+                        <td><?php echo $tag['Description']; ?> </td> 
+                        <td><?php echo $tag['Subcategory']; ?> </td> 
+                        <td><?php echo $tag['TagNotes']; ?> </td> 
+                        <td><?php echo $tag['InstallCost']; ?> </td> 
+                        <td><?php echo $tag['PriceNotes']; ?> </td> 
+                        <td><?php echo $tag['Owner']; ?> </td> 
+                    </tr>
+                <?php } ?>
+
 				</tbody>
 			</table>
 		</div>
