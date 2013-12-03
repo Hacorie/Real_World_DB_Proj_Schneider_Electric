@@ -172,7 +172,7 @@
 		<tr id="emptyRow"><td>&nbsp;</td></tr>
 	</table>
 	<button class="btn btn-danger" id="attachmentButton">Click Box to Make TAG Permanently Obsolete</button><br />
-	<button class="btn btn-primary" id="attachmentButton">Make Revision</button><br /><br />
+	<a href="editTag.php?tag=<?php echo $tag['Num']; ?>" class="btn btn-primary" id="attachmentButton">Make Revision</a><br /><br />
 	<hr style="clear: both"/>
 	<div id="attachmentList">
 	<strong>Attachments:</strong>
