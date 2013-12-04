@@ -109,6 +109,22 @@
 
 	}
 
+	if (isset($_POST['filedelete']) && !empty($_POST['deleteFile'])) {
+		$sql = "DELETE FROM Attachment WHERE Tag = ? AND Name = ?";
+		$stmt = $db->prepare($sql);
+
+		$stmt->bind_param("ss",
+			$_GET['tag'],
+			$file);
+
+		foreach($_POST['deleteFile'] as $file) {
+			$stmt->execute();
+		}
+
+		$flash = "Files removed";
+
+	}
+
 	// Verify that a valid tag was specified
 	if (isset($_GET['tag'])) {
 
@@ -426,14 +442,15 @@
 			<ul style="list-style-type: none">
 				<?php if (!empty($attachments)) { foreach($attachments as $attachment) { ?>
 					<li>
-						<input type="checkbox" value="<?php echo $attachment['Name']; ?>" />
+						<input type="checkbox" name="deleteFile[]" value="<?php echo $attachment['Name']; ?>" />
 						<a href="<?php echo $attachment['Path']; ?>" target="_blank"><?php echo $attachment['Name']; ?></a>
 					</li>
 				<?php } } ?>
 			</ul><br />
 
 			<input type="file" name="file" id="file"><br />
-			<input type="submit" name="fileadd" class="btn btn-success" id="viewTag_button" value="Add" /><button class="btn btn-danger" id="viewTag_button">Delete</button><br />
+			<input type="submit" name="fileadd" class="btn btn-success" id="viewTag_button" value="Add" />
+			<input type="submit" name="filedelete" class="btn btn-danger" id="viewTag_button" value="Delete" /><br />
 		</form>
 	</div>
 </div>
