@@ -19,7 +19,7 @@
 				VALUES (1, ?, CURRENT_DATE, ?, ?, ?, ADDDATE(CURRENT_DATE, INTERVAL ? MONTH), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		$stmt = $db->prepare($sql);
 
-		$totalCost = $_POST['mCost'] + $_POST['labor'] + $_POST['engineering'];
+		$totalCost = $_POST['mcost'] + $_POST['lcost'] + $_POST['ecost'];
 
 		$hvl = (isset($_POST['hvl']) ? 1 : 0);
 		$hvlcc = (isset($_POST['hvlcc']) ? 1 : 0);
@@ -32,7 +32,7 @@
 			$_POST['tagNotes'],
 			$_POST['priceNotes'],
 			$_POST['priceExpiration'],
-			$_POST['mCost'],
+			$_POST['mcost'],
 			$_POST['labor'],
 			$_POST['engineering'],
 			$totalCost,
@@ -49,7 +49,7 @@
 		if ($db->affected_rows == 1) {
 			// Success
 			$flash = 'Tag added!';
-			Header('Location: homepage.php');
+			Header('Location: viewTag.php?rev=1&tag=' . $stmt->insert_id);
 			
 		} else {
 			$error = 'Error adding Tag<br />' . $db->error;
@@ -88,9 +88,9 @@
 		<td>Lead Time</td>
 	</tr>
 	<tr>
-		<td><input id="addTag_tagNum" type="text" name="tagNum" value="<?php echo $id[0]['Auto_increment']; ?>" disabled="disabled" /></td>
-		<td><input id="addTag_rev" type="text" name="rev" value="1" disabled="disabled" /></td>
-		<td><input id="addTag_date" type="text" name="date" value="<?php echo date('n/j/y'); ?>" disabled="disabled" /></td>
+		<td><input id="addTag_tagNum" type="text" name="tagNum" value="<?php echo $id[0]['Auto_increment']; ?>" readonly="readonly" /></td>
+		<td><input id="addTag_rev" type="text" name="rev" value="1" readonly="readonly" /></td>
+		<td><input id="addTag_date" type="text" name="date" value="<?php echo date('n/j/y'); ?>" readonly="readonly" /></td>
         <td>
             <select id="addTag_sCategory" name="sCategory">
                 <?php foreach($subCategory as $category) { ?>
@@ -139,21 +139,21 @@
 	<table id="pricingTable">
 		<tr>
 			<td>Material:</td>
-			<td><input type="text" id="mCost" name="mCost" placeholder="Price" /></td>
+			<td><input type="text" name="mcost" id="mCost" name="mCost" placeholder="Price" /></td>
 		</tr>
 		<tr>
 			<td>Labor:</td>
-			<td><input type="text" id="lprice" name="lprice" disabled="disabled" /></td>
-			<td><input type="text" id="labor"name="labor" placeholder="Hours" /></td>
+			<td><input type="text" id="lprice" name="lcost" readonly="readonly" /></td>
+			<td><input type="text" name="labor" id="labor"name="labor" placeholder="Hours" /></td>
 		</tr>
 		<tr style="border-bottom: 1px solid #000;" >
 			<td>Engineering:</td>
-			<td><input type="text" id="eprice"  name="eprice" disabled="disabled" /></td>
-			<td><input type="text" id="engineering" name="engineering" placeholder="Hours" /></td>
+			<td><input type="text" id="eprice"  name="ecost" readonly="readonly" /></td>
+			<td><input type="text" name="engineering" id="engineering" name="engineering" placeholder="Hours" /></td>
 		</tr>
 		<tr>
 			<td>Initial Cost:</td>
-			<td><input type="text" id="install"  name="install" disabled="disabled" /></td>
+			<td><input type="text" id="install"  name="install" readonly="readonly" /></td>
 		</tr>
 		<tr id="emptyRow"><td>&nbsp;</td></tr>
 		<tr id="emptyRow"><td>&nbsp;</td></tr>
@@ -162,7 +162,7 @@
 	<table id="pricingTable">
 		<tr>
 			<td>TAG Member:</td>
-			<td><input type="text" value="<?php echo $_SESSION['username'];?>" disabled="disabled" /></td>
+			<td><input type="text" value="<?php echo $_SESSION['username'];?>" readonly="readonly" /></td>
 		</tr>
 		<tr>
 			<td>Price Expires:</td>

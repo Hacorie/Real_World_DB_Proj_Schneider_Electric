@@ -44,7 +44,7 @@
 				VALUES (?, ?, ?, CURRENT_DATE, ?, ?, ?, ADDDATE(CURRENT_DATE, INTERVAL ? MONTH), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		$stmt = $db->prepare($sql);
 
-		$totalCost = $_POST['mCost'] + $_POST['labor'] + $_POST['engineering'];
+		$totalCost = $_POST['mcost'] + $_POST['lcost'] + $_POST['ecost'];
 
 		$hvl = (isset($_POST['hvl']) ? 1 : 0);
 		$hvlcc = (isset($_POST['hvlcc']) ? 1 : 0);
@@ -59,7 +59,7 @@
 			$_POST['tagNotes'],
 			$_POST['priceNotes'],
 			$_POST['priceExpiration'],
-			$_POST['mCost'],
+			$_POST['mcost'],
 			$_POST['labor'],
 			$_POST['engineering'],
 			$totalCost,
@@ -277,16 +277,16 @@
 	<table id="pricingTable">
 		<tr>
 			<td>Material:</td>
-			<td><input type="text" id="mCost" value="<?php echo $tag['MaterialCost']; ?>" /></td>
+			<td><input type="text" name="mcost" id="mCost" value="<?php echo $tag['MaterialCost']; ?>" /></td>
 		</tr>
 		<tr>
 			<td>Labor:</td>
-			<td><input id="lprice" type="text" placeholder="Labor Cost" readonly="readonly" /></td>
+			<td><input id="lprice" name="lcost" type="text" placeholder="Labor Cost" readonly="readonly" /></td>
 			<td><input type="text" id="labor"  name="labor" placeholder="Hours" value="<?php echo $tag['LaborCost']; ?>" /></td>
 		</tr>
 		<tr style="border-bottom: 1px solid #000;">
 			<td>Engineering:</td>
-			<td><input type="text" id="eprice" placeholder="Engineering Cost" readonly="readonly" /></td>
+			<td><input type="text" name="ecost" id="eprice" placeholder="Engineering Cost" readonly="readonly" /></td>
 			<td><input type="text" id="engineering" name="engineering" placeholder="Hours" value="<?php echo $tag['EngineeringCost']; ?>" /></td>
 		</tr>
 		<tr>
