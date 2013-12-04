@@ -90,5 +90,6 @@ function isAdmin() {
 				<?php } ?>
 
 				<div id="printedBy">
+					<img src="images/favicon.ico">
 					Printed by <?php echo $_SESSION['username']; ?>
 				</div>
