@@ -1,19 +1,18 @@
 #printedBy{
 	display: none;
-	float: right;
 }
 
-@media print{
+@media print {
 	
-#section1, #section2, #section3, #plTable{
+#section1, #section2, #section3, #plTable {
 	width: 100%;
 }
 
-#attachmentButton, #emptyRow{
+#attachmentButton, #emptyRow {
 	display: none;
 }
 
-#navbar, #footer{
+#navbar, #footer {
 	display: none;
 }
 
@@ -22,30 +21,32 @@
 	margin-bottom: 0;
 }
 
-.nav-tabs{
+.nav-tabs {
 	display: none;
 }
 
-.tab-content{
+.tab-content {
 	margin-top: 60px;
 }
 
-#section4{
+#section4 {
 	width: 100%;
 }
 
-.page-header{
+.page-header {
 	margin-top: -80px;
 }
 
-#pheader[
+#pheader {
 	display: none
 	float: left;
 }
 
-#printedBy{
-	display: inline;
-	float: right;
+#printedBy {
+	display: block;
+	position: absolute;
+	top: 0px;
+	left: 500px;
 }
 
 }
