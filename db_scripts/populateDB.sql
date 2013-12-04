@@ -42,25 +42,25 @@ INSERT INTO Subcategory VALUES
 
 INSERT INTO Tag VALUES
 	(6001, 1, "1", CURDATE(), "This is a description", "This is Tag Notes", "This is Price Notes", 
-		CURDATE(), 12.50, 13.50, 14.50, NULL, "AC Panel", "A", "Tony", 1, 0, 1, 0),
+		CURDATE(), 12.50, 13.50, 14.50, 100, "AC Panel", "A", "Tony", 1, 0, 1, 0),
 	(6002, 1, "2", CURDATE(), "This is another description", "This is another Tag Notes", "This is another Price Notes", 
-		CURDATE(), 112.50, 213.50, 134.50, NULL, "Arc Resistant", "B", "Tony", 0, 0, 0, 0),
+		CURDATE(), 112.50, 213.50, 134.50, 100, "Arc Resistant", "B", "Tony", 0, 0, 0, 0),
 	(6002, 2, "2", CURDATE(), "This is another description", "This is another Tag Notes", "This is another Price Notes", 
-		CURDATE(), 112.50, 213.50, 134.50, NULL, "Arc Resistant", "B", "Tony", 0, 0, 0, 0),
+		CURDATE(), 112.50, 213.50, 134.50, 100, "Arc Resistant", "B", "Tony", 0, 0, 0, 0),
 	(6003, 1, "3", CURDATE(), "This is an awesome description", "This is an awesome Tag Notes", "This is an awesome Price Notes", 
-		CURDATE(), 50, 22.50, 455.11, NULL, "Cables", "G", "Adam", 0, 0, 0, 0),
+		CURDATE(), 50, 22.50, 455.11, 100, "Cables", "G", "Adam", 0, 0, 0, 0),
 	(6003, 2, "3", CURDATE(), "This is an awesome description", "This is an awesome Tag Notes", "This is an awesome Price Notes", 
-		CURDATE(), 50, 22.50, 455.11, NULL, "Cables", "G", "Adam", 0, 0, 0, 0),
+		CURDATE(), 50, 22.50, 455.11, 100, "Cables", "G", "Adam", 0, 0, 0, 0),
 	(6003, 3, "3", CURDATE(), "This is an awesome description", "This is an awesome Tag Notes", "This is an awesome Price Notes", 
-		CURDATE(), 50, 22.50, 455.11, NULL, "Cables", "G", "Adam", 0, 0, 0, 0),
+		CURDATE(), 50, 22.50, 455.11, 100, "Cables", "G", "Adam", 0, 0, 0, 0),
 	(6004, 1, "4", CURDATE(), "This is an awesome description", "This is an awesome Tag Notes", "This is an awesome Price Notes", 
-		CURDATE(), 50, 22.50, 455.11, NULL, "Battery System", "E", "Tony", 0, 0, 0, 0),
+		CURDATE(), 50, 22.50, 455.11, 100, "Battery System", "E", "Tony", 0, 0, 0, 0),
 	(6004, 2, "4", CURDATE(), "This is an awesome description", "This is an awesome Tag Notes", "This is an awesome Price Notes", 
-		CURDATE(), 50, 22.50, 455.11, NULL, "Battery System", "E", "Tony", 0, 0, 0, 0),
+		CURDATE(), 50, 22.50, 455.11, 100, "Battery System", "E", "Tony", 0, 0, 0, 0),
 	(6004, 3, "4", CURDATE(), "This is an awesome description", "This is an awesome Tag Notes", "This is an awesome Price Notes", 
-		CURDATE(), 50, 22.50, 455.11, NULL, "Battery System", "E", "Tony", 0, 0, 0, 0),
+		CURDATE(), 50, 22.50, 455.11, 100, "Battery System", "E", "Tony", 0, 0, 0, 0),
 	(6004, 4, "4", CURDATE(), "This is an awesome description", "This is an awesome Tag Notes", "This is an awesome Price Notes", 
-		CURDATE(), 50, 22.50, 455.11, NULL, "Battery System", "E", "Tony", 0, 0, 0, 0);
+		CURDATE(), 50, 22.50, 455.11, 100, "Battery System", "E", "Tony", 0, 0, 0, 0);
 
 INSERT INTO Per_Hour VALUES
     (1, 74.28, 64.24);
