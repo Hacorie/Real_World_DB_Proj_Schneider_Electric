@@ -88,3 +88,7 @@ function isAdmin() {
 						<?php echo $error; ?>
 					</div>
 				<?php } ?>
+
+				<div id="printedBy">
+					Printed by <?php echo $_SESSION['username']; ?>
+				</div>
