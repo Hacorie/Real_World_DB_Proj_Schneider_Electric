@@ -326,29 +326,30 @@
 		</tr>
 		<tr>
 			<td><input type="checkbox" <?php if($tag['HVL'] == 1) { echo 'checked="checked"'; }?> name="hvl" value="HVL" />HVL</td>
-			<td><input type="text" value="<?php echo $tag['InstallCost'] * $products['HVL'] * $countries['USA']; ?>" /></td>
-			<td><input type="text" value="<?php echo $tag['InstallCost'] * $products['HVL'] * $countries['Canada']; ?>" /></td>
-			<td><input type="text" value="<?php echo $tag['InstallCost'] * $products['HVL'] * $countries['Mexico']; ?>" /></td>
+			<td><input id="usahvl" type="text" value="<?php echo $tag['InstallCost'] * $products['HVL'] * $countries['USA']; ?>" /></td>
+			<td><input id="canadahvl" type="text" value="<?php echo $tag['InstallCost'] * $products['HVL'] * $countries['Canada']; ?>" /></td>
+			<td><input id="mexicohvl" type="text" value="<?php echo $tag['InstallCost'] * $products['HVL'] * $countries['Mexico']; ?>" /></td>
 		</tr>
 		<tr>
 			<td><input type="checkbox" <?php if($tag['HVLCC'] == 1) { echo 'checked="checked"'; }?> name="hvlcc" value="hvlcc" />HVL/CC</td>
-			<td><input type="text" value="<?php echo $tag['InstallCost'] * $products['HVL/CC'] * $countries['USA']; ?>" /></td>
-			<td><input type="text" value="<?php echo $tag['InstallCost'] * $products['HVL/CC'] * $countries['Canada']; ?>" /></td>
-			<td><input type="text" value="<?php echo $tag['InstallCost'] * $products['HVL/CC'] * $countries['Mexico']; ?>" /></td>
+			<td><input id="usahvlcc" type="text" value="<?php echo $tag['InstallCost'] * $products['HVL/CC'] * $countries['USA']; ?>" /></td>
+			<td><input id="canadahvlcc" type="text" value="<?php echo $tag['InstallCost'] * $products['HVL/CC'] * $countries['Canada']; ?>" /></td>
+			<td><input id="mexicohvlcc" type="text" value="<?php echo $tag['InstallCost'] * $products['HVL/CC'] * $countries['Mexico']; ?>" /></td>
 		</tr>
 		<tr>
 			<td><input type="checkbox" <?php if($tag['MC'] == 1) { echo 'checked="checked"'; }?> name="mc" value="mc" />Metal Clad</td>
-			<td><input type="text" value="<?php echo $tag['InstallCost'] * $products['Metal Clad'] * $countries['USA']; ?>" /></td>
-			<td><input type="text" value="<?php echo $tag['InstallCost'] * $products['Metal Clad'] * $countries['Canada']; ?>" /></td>
-			<td><input type="text" value="<?php echo $tag['InstallCost'] * $products['Metal Clad'] * $countries['Mexico']; ?>" /></td>
+			<td><input id="usamc" type="text" value="<?php echo $tag['InstallCost'] * $products['Metal Clad'] * $countries['USA']; ?>" /></td>
+			<td><input id="canadamc" type="text" value="<?php echo $tag['InstallCost'] * $products['Metal Clad'] * $countries['Canada']; ?>" /></td>
+			<td><input id="mexicomc" type="text" value="<?php echo $tag['InstallCost'] * $products['Metal Clad'] * $countries['Mexico']; ?>" /></td>
 		</tr>
 		<tr>
 			<td><input type="checkbox" <?php if($tag['MVMCC'] == 1) { echo 'checked="checked"'; }?> name="mvmcc" value="mvmcc" />MVMCC</td>
-			<td><input type="text" value="<?php echo $tag['InstallCost'] * $products['MVMCC'] * $countries['USA']; ?>" /></td>
-			<td><input type="text" value="<?php echo $tag['InstallCost'] * $products['MVMCC'] * $countries['Canada']; ?>" /></td>
-			<td><input type="text" value="<?php echo $tag['InstallCost'] * $products['MVMCC'] * $countries['Mexico']; ?>" /></td>
+			<td><input id="usamvmcc" type="text" value="<?php echo $tag['InstallCost'] * $products['MVMCC'] * $countries['USA']; ?>" /></td>
+			<td><input id="canadamvmcc" type="text" value="<?php echo $tag['InstallCost'] * $products['MVMCC'] * $countries['Canada']; ?>" /></td>
+			<td><input id="mexicomvmcc" type="text" value="<?php echo $tag['InstallCost'] * $products['MVMCC'] * $countries['Mexico']; ?>" /></td>
 		</tr>
 	</table>
+    
 	</div>
 </form>
 <div id="section4">
@@ -471,7 +472,24 @@ $("#labor")
         if(isNaN(mCost))
             mCost = 0;
 
-        $("#install").val(mCost + lCost + eCost );
+        var iCost = mCost+lCost+eCost;
+        $("#install").val(iCost );
+        $("#usahvl").val(iCost*parseFloat(<?php echo $products['HVL']?>)*parseFloat(<?php echo $countries['USA']?> ) );
+        $("#canadahvl").val(iCost*parseFloat(<?php echo $products['HVL']?>)*parseFloat(<?php echo $countries['Canada']?>) );
+        $("#mexicohvl").val(iCost*parseFloat(<?php echo $products['HVL']?>)*parseFloat(<?php echo $countries['Mexico']?>) );
+
+        $("#usahvlcc").val(iCost*parseFloat(<?php echo $products['HVL/CC']?>)*parseFloat(<?php echo $countries['USA']?>) );
+        $("#canadahvlcc").val(iCost*parseFloat(<?php echo $products['HVL/CC']?>)*parseFloat(<?php echo $countries['Canada']?>) );
+        $("#mexicohvlcc").val(iCost*parseFloat(<?php echo $products['HVL/CC']?>)*parseFloat(<?php echo $countries['Mexico']?>) );
+
+        $("#usamc").val(iCost*parseFloat(<?php echo $products['Metal Clad']?>)*parseFloat(<?php echo $countries['USA']?>) );
+        $("#canadamc").val(iCost*parseFloat(<?php echo $products['Metal Clad']?>)*parseFloat(<?php echo $countries['Canada']?>) );
+        $("#mexicomc").val(iCost*parseFloat(<?php echo $products['Metal Clad']?>)*parseFloat(<?php echo $countries['Mexico']?>) );
+
+        $("#usamvmcc").val(iCost*parseFloat(<?php echo $products['MVMCC']?>)*parseFloat(<?php echo $countries['USA']?>) );
+        $("#canadamvmcc").val(iCost*parseFloat(<?php echo $products['MVMCC']?>)*parseFloat(<?php echo $countries['Canada']?>) );
+        $("#mexicomvmcc").val(iCost*parseFloat(<?php echo $products['MVMCC']?>)*parseFloat(<?php echo $countries['Mexico']?>) );
+
     }).change()
 
 $("#engineering")
@@ -487,7 +505,24 @@ $("#engineering")
         if(isNaN(mCost))
             mCost = 0;
 
-        $("#install").val(mCost + lCost + eCost );
+        var iCost = mCost+lCost+eCost;
+        $("#install").val(iCost );
+        $("#usahvl").val(iCost*parseFloat(<?php echo $products['HVL']?>)*parseFloat(<?php echo $countries['USA']?> ) );
+        $("#canadahvl").val(iCost*parseFloat(<?php echo $products['HVL']?>)*parseFloat(<?php echo $countries['Canada']?>) );
+        $("#mexicohvl").val(iCost*parseFloat(<?php echo $products['HVL']?>)*parseFloat(<?php echo $countries['Mexico']?>) );
+
+        $("#usahvlcc").val(iCost*parseFloat(<?php echo $products['HVL/CC']?>)*parseFloat(<?php echo $countries['USA']?>) );
+        $("#canadahvlcc").val(iCost*parseFloat(<?php echo $products['HVL/CC']?>)*parseFloat(<?php echo $countries['Canada']?>) );
+        $("#mexicohvlcc").val(iCost*parseFloat(<?php echo $products['HVL/CC']?>)*parseFloat(<?php echo $countries['Mexico']?>) );
+
+        $("#usamc").val(iCost*parseFloat(<?php echo $products['Metal Clad']?>)*parseFloat(<?php echo $countries['USA']?>) );
+        $("#canadamc").val(iCost*parseFloat(<?php echo $products['Metal Clad']?>)*parseFloat(<?php echo $countries['Canada']?>) );
+        $("#mexicomc").val(iCost*parseFloat(<?php echo $products['Metal Clad']?>)*parseFloat(<?php echo $countries['Mexico']?>) );
+
+        $("#usamvmcc").val(iCost*parseFloat(<?php echo $products['MVMCC']?>)*parseFloat(<?php echo $countries['USA']?>) );
+        $("#canadamvmcc").val(iCost*parseFloat(<?php echo $products['MVMCC']?>)*parseFloat(<?php echo $countries['Canada']?>) );
+        $("#mexicomvmcc").val(iCost*parseFloat(<?php echo $products['MVMCC']?>)*parseFloat(<?php echo $countries['Mexico']?>) );
+
     }).change()
 
 $("#mCost")
@@ -500,7 +535,25 @@ $("#mCost")
             lCost = 0;
         if(isNaN(eCost))
             eCost = 0;
-        $("#install").val(mCost + lCost + eCost );
+        
+        var iCost = mCost+lCost+eCost;
+        $("#install").val(iCost );
+        $("#usahvl").val(iCost*parseFloat(<?php echo $products['HVL']?>)*parseFloat(<?php echo $countries['USA']?> ) );
+        $("#canadahvl").val(iCost*parseFloat(<?php echo $products['HVL']?>)*parseFloat(<?php echo $countries['Canada']?>) );
+        $("#mexicohvl").val(iCost*parseFloat(<?php echo $products['HVL']?>)*parseFloat(<?php echo $countries['Mexico']?>) );
+
+        $("#usahvlcc").val(iCost*parseFloat(<?php echo $products['HVL/CC']?>)*parseFloat(<?php echo $countries['USA']?>) );
+        $("#canadahvlcc").val(iCost*parseFloat(<?php echo $products['HVL/CC']?>)*parseFloat(<?php echo $countries['Canada']?>) );
+        $("#mexicohvlcc").val(iCost*parseFloat(<?php echo $products['HVL/CC']?>)*parseFloat(<?php echo $countries['Mexico']?>) );
+
+        $("#usamc").val(iCost*parseFloat(<?php echo $products['Metal Clad']?>)*parseFloat(<?php echo $countries['USA']?>) );
+        $("#canadamc").val(iCost*parseFloat(<?php echo $products['Metal Clad']?>)*parseFloat(<?php echo $countries['Canada']?>) );
+        $("#mexicomc").val(iCost*parseFloat(<?php echo $products['Metal Clad']?>)*parseFloat(<?php echo $countries['Mexico']?>) );
+
+        $("#usamvmcc").val(iCost*parseFloat(<?php echo $products['MVMCC']?>)*parseFloat(<?php echo $countries['USA']?>) );
+        $("#canadamvmcc").val(iCost*parseFloat(<?php echo $products['MVMCC']?>)*parseFloat(<?php echo $countries['Canada']?>) );
+        $("#mexicomvmcc").val(iCost*parseFloat(<?php echo $products['MVMCC']?>)*parseFloat(<?php echo $countries['Mexico']?>) );
+
     }).change()
         
 </script>

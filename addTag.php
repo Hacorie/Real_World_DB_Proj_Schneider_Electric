@@ -245,8 +245,8 @@ $("#labor")
         $("#mexicohvl").val(iCost*parseFloat(<?php echo $hvlMult[0]['Multiplier']?>)*parseFloat(<?php echo $mexicoMult[0]['Multiplier']?>) );
 
         $("#usahvlcc").val(iCost*parseFloat(<?php echo $hvlccMult[0]['Multiplier']?>)*parseFloat(<?php echo $usaMult[0]['Multiplier']?>) );
-        $("#mexicohvlcc").val(iCost*parseFloat(<?php echo $hvlccMult[0]['Multiplier']?>)*parseFloat(<?php echo $canadaMult[0]['Multiplier']?>) );
-        $("#canadahvlcc").val(iCost*parseFloat(<?php echo $hvlccMult[0]['Multiplier']?>)*parseFloat(<?php echo $mexicoMult[0]['Multiplier']?>) );
+        $("#canadahvlcc").val(iCost*parseFloat(<?php echo $hvlccMult[0]['Multiplier']?>)*parseFloat(<?php echo $canadaMult[0]['Multiplier']?>) );
+        $("#mexicohvlcc").val(iCost*parseFloat(<?php echo $hvlccMult[0]['Multiplier']?>)*parseFloat(<?php echo $mexicoMult[0]['Multiplier']?>) );
 
         $("#usamc").val(iCost*parseFloat(<?php echo $metalMult[0]['Multiplier']?>)*parseFloat(<?php echo $usaMult[0]['Multiplier']?>) );
         $("#canadamc").val(iCost*parseFloat(<?php echo $metalMult[0]['Multiplier']?>)*parseFloat(<?php echo $canadaMult[0]['Multiplier']?>) );
@@ -278,8 +278,8 @@ $("#engineering")
         $("#mexicohvl").val(iCost*parseFloat(<?php echo $hvlMult[0]['Multiplier']?>)*parseFloat(<?php echo $mexicoMult[0]['Multiplier']?>) );
 
         $("#usahvlcc").val(iCost*parseFloat(<?php echo $hvlccMult[0]['Multiplier']?>)*parseFloat(<?php echo $usaMult[0]['Multiplier']?>) );
-        $("#mexicohvlcc").val(iCost*parseFloat(<?php echo $hvlccMult[0]['Multiplier']?>)*parseFloat(<?php echo $canadaMult[0]['Multiplier']?>) );
-        $("#canadahvlcc").val(iCost*parseFloat(<?php echo $hvlccMult[0]['Multiplier']?>)*parseFloat(<?php echo $mexicoMult[0]['Multiplier']?>) );
+        $("#canadahvlcc").val(iCost*parseFloat(<?php echo $hvlccMult[0]['Multiplier']?>)*parseFloat(<?php echo $canadaMult[0]['Multiplier']?>) );
+        $("#mexicohvlcc").val(iCost*parseFloat(<?php echo $hvlccMult[0]['Multiplier']?>)*parseFloat(<?php echo $mexicoMult[0]['Multiplier']?>) );
 
         $("#usamc").val(iCost*parseFloat(<?php echo $metalMult[0]['Multiplier']?>)*parseFloat(<?php echo $usaMult[0]['Multiplier']?>) );
         $("#canadamc").val(iCost*parseFloat(<?php echo $metalMult[0]['Multiplier']?>)*parseFloat(<?php echo $canadaMult[0]['Multiplier']?>) );
@@ -309,8 +309,8 @@ $("#mCost")
         $("#mexicohvl").val(iCost*parseFloat(<?php echo $hvlMult[0]['Multiplier']?>)*parseFloat(<?php echo $mexicoMult[0]['Multiplier']?>) );
 
         $("#usahvlcc").val(iCost*parseFloat(<?php echo $hvlccMult[0]['Multiplier']?>)*parseFloat(<?php echo $usaMult[0]['Multiplier']?>) );
-        $("#mexicohvlcc").val(iCost*parseFloat(<?php echo $hvlccMult[0]['Multiplier']?>)*parseFloat(<?php echo $canadaMult[0]['Multiplier']?>) );
-        $("#canadahvlcc").val(iCost*parseFloat(<?php echo $hvlccMult[0]['Multiplier']?>)*parseFloat(<?php echo $mexicoMult[0]['Multiplier']?>) );
+        $("#canadahvlcc").val(iCost*parseFloat(<?php echo $hvlccMult[0]['Multiplier']?>)*parseFloat(<?php echo $canadaMult[0]['Multiplier']?>) );
+        $("#mexicohvlcc").val(iCost*parseFloat(<?php echo $hvlccMult[0]['Multiplier']?>)*parseFloat(<?php echo $mexicoMult[0]['Multiplier']?>) );
 
         $("#usamc").val(iCost*parseFloat(<?php echo $metalMult[0]['Multiplier']?>)*parseFloat(<?php echo $usaMult[0]['Multiplier']?>) );
         $("#canadamc").val(iCost*parseFloat(<?php echo $metalMult[0]['Multiplier']?>)*parseFloat(<?php echo $canadaMult[0]['Multiplier']?>) );
