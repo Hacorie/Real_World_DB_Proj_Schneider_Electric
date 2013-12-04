@@ -48,8 +48,10 @@ function isAdmin() {
 		<div class="collapse navbar-collapse">
 			<ul class="nav navbar-nav">
 				<li <?php isActive('Home');?>><a href="homepage.php">Home</a></li>
-				<li <?php isActive('Search Tags');?>><a href="searchTag.php">Search</a></li>
-				<li <?php isActive('Add Tag');?>><a href="addTag.php">Insert</a></li>
+				<?php if ($_SESSION['role'] >= 1) { ?>
+					<li <?php isActive('Search Tags');?>><a href="searchTag.php">Search</a></li>
+					<li <?php isActive('Add Tag');?>><a href="addTag.php">Add</a></li>
+				<?php } ?>
 				<li <?php isActive('View Tag');?>><a href="viewTag.php">View</a></li>
 				<!-- ADMIN LIST ITEMS -->
 				<?php if ($_SESSION['role'] >= 3) { ?>

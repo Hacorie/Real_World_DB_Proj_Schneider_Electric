@@ -85,19 +85,19 @@
 <table class="table table-bordered table-striped">
 <tr>
 	<th><strong>Group Name</strong></th>
-	<th><strong>Count</strong></th>
+	<th><strong>Members</strong></th>
 	<th><strong>Action</strong></th>
 </tr>
 	<?php foreach($groups as $group) { ?>
 		<tr>
-			<td><?php echo $group['GName']; ?> </td><td>(<?php echo $group['Count']; ?>)</td>
+			<td><?php echo $group['GName']; ?> </td><td><?php echo $group['Count']; ?></td>
 			<?php if (!in_array($group['GName'], $specialGroups)) { ?>
 				<form action="groups.php" method="post">
 					<input type="hidden" name="GName" value="<?php echo $group['GName'] ?>" />
 					<td><button type="submit" name="delete" class="btn btn-xs btn-danger">Delete</button></td>
 				</form>
 			<?php } else { ?>
-				<td><button class="btn btn-xs">Disabled</button></td>
+				<td><button class="btn btn-xs btn-danger" disabled="disabled">Delete</button></td>
 
 			<?php } ?>
 		</tr>

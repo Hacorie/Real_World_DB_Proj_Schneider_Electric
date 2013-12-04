@@ -6,7 +6,7 @@
 
 	session_start();
 	gateway(2);
-	$title = 'Add / Insert a Tag';
+	$title = 'Add Tag';
 
 	$db = dbConnect();
 
