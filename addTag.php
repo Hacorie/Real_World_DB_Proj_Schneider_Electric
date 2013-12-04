@@ -65,7 +65,17 @@
     $laborMult = dbQuery($db, "SELECT Labor FROM Per_Hour");
     $enginMult = dbQuery($db, "SELECT Engineering FROM Per_Hour");
     $labor = $laborMult[0]['Labor'];
-    $engin = $enginMult[0]['Engineering']; 
+    $engin = $enginMult[0]['Engineering'];
+
+    $usaMult = dbQuery($db, "Select Multiplier FROM Country WHERE CName='USA'");
+    $canadaMult = dbQuery($db, "Select Multiplier FROM Country WHERE CName='Canada'");
+    $mexicoMult = dbQuery($db, "Select Multiplier FROM Country WHERE CName='Mexico'");
+
+    $hvlMult = dbQuery($db, "SELECT Multiplier FROM Product_Type WHERE PName='HVL'");
+    $hvlccMult = dbQuery($db, "SELECT Multiplier FROM Product_Type WHERE PName='HVL/CC'");
+    $metalMult = dbQuery($db, "SELECT Multiplier FROM Product_Type WHERE PName='Metal Clad'");
+    $mvmccMult = dbQuery($db, "SELECT Multiplier FROM Product_Type WHERE PName='MVMCC'");
+
 
     
 
@@ -187,27 +197,27 @@
 		</tr>
 		<tr>
 			<td><input type="checkbox" name="hvl" value="HVL" /> HVL</td>
-			<td><input type="text" /></td>
-			<td><input type="text" /></td>
-			<td><input type="text" /></td>
+			<td><input id="usahvl" type="text" /></td>
+			<td><input id="canadahvl" type="text" /></td>
+			<td><input id="mexicohvl" type="text" /></td>
 		</tr>
 		<tr>
 			<td><input type="checkbox" name="hvlcc" value="HVL/CC" /> HVL/CC</td>
-			<td><input type="text" /></td>
-			<td><input type="text" /></td>
-			<td><input type="text" /></td>
+			<td><input id="usahvlcc" type="text" /></td>
+			<td><input id="canadahvlcc" type="text" /></td>
+			<td><input id="mexicohvlcc" type="text" /></td>
 		</tr>
 		<tr>
 			<td><input type="checkbox" name="mc" value="Metal Clad" /> Metal Clad</td>
-			<td><input type="text" /></td>
-			<td><input type="text" /></td>
-			<td><input type="text" /></td>
+			<td><input id="usamc" type="text" /></td>
+			<td><input id="canadamc" type="text" /></td>
+			<td><input id="mexicomc" type="text" /></td>
 		</tr>
 		<tr>
 			<td><input type="checkbox" name="mvmcc" value="MVMCC" /> MVMCC</td>
-			<td><input type="text" /></td>
-			<td><input type="text" /></td>
-			<td><input type="text" /></td>
+			<td><input id="usamvmcc" type="text" /></td>
+			<td><input id="canadamvmcc" type="text" /></td>
+			<td><input id="mexicomvmcc" type="text" /></td>
 		</tr>
 	</table>
 	</div>
@@ -228,7 +238,23 @@ $("#labor")
         if(isNaN(mCost))
             mCost = 0;
 
-        $("#install").val(mCost + lCost + eCost );
+        var iCost = mCost+lCost+eCost;
+        $("#install").val(iCost );
+        $("#usahvl").val(iCost*parseFloat(<?php echo $hvlMult[0]['Multiplier']?>)*parseFloat(<?php echo $usaMult[0]['Multiplier']?>) );
+        $("#canadahvl").val(iCost*parseFloat(<?php echo $hvlMult[0]['Multiplier']?>)*parseFloat(<?php echo $canadaMult[0]['Multiplier']?>) );
+        $("#mexicohvl").val(iCost*parseFloat(<?php echo $hvlMult[0]['Multiplier']?>)*parseFloat(<?php echo $mexicoMult[0]['Multiplier']?>) );
+
+        $("#usahvlcc").val(iCost*parseFloat(<?php echo $hvlccMult[0]['Multiplier']?>)*parseFloat(<?php echo $usaMult[0]['Multiplier']?>) );
+        $("#mexicohvlcc").val(iCost*parseFloat(<?php echo $hvlccMult[0]['Multiplier']?>)*parseFloat(<?php echo $canadaMult[0]['Multiplier']?>) );
+        $("#canadahvlcc").val(iCost*parseFloat(<?php echo $hvlccMult[0]['Multiplier']?>)*parseFloat(<?php echo $mexicoMult[0]['Multiplier']?>) );
+
+        $("#usamc").val(iCost*parseFloat(<?php echo $metalMult[0]['Multiplier']?>)*parseFloat(<?php echo $usaMult[0]['Multiplier']?>) );
+        $("#canadamc").val(iCost*parseFloat(<?php echo $metalMult[0]['Multiplier']?>)*parseFloat(<?php echo $canadaMult[0]['Multiplier']?>) );
+        $("#mexicomc").val(iCost*parseFloat(<?php echo $metalMult[0]['Multiplier']?>)*parseFloat(<?php echo $mexicoMult[0]['Multiplier']?>) );
+
+        $("#usamvmcc").val(iCost*parseFloat(<?php echo $mvmccMult[0]['Multiplier']?>)*parseFloat(<?php echo $usaMult[0]['Multiplier']?>) );
+        $("#canadamvmcc").val(iCost*parseFloat(<?php echo $mvmccMult[0]['Multiplier']?>)*parseFloat(<?php echo $canadaMult[0]['Multiplier']?>) );
+        $("#mexicomvmcc").val(iCost*parseFloat(<?php echo $mvmccMult[0]['Multiplier']?>)*parseFloat(<?php echo $mexicoMult[0]['Multiplier']?>) );
     })
 
 $("#engineering")
@@ -244,7 +270,24 @@ $("#engineering")
         if(isNaN(mCost))
             mCost = 0;
 
-        $("#install").val(mCost + lCost + eCost );
+        var iCost = mCost+lCost+eCost;
+        $("#install").val(iCost );
+        
+        $("#usahvl").val(iCost*parseFloat(<?php echo $hvlMult[0]['Multiplier']?>)*parseFloat(<?php echo $usaMult[0]['Multiplier']?>) );
+        $("#canadahvl").val(iCost*parseFloat(<?php echo $hvlMult[0]['Multiplier']?>)*parseFloat(<?php echo $canadaMult[0]['Multiplier']?>) );
+        $("#mexicohvl").val(iCost*parseFloat(<?php echo $hvlMult[0]['Multiplier']?>)*parseFloat(<?php echo $mexicoMult[0]['Multiplier']?>) );
+
+        $("#usahvlcc").val(iCost*parseFloat(<?php echo $hvlccMult[0]['Multiplier']?>)*parseFloat(<?php echo $usaMult[0]['Multiplier']?>) );
+        $("#mexicohvlcc").val(iCost*parseFloat(<?php echo $hvlccMult[0]['Multiplier']?>)*parseFloat(<?php echo $canadaMult[0]['Multiplier']?>) );
+        $("#canadahvlcc").val(iCost*parseFloat(<?php echo $hvlccMult[0]['Multiplier']?>)*parseFloat(<?php echo $mexicoMult[0]['Multiplier']?>) );
+
+        $("#usamc").val(iCost*parseFloat(<?php echo $metalMult[0]['Multiplier']?>)*parseFloat(<?php echo $usaMult[0]['Multiplier']?>) );
+        $("#canadamc").val(iCost*parseFloat(<?php echo $metalMult[0]['Multiplier']?>)*parseFloat(<?php echo $canadaMult[0]['Multiplier']?>) );
+        $("#mexicomc").val(iCost*parseFloat(<?php echo $metalMult[0]['Multiplier']?>)*parseFloat(<?php echo $mexicoMult[0]['Multiplier']?>) );
+
+        $("#usamvmcc").val(iCost*parseFloat(<?php echo $mvmccMult[0]['Multiplier']?>)*parseFloat(<?php echo $usaMult[0]['Multiplier']?>) );
+        $("#canadamvmcc").val(iCost*parseFloat(<?php echo $mvmccMult[0]['Multiplier']?>)*parseFloat(<?php echo $canadaMult[0]['Multiplier']?>) );
+        $("#mexicomvmcc").val(iCost*parseFloat(<?php echo $mvmccMult[0]['Multiplier']?>)*parseFloat(<?php echo $mexicoMult[0]['Multiplier']?>) );
     })
 
 $("#mCost")
@@ -257,7 +300,26 @@ $("#mCost")
             lCost = 0;
         if(isNaN(eCost))
             eCost = 0;
-        $("#install").val(mCost + lCost + eCost );
+        
+        var iCost = mCost+lCost+eCost;
+        $("#install").val(iCost );
+        
+        $("#usahvl").val(iCost*parseFloat(<?php echo $hvlMult[0]['Multiplier']?>)*parseFloat(<?php echo $usaMult[0]['Multiplier']?>) );
+        $("#canadahvl").val(iCost*parseFloat(<?php echo $hvlMult[0]['Multiplier']?>)*parseFloat(<?php echo $canadaMult[0]['Multiplier']?>) );
+        $("#mexicohvl").val(iCost*parseFloat(<?php echo $hvlMult[0]['Multiplier']?>)*parseFloat(<?php echo $mexicoMult[0]['Multiplier']?>) );
+
+        $("#usahvlcc").val(iCost*parseFloat(<?php echo $hvlccMult[0]['Multiplier']?>)*parseFloat(<?php echo $usaMult[0]['Multiplier']?>) );
+        $("#mexicohvlcc").val(iCost*parseFloat(<?php echo $hvlccMult[0]['Multiplier']?>)*parseFloat(<?php echo $canadaMult[0]['Multiplier']?>) );
+        $("#canadahvlcc").val(iCost*parseFloat(<?php echo $hvlccMult[0]['Multiplier']?>)*parseFloat(<?php echo $mexicoMult[0]['Multiplier']?>) );
+
+        $("#usamc").val(iCost*parseFloat(<?php echo $metalMult[0]['Multiplier']?>)*parseFloat(<?php echo $usaMult[0]['Multiplier']?>) );
+        $("#canadamc").val(iCost*parseFloat(<?php echo $metalMult[0]['Multiplier']?>)*parseFloat(<?php echo $canadaMult[0]['Multiplier']?>) );
+        $("#mexicomc").val(iCost*parseFloat(<?php echo $metalMult[0]['Multiplier']?>)*parseFloat(<?php echo $mexicoMult[0]['Multiplier']?>) );
+
+        $("#usamvmcc").val(iCost*parseFloat(<?php echo $mvmccMult[0]['Multiplier']?>)*parseFloat(<?php echo $usaMult[0]['Multiplier']?>) );
+        $("#canadamvmcc").val(iCost*parseFloat(<?php echo $mvmccMult[0]['Multiplier']?>)*parseFloat(<?php echo $canadaMult[0]['Multiplier']?>) );
+        $("#mexicomvmcc").val(iCost*parseFloat(<?php echo $mvmccMult[0]['Multiplier']?>)*parseFloat(<?php echo $mexicoMult[0]['Multiplier']?>) );
+
     })
         
 </script>
