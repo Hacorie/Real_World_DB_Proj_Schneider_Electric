@@ -1,5 +1,5 @@
-#logo{
-	visibility: visible;
+#printedBy{
+	display: none;
 	float: right;
 }
 
@@ -43,8 +43,8 @@
 	float: left;
 }
 
-#logo{
-	visibility: visible;
+#printedBy{
+	display: inline;
 	float: right;
 }
 
