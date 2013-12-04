@@ -30,8 +30,8 @@ INSERT INTO Product_Type VALUES
 	("MVMCC", 12);
 
 INSERT INTO Applied_FO_Table(Notes, Num, RevNo, Typeof) VALUES
-	("Notes about this FO", 1, 1, "Type1"),
-	("Notes about second FO", 2, 1, "Type2");
+	("Notes about this FO", 6001, 1, "F"),
+	("Notes about second FO", 6001, 1, "Q");
 
 INSERT INTO Complexity VALUES
 	("A"), ("B"), ("C"), ("D"), ("E"), ("F"), ("G");
@@ -61,10 +61,6 @@ INSERT INTO Tag VALUES
 		CURDATE(), 50, 22.50, 455.11, NULL, "Battery System", "E", "Tony", 0, 0, 0, 0),
 	(6004, 4, "4", CURDATE(), "This is an awesome description", "This is an awesome Tag Notes", "This is an awesome Price Notes", 
 		CURDATE(), 50, 22.50, 455.11, NULL, "Battery System", "E", "Tony", 0, 0, 0, 0);
-
-INSERT INTO Attachment VALUES
-	(6001, 'test.txt', NULL),
-	(6003, 'test.pdf', NULL);
 
 INSERT INTO Per_Hour VALUES
     (1, 74.28, 64.24);
