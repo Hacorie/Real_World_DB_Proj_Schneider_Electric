@@ -86,6 +86,29 @@
 
 	}
 
+	if (isset($_POST['fileadd'])) {
+
+		$uploaddir = './files/';
+		$uploadfile = $uploaddir . basename($_FILES['file']['name']);
+
+		if (move_uploaded_file($_FILES['file']['tmp_name'], $uploadfile)) {
+		    $flash = "File uploaded!";
+
+		    $sql = "INSERT INTO Attachment VALUES (?, ?, ?)";
+			$stmt = $db->prepare($sql);
+
+			$stmt->bind_param("sss",
+				$_GET['tag'],
+				$_FILES['file']['name'],
+				$uploadfile);
+
+			$stmt->execute();
+		} else {
+			$error = "Error uploading file";
+		}
+
+	}
+
 	// Verify that a valid tag was specified
 	if (isset($_GET['tag'])) {
 
@@ -274,18 +297,7 @@
 	<button class="btn btn-danger" id="attachmentButton">Click Box to Make TAG Permanently Obsolete</button><br />
 	<input type="submit" name="submit" class="btn btn-success" id="attachmentButton" value="Save" /><br /><br />
 	<hr style="clear: both"/>
-	<div id="attachmentList">
-	<strong>Attachments:</strong>
-	<ul style="list-style-type: none">
-		<?php if (!empty($attachments)) { foreach($attachments as $attachment) { ?>
-			<li><input type="checkbox" value="<?php echo $attachment['Name']; ?>" /> <?php echo $attachment['Name']; ?></li>
-		<?php } } ?>
-	</ul><br />
 	
-
-		<input type="file" name="file" id="file"><br />
-		<button class="btn btn-success" id="viewTag_button">Add</button><button class="btn btn-danger" id="viewTag_button">Delete</button><br />
-	</div>
 	</div>	
 	<div id="section2">
 		<strong>Product Lines Tag May be Applied To:</strong>
@@ -406,7 +418,25 @@
 
 </div>
 
+</div>
+<div id="section5">
+	<div id="attachmentList">
+		<form action="editTag.php?tag=<?php echo $tag['Num']; ?>" enctype="multipart/form-data" method="POST">
+			<strong>Attachments:</strong>
+			<ul style="list-style-type: none">
+				<?php if (!empty($attachments)) { foreach($attachments as $attachment) { ?>
+					<li>
+						<input type="checkbox" value="<?php echo $attachment['Name']; ?>" />
+						<a href="<?php echo $attachment['Path']; ?>" target="_blank"><?php echo $attachment['Name']; ?></a>
+					</li>
+				<?php } } ?>
+			</ul><br />
+
+			<input type="file" name="file" id="file"><br />
+			<input type="submit" name="fileadd" class="btn btn-success" id="viewTag_button" value="Add" /><button class="btn btn-danger" id="viewTag_button">Delete</button><br />
+		</form>
 	</div>
+</div>
 </div>
 
 <script src="//code.jquery.com/jquery-1.9.1.js"></script>

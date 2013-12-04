@@ -95,8 +95,14 @@
 }
 
 #section4{
+  float: left;
 	clear: left;
-	width: 50%;
+	width: 60%;
+}
+
+#section5 {
+  float: right;
+  width: 38%;
 }
 
 #addTagDiv{
