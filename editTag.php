@@ -304,7 +304,7 @@
 		</tr>
 		<tr>
 			<td>Price Expires:</td>
-			<td><input type="text" value="<?php echo $tag['PriceExpire']; ?>" /></td>
+			<td><input type="text" name="priceExpiration" value="<?php echo $tag['PriceExpire']; ?>" /></td>
 		</tr>
 		<tr><td>&nbsp;</td></tr>
 		<tr><td>&nbsp;</td></tr>
